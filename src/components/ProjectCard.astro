@@ -1,0 +1,74 @@
+---
+import type { ProjectEntry } from '../data/projects';
+
+interface Props {
+	project: ProjectEntry;
+}
+
+const { project } = Astro.props;
+const coverImage = project.images.find((image) => image.role === 'cover') ?? project.images[0];
+const primaryLink =
+	project.links.find((link) => link.kind === 'case-study') ??
+	project.links.find((link) => link.available) ??
+	project.links[0];
+const secondaryLinks = project.links.filter((link) => link !== primaryLink);
+---
+
+<article class:list={["panel", "project-card", project.isFeatured && 'project-card-featured']}>
+	<div class="project-card-image" aria-hidden="true">
+		<div class="project-card-orb"></div>
+		<div class="project-card-screen">
+			<div class="project-card-bar"></div>
+			<div class="project-card-layout">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<p class="project-card-caption">{coverImage?.caption}</p>
+	</div>
+
+	<div class="project-kicker">
+		<span>{project.name}</span>
+		<span>{project.isFeatured ? 'Proyecto principal' : `Prioridad ${project.priority}`}</span>
+	</div>
+
+	<h3 class="card-title">{project.summary}</h3>
+	<p class="card-copy">{project.longDescription}</p>
+	<p class="card-note">{project.highlight}</p>
+
+	<ul class="compact-list project-points">
+		{project.features.slice(0, 2).map((feature) => (
+			<li>{feature}</li>
+		))}
+	</ul>
+
+	<ul class="pill-list">
+		{project.tech.map((item) => (
+			<li>{item}</li>
+		))}
+	</ul>
+
+	<div class="project-card-actions">
+		{primaryLink && (
+			<a
+				class="button"
+				href={primaryLink.href}
+				target={primaryLink.href.startsWith('http') ? '_blank' : undefined}
+				rel={primaryLink.href.startsWith('http') ? 'noreferrer' : undefined}
+			>
+				{primaryLink.available ? primaryLink.label : 'Ver caso de estudio'}
+			</a>
+		)}
+		{secondaryLinks.slice(0, 2).map((link) => (
+			<a
+				class="button button-secondary"
+				href={link.available ? link.href : '#contact'}
+				target={link.available && link.href.startsWith('http') ? '_blank' : undefined}
+				rel={link.available && link.href.startsWith('http') ? 'noreferrer' : undefined}
+			>
+				{link.available ? link.label : `${link.label} pronto`}
+			</a>
+		))}
+	</div>
+</article>

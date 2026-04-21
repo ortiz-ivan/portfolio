@@ -1,0 +1,140 @@
+---
+import type { ProjectEntry } from '../data/projects';
+
+interface Props {
+	project: ProjectEntry;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="project-detail">
+	<section class="section container project-hero" aria-labelledby="project-title">
+		<div class="project-hero-grid">
+			<div class="project-hero-copy">
+				<span class="eyebrow">{project.eyebrow}</span>
+				<h1 id="project-title" class="title-display project-title-display">{project.name}</h1>
+				<p class="lead">{project.summary}</p>
+				<p class="body-copy">{project.longDescription}</p>
+				<div class="project-meta-grid">
+					<div class="panel project-meta-card">
+						<span class="meta-label">Impacto</span>
+						<p class="meta-value">{project.results[0]}</p>
+					</div>
+					<div class="panel project-meta-card">
+						<span class="meta-label">Rol del proyecto</span>
+						<p class="meta-value">{project.highlight}</p>
+					</div>
+				</div>
+			</div>
+
+			<aside class="panel project-showcase" aria-label={`Vista de ${project.name}`}>
+				<div class="project-showcase-window">
+					<div class="project-showcase-bar"></div>
+					<div class="project-showcase-body">
+						<div class="project-showcase-sidebar"></div>
+						<div class="project-showcase-content">
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+					</div>
+				</div>
+				<p class="muted-note">{project.images[0]?.caption}</p>
+			</aside>
+		</div>
+	</section>
+
+	<section class="section container project-content-grid">
+		<div class="panel detail-panel">
+			<span class="meta-label">Problema</span>
+			<h2 class="title-section detail-title">{project.caseStudy.problem.title}</h2>
+			<p class="card-copy">{project.caseStudy.problem.description}</p>
+			<ul class="compact-list">
+				{project.caseStudy.problem.points.map((point) => (
+					<li>{point}</li>
+				))}
+			</ul>
+		</div>
+
+		<div class="panel detail-panel">
+			<span class="meta-label">Solucion</span>
+			<h2 class="title-section detail-title">{project.caseStudy.solution.title}</h2>
+			<p class="card-copy">{project.caseStudy.solution.description}</p>
+			<ul class="compact-list">
+				{project.caseStudy.solution.points.map((point) => (
+					<li>{point}</li>
+				))}
+			</ul>
+		</div>
+
+		<div class="panel detail-panel detail-panel-wide">
+			<span class="meta-label">Arquitectura</span>
+			<h2 class="title-section detail-title">{project.caseStudy.architecture.title}</h2>
+			<p class="card-copy">{project.caseStudy.architecture.description}</p>
+			<div class="architecture-list">
+				{project.caseStudy.architecture.layers.map((layer) => (
+					<div class="architecture-item">
+						<strong>{layer.name}</strong>
+						<p>{layer.description}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="section container project-secondary-grid">
+		<div class="panel detail-panel">
+			<span class="meta-label">Tecnologias</span>
+			<h2 class="title-section detail-title">Stack seleccionado para el contexto real.</h2>
+			<p class="card-copy">{project.caseStudy.technologiesNote}</p>
+			<ul class="pill-list">
+				{project.tech.map((item) => (
+					<li>{item}</li>
+				))}
+			</ul>
+		</div>
+
+		<div class="panel detail-panel">
+			<span class="meta-label">Resultados</span>
+			<h2 class="title-section detail-title">Lo que este proyecto demuestra.</h2>
+			<ul class="compact-list">
+				{project.results.map((result) => (
+					<li>{result}</li>
+				))}
+			</ul>
+		</div>
+	</section>
+
+	<section class="section container" aria-labelledby="decisions-title">
+		<div class="section-heading">
+			<span class="eyebrow">Decisiones tecnicas</span>
+			<h2 id="decisions-title" class="title-section">Criterios que sostienen el proyecto en el tiempo.</h2>
+		</div>
+		<div class="card-grid decision-grid">
+			{project.technicalDecisions.map((decision) => (
+				<article class="panel principle-card">
+					<p class="card-copy">{decision}</p>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class="section container project-cta-panel">
+		<div class="panel contact-panel project-bottom-panel">
+			<div class="section-heading">
+				<span class="eyebrow">Siguiente paso</span>
+				<h2 class="title-section">Este caso de estudio conecta negocio, producto y ejecucion tecnica.</h2>
+				<p class="section-copy">
+					Si quieres revisar el resto de proyectos o conversar sobre una oportunidad similar, la home
+					queda a un clic y el contacto ya esta preparado.
+				</p>
+			</div>
+
+			<div class="button-row project-bottom-actions">
+				<a class="button" href="/">Volver al inicio</a>
+				<a class="button button-secondary" href="/#contact">Contactar</a>
+			</div>
+		</div>
+	</section>
+</article>

@@ -1,0 +1,23 @@
+---
+import ProjectDetail from '../../components/ProjectDetail.astro';
+import { getProjectBySlug, projects } from '../../data/projects';
+import Layout from '../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+	return projects.map((project) => ({
+		params: { slug: project.slug },
+		props: { project }
+	}));
+}
+
+const { project } = Astro.props;
+const currentProject = project ?? getProjectBySlug(Astro.params.slug ?? '');
+
+if (!currentProject) {
+	return Astro.redirect('/');
+}
+---
+
+<Layout title={`${currentProject.name} | Ivan Ortiz`} description={currentProject.summary}>
+	<ProjectDetail project={currentProject} />
+</Layout>
