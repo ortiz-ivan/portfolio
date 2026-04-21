@@ -1,0 +1,171 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const principles = [
+	{
+		title: 'Problemas primero',
+		copy: 'Empiezo por el flujo real del negocio, identifico fricción operativa y traduzco eso en decisiones de producto y arquitectura.'
+	},
+	{
+		title: 'Arquitectura con criterio',
+		copy: 'Priorizo sistemas mantenibles: separación clara entre frontend y backend, módulos escalables y decisiones técnicas fáciles de sostener.'
+	},
+	{
+		title: 'Automatización útil',
+		copy: 'Busco que cada entrega reduzca trabajo manual, mejore trazabilidad y deje una operación más predecible.'
+	}
+];
+
+const projects = [
+	{
+		name: 'Kairos',
+		description: 'Sistema de gestión empresarial con ventas, inventario, reportes y roles.',
+		status: 'Proyecto estrella',
+		stack: ['Django REST', 'React', 'Business logic']
+	},
+	{
+		name: 'Home Manager',
+		description: 'Gestión del hogar con control de gastos, inventario y planificación de compras.',
+		status: 'Versatilidad',
+		stack: ['Data modeling', 'Flows', 'Automation']
+	},
+	{
+		name: 'Kairos Web',
+		description: 'Landing enfocada en captación de clientes y validación comercial del producto.',
+		status: 'Negocio + UX',
+		stack: ['Astro', 'UI/UX', 'Conversion']
+	}
+];
+---
+
+<Layout
+	title="Iván Ortiz | Fullstack Developer"
+	description="Portfolio de Iván Ortiz. Desarrollo sistemas de gestión y automatización enfocados en negocios reales."
+>
+	<main>
+		<section class="hero section container" aria-label="Presentación principal">
+			<div class="hero-grid">
+				<div class="hero-copy">
+					<span class="eyebrow">Fullstack Developer · Django + React</span>
+					<h1 class="title-display">Iván Ortiz</h1>
+					<p class="lead">
+						Desarrollo sistemas de gestión y automatización enfocados en negocios reales.
+					</p>
+					<p class="body-copy">
+						Diseño y desarrollo sistemas que resuelven problemas reales de negocio, desde la
+						arquitectura hasta la implementación. Esta primera fase deja definida la identidad
+						visual y la base del portfolio para montar casos de estudio sólidos en las siguientes.
+					</p>
+					<div class="button-row">
+						<a class="button" href="#projects">Ver proyectos</a>
+						<a class="button button-secondary" href="#contact">Contactar</a>
+					</div>
+				</div>
+
+				<aside class="panel hero-panel" aria-label="Dirección del portfolio">
+					<div class="stack-list">
+						<div class="meta-block">
+							<span class="meta-label">Posicionamiento</span>
+							<p class="meta-value">
+								Building scalable business systems and automation tools.
+							</p>
+						</div>
+						<div class="meta-block">
+							<span class="meta-label">Dirección visual</span>
+							<p class="meta-value">
+								Dark mode, layout sobrio, contraste alto y componentes reutilizables para casos
+								de estudio.
+							</p>
+						</div>
+						<div class="meta-block">
+							<span class="meta-label">Stack base</span>
+							<ul class="pill-list">
+								<li>Astro</li>
+								<li>React</li>
+								<li>Tailwind CSS</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="metric">
+						<span class="metric-label">Objetivo de esta fase</span>
+						<span class="metric-value">Base lista</span>
+						<p class="muted-note">
+							Home inicial con identidad profesional, SEO básico y estructura preparada para
+							proyectos reales.
+						</p>
+					</div>
+				</aside>
+			</div>
+		</section>
+
+		<section id="projects" class="section container" aria-labelledby="projects-title">
+			<span class="section-anchor" aria-hidden="true"></span>
+			<div class="section-heading">
+				<span class="eyebrow">Selected Work</span>
+				<h2 id="projects-title" class="title-section">La home ya apunta a los proyectos correctos.</h2>
+				<p class="section-copy">
+					Todavía no hay páginas de detalle en esta fase, pero el portfolio ya marca la jerarquía:
+					un proyecto principal, un caso de versatilidad y una pieza orientada a captación.
+				</p>
+			</div>
+
+			<div class="card-grid">
+				{projects.map((project) => (
+					<article class="panel project-card">
+						<div class="project-kicker">
+							<span>{project.name}</span>
+							<span>{project.status}</span>
+						</div>
+						<p class="card-copy">{project.description}</p>
+						<ul class="pill-list">
+							{project.stack.map((item) => (
+								<li>{item}</li>
+							))}
+						</ul>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="section container" aria-labelledby="thinking-title">
+			<div class="section-heading">
+				<span class="eyebrow">Cómo Pienso</span>
+				<h2 id="thinking-title" class="title-section">La narrativa ya vende criterio, no solo ejecución.</h2>
+				<p class="section-copy">
+					Esta sección ya deja instalado el ángulo correcto para la siguiente fase: explicar
+					cómo abordas problemas, estructuras proyectos y eliges tecnologías.
+				</p>
+			</div>
+
+			<div class="card-grid">
+				{principles.map((principle) => (
+					<article class="panel principle-card">
+						<h3 class="card-title">{principle.title}</h3>
+						<p class="card-copy">{principle.copy}</p>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section id="contact" class="section container" aria-labelledby="contact-title">
+			<span class="section-anchor" aria-hidden="true"></span>
+			<div class="panel contact-panel">
+				<div class="section-heading">
+					<span class="eyebrow">Contacto</span>
+					<h2 id="contact-title" class="title-section">Base lista para conectar con oportunidades reales.</h2>
+					<p class="section-copy">
+						La siguiente fase puede incorporar email, LinkedIn, GitHub y páginas internas de
+						proyectos. Por ahora, esta sección deja el ancla de navegación y el tono del cierre.
+					</p>
+				</div>
+
+				<ul class="compact-list">
+					<li>CTA principal ya definido en el hero.</li>
+					<li>Estructura preparada para agregar enlaces reales sin rehacer el layout.</li>
+					<li>SEO básico y dirección visual consistentes desde la primera pantalla.</li>
+				</ul>
+			</div>
+		</section>
+	</main>
+</Layout>
