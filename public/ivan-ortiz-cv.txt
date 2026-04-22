@@ -1,0 +1,27 @@
+IVAN ORTIZ
+Fullstack Developer
+
+Contacto
+Telefono: +595 986 805831
+Email: ortiz.ivan.dev@gmail.com
+LinkedIn: https://www.linkedin.com/in/ortiz-ivan08/
+GitHub: https://github.com/ortiz-ivan
+
+Perfil
+Desarrollador fullstack enfocado en sistemas de gestion, automatizacion e integraciones para operaciones reales.
+Conecto negocio, arquitectura y producto para construir soluciones mantenibles.
+
+Experiencia
+Airam | Desarrollador Fullstack | Febrero 2026 - Actualidad
+- Desarrollo de APIs REST con Java y Spring, separadas por capas y DTOs.
+- Optimizacion de consultas SQL en vistas criticas, bajando respuestas de ~3s a ~1s.
+- Integracion y mantenimiento de endpoints clave, incluyendo SIFEN para facturacion electronica.
+- Evolucion de modelos en PostgreSQL y apoyo en frontend sobre React y Angular.
+
+Stack
+Java, Spring, PostgreSQL, React, Angular, Django, Docker
+
+Proyectos
+- Kairos: sistema de gestion empresarial con control de ventas, inventario, reportes y roles.
+- Home Manager: sistema de gestion del hogar con control de gastos, inventario y compras.
+- Kairos Web: landing enfocada en captacion de clientes y validacion comercial del producto.

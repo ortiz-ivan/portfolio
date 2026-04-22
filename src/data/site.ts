@@ -67,9 +67,9 @@ export const heroContent: HeroContent = {
 	name: 'Iván Ortiz',
 	role: 'Fullstack Developer',
 	positioning: 'Fullstack Developer (Java + Angular)',
-	subtitle: 'Desarrollo sistemas de gestion y automatizacion enfocados en negocios reales.',
+	subtitle: 'Desarrollo sistemas de gestion y automatizacion para operaciones reales.',
 	narrative:
-		'Diseño y desarrollo sistemas que resuelven problemas reales de negocio, desde la arquitectura hasta la implementacion.',
+		'Conecto negocio, arquitectura y producto para construir soluciones mantenibles.',
 	primaryCta: {
 		label: 'Ver proyectos',
 		href: '#projects'
@@ -82,55 +82,51 @@ export const heroContent: HeroContent = {
 
 export const thinkingSection: ThinkingSection = {
 	kicker: 'Cómo pienso como desarrollador',
-	title: 'Trabajo desde el problema, estructuro con criterio y tomo decisiones orientadas a producto real.',
+	title: 'Pienso desde el problema y ejecuto con foco en producto real.',
 	intro:
-		'Esta sección refleja cómo abordo el desarrollo de sistemas: entender el negocio, traducirlo a arquitectura y construir soluciones mantenibles y escalables.',
+		'Asi abordo el desarrollo: entender el negocio, ordenar la arquitectura y ejecutar con criterio.',
 
 	principles: [
 		{
 			title: 'Cómo abordo problemas',
 			copy:
-				'Analizo el flujo real del negocio antes de escribir código. Identifico fricciones operativas y las convierto en requisitos funcionales claros que guían el diseño del sistema.'
+				'Analizo el flujo real antes de escribir codigo y convierto fricciones operativas en requisitos claros.'
 		},
 		{
 			title: 'Cómo estructuro proyectos',
 			copy:
-				'Diseño sistemas modulares con separación clara de responsabilidades, pensando en escalabilidad y mantenimiento. Prioritizo arquitecturas que soporten crecimiento sin reescrituras constantes.'
+				'Diseño sistemas modulares, con responsabilidades claras y una base que soporte crecimiento sin reescrituras.'
 		},
 		{
 			title: 'Cómo decido tecnologías',
 			copy:
-				'El stack se define por contexto, no por preferencia. Elijo herramientas que reduzcan tiempo de entrega, simplifiquen mantenimiento y se adapten a la complejidad real del producto.'
+				'Elijo tecnologias por contexto: velocidad de entrega, mantenimiento simple y ajuste al problema real.'
 		}
 	]
 };
 
 export const projectSection = {
 	kicker: 'Proyectos seleccionados',
-	title: 'Proyectos.',
+	title: 'Proyectos seleccionados.',
 	intro:
-		'Diseño y desarrollo de sistemas fullstack orientados a negocio, abarcando gestión de ventas, inventario y automatización de procesos. Cada proyecto refleja decisiones técnicas orientadas a escalabilidad, mantenibilidad y uso en entornos reales.'
+		'Sistemas fullstack orientados a negocio, con foco en gestion, automatizacion y decisiones tecnicas sostenibles.'
 };
 
 export const experienceSection: ExperienceSection = {
 	kicker: 'Experiencia',
-	title: 'Experiencia construyendo y optimizando sistemas empresariales.',
+	title: 'Experiencia construyendo sistemas empresariales.',
 	items: [
 		{
 			company: 'Airam',
 			role: 'Desarrollador Fullstack',
 			period: 'Febrero 2026 – Actualidad',
 			description:
-				'Desarrollo y mantenimiento de sistemas empresariales utilizados en entornos reales, con foco en backend robusto, integración de servicios y optimización de rendimiento.',
+				'Desarrollo y mantengo sistemas empresariales con foco en backend, integraciones y rendimiento.',
 			responsibilities: [
-				'Desarrollo de APIs REST con Java y Spring bajo arquitectura MVC, utilizando DTOs y separación por capas.',
-				'Optimización de consultas SQL reduciendo tiempos de respuesta de ~3s a ~1s en vistas críticas de productos.',
-				'Implementación y mantenimiento de endpoints clave como la integración con SIFEN para facturación electrónica.',
-				'Diseño y evolución de modelos de datos en PostgreSQL, incluyendo normalización, índices y patrones como supertype/subtype.',
-				'Resolución de tickets con autonomía técnica y propuesta activa de mejoras en arquitectura y rendimiento.',
-				'Desarrollo de vistas completas en frontend e integración consistente con backend.',
-				'Participación en migración del frontend hacia Angular.',
-				'Trabajo en entornos múltiples (desarrollo, testing) utilizando Docker y herramientas de gestión de base de datos.'
+				'Desarrollo de APIs REST con Java y Spring, separadas por capas y DTOs.',
+				'Optimizacion de consultas SQL en vistas criticas, bajando respuestas de ~3s a ~1s.',
+				'Integracion y mantenimiento de endpoints clave, incluyendo SIFEN para facturacion electronica.',
+				'Evolucion de modelos en PostgreSQL y apoyo en frontend sobre React y Angular.'
 			],
 			tech: ['Java', 'Spring', 'PostgreSQL', 'React', 'Angular', 'Django', 'Docker']
 		}
@@ -139,34 +135,40 @@ export const experienceSection: ExperienceSection = {
 
 export const contactSection: ContactSection = {
 	kicker: 'Contacto',
-	title: 'Abierto a oportunidades donde el desarrollo impacte productos reales y sistemas escalables.',
+	title: 'Abierto a oportunidades en productos reales y sistemas escalables.',
 	intro:
-		'Este espacio reúne los canales directos para conversar sobre desarrollo fullstack, arquitectura de software y automatización de procesos.',
+		'Canales directos para conversar sobre desarrollo fullstack y arquitectura de software.',
 
 	items: [
+		{
+			label: 'Telefono',
+			value: '+595 986 805831',
+			href: 'tel:+595986805831',
+			description: 'Llamadas o contacto directo por telefono.'
+		},
 		{
 			label: 'LinkedIn',
 			value: 'Ivan Ortiz',
 			href: 'https://www.linkedin.com/in/ortiz-ivan08/',
-			description: 'Perfil profesional orientado a desarrollo fullstack y construcción de sistemas.'
+			description: 'Perfil profesional y recorrido tecnico.'
 		},
 		{
 			label: 'Email',
-			value: 'ivanzitro18@gmail.com',
-			href: 'mailto:ivanzitro18@gmail.com',
-			description: 'Contacto directo para propuestas laborales, proyectos o colaboraciones técnicas.'
+			value: 'ortiz.ivan.dev@gmail.com',
+			href: 'mailto:ortiz.ivan.dev@gmail.com',
+			description: 'Contacto directo para propuestas y colaboraciones.'
 		},
 		{
 			label: 'GitHub',
 			value: 'ortiz-ivan',
 			href: 'https://github.com/ortiz-ivan',
-			description: 'Repositorio de proyectos y evolución técnica en sistemas fullstack.'
+			description: 'Proyectos y evolucion tecnica.'
 		}
 	]
 };
 
 export const footerContent: FooterContent = {
-	copy: 'Iván Ortiz Fullstack Developer enfocado en sistemas de gestion y automatizacion.',
+	copy: 'Iván Ortiz, Fullstack Developer enfocado en sistemas de gestion y automatizacion.',
 	links: [
 		{ label: 'Proyectos', href: '#projects' },
 		{ label: 'Experiencia', href: '#experience' },
