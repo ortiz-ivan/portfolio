@@ -33,6 +33,21 @@ export interface ContactItem {
 	description: string;
 }
 
+export interface ExperienceItem {
+	company: string;
+	role: string;
+	period: string;
+	description: string;
+	responsibilities: string[];
+	tech: string[];
+}
+
+export interface ExperienceSection {
+	kicker: string;
+	title: string;
+	items: ExperienceItem[];
+}
+
 export interface ContactSection {
 	kicker: string;
 	title: string;
@@ -97,6 +112,31 @@ export const projectSection = {
 		'Diseño y desarrollo de sistemas fullstack orientados a negocio, abarcando gestión de ventas, inventario y automatización de procesos. Cada proyecto refleja decisiones técnicas orientadas a escalabilidad, mantenibilidad y uso en entornos reales.'
 };
 
+export const experienceSection: ExperienceSection = {
+	kicker: 'Experiencia',
+	title: 'Experiencia construyendo y optimizando sistemas empresariales.',
+	items: [
+		{
+			company: 'Airam',
+			role: 'Desarrollador Fullstack',
+			period: 'Febrero 2026 – Actualidad',
+			description:
+				'Desarrollo y mantenimiento de sistemas empresariales utilizados en entornos reales, con foco en backend robusto, integración de servicios y optimización de rendimiento.',
+			responsibilities: [
+				'Desarrollo de APIs REST con Java y Spring bajo arquitectura MVC, utilizando DTOs y separación por capas.',
+				'Optimización de consultas SQL reduciendo tiempos de respuesta de ~3s a ~1s en vistas críticas de productos.',
+				'Implementación y mantenimiento de endpoints clave como la integración con SIFEN para facturación electrónica.',
+				'Diseño y evolución de modelos de datos en PostgreSQL, incluyendo normalización, índices y patrones como supertype/subtype.',
+				'Resolución de tickets con autonomía técnica y propuesta activa de mejoras en arquitectura y rendimiento.',
+				'Desarrollo de vistas completas en frontend e integración consistente con backend.',
+				'Participación en migración del frontend hacia Angular.',
+				'Trabajo en entornos múltiples (desarrollo, testing) utilizando Docker y herramientas de gestión de base de datos.'
+			],
+			tech: ['Java', 'Spring', 'PostgreSQL', 'React', 'Angular', 'Django', 'Docker']
+		}
+	]
+};
+
 export const contactSection: ContactSection = {
 	kicker: 'Contacto',
 	title: 'Abierto a oportunidades donde el desarrollo impacte productos reales y sistemas escalables.',
@@ -129,6 +169,7 @@ export const footerContent: FooterContent = {
 	copy: 'Iván Ortiz Fullstack Developer enfocado en sistemas de gestion y automatizacion.',
 	links: [
 		{ label: 'Proyectos', href: '#projects' },
+		{ label: 'Experiencia', href: '#experience' },
 		{ label: 'Como pienso', href: '#thinking' },
 		{ label: 'Contacto', href: '#contact' }
 	]

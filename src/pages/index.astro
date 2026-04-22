@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import { projects } from '../data/projects';
 import {
 	contactSection,
+	experienceSection,
 	footerContent,
 	heroContent,
 	projectSection,
@@ -100,6 +101,41 @@ const contactIcons: Record<string, { viewBox: string; path: string }> = {
 			<div class="card-grid">
 				{featuredProjects.map((project) => (
 					<ProjectCard project={project} />
+				))}
+			</div>
+		</section>
+
+		<section id="experience" class="section container" aria-labelledby="experience-title">
+			<div class="section-heading">
+				<span class="eyebrow">{experienceSection.kicker}</span>
+				<h2 id="experience-title" class="title-section">{experienceSection.title}</h2>
+			</div>
+
+			<div class="experience-grid">
+				{experienceSection.items.map((item) => (
+					<article class="panel experience-card">
+						<div class="experience-header">
+							<div>
+								<p class="experience-company">{item.company}</p>
+								<h3 class="card-title">{item.role}</h3>
+							</div>
+							<span class="experience-period">{item.period}</span>
+						</div>
+
+						<p class="card-copy">{item.description}</p>
+
+						<ul class="compact-list experience-list">
+							{item.responsibilities.map((responsibility) => (
+								<li>{responsibility}</li>
+							))}
+						</ul>
+
+						<ul class="pill-list">
+							{item.tech.map((tech) => (
+								<li>{tech}</li>
+							))}
+						</ul>
+					</article>
 				))}
 			</div>
 		</section>
