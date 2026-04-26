@@ -7,10 +7,12 @@ export interface HeroContent {
 	primaryCta: {
 		label: string;
 		href: string;
+		download?: boolean;
 	};
 	secondaryCta: {
 		label: string;
 		href: string;
+		download?: boolean;
 	};
 }
 
@@ -75,8 +77,9 @@ export const heroContent: HeroContent = {
 		href: '#projects'
 	},
 	secondaryCta: {
-		label: 'Contactar',
-		href: '#contact'
+		label: 'Descargar CV',
+		href: '/ivan-ortiz-cv.txt',
+		download: true
 	}
 };
 

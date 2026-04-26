@@ -52,17 +52,26 @@ const contactIcons: Record<string, { viewBox: string; path: string }> = {
 					</p>
 					<div class="button-row">
 						<a class="button" href={heroContent.primaryCta.href}>{heroContent.primaryCta.label}</a>
-						<a class="button button-secondary" href={heroContent.secondaryCta.href}
-							>{heroContent.secondaryCta.label}</a
+						<a
+							class="button button-secondary"
+							href={heroContent.secondaryCta.href}
+							download={heroContent.secondaryCta.download}
+						>
+							{heroContent.secondaryCta.label}</a
 						>
 					</div>
 				</div>
 
 				<aside class="panel hero-panel" aria-label="Dirección del portfolio">
 					<div class="stack-list">
-						<div class="meta-block">
-							<span class="meta-label">Especialidad</span>
-							<p class="meta-value">Sistemas de gestion, automatizacion e integraciones para negocio.</p>
+						<div class="hero-panel-brand">
+							<span class="hero-panel-brand-mark">
+								<img src="/logo_final.png" alt="Logo Gemi" width="96" height="96" />
+							</span>
+							<div class="hero-panel-brand-copy">
+								<span class="meta-label">Identidad y especialidad</span>
+								<p class="meta-value">Acompaño con un enfoque en sistemas de gestion, automatizacion e integraciones para negocio.</p>
+							</div>
 						</div>
 						<div class="meta-block">
 							<span class="meta-label">Stack base</span>

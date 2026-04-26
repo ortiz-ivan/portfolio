@@ -213,7 +213,7 @@ export const projects: ProjectEntry[] = [
 		},
 		links: [
 			{ label: 'Demo', href: '#', kind: 'demo', available: false },
-			{ label: 'GitHub', href: '#', kind: 'github', available: false },
+			{ label: 'GitHub', href: 'https://github.com/ortiz-ivan/home-manager', kind: 'github', available: true },
 			{ label: 'Caso de estudio', href: '/projects/home-manager', kind: 'case-study', available: true }
 		],
 		images: [
