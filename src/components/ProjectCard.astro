@@ -12,8 +12,6 @@ const primaryLink =
 	project.links.find((link) => link.available) ??
 	project.links[0];
 const secondaryLinks = project.links.filter((link) => link !== primaryLink);
-const visibleTech = project.tech.slice(0, 3);
-const remainingTechCount = Math.max(project.tech.length - visibleTech.length, 0);
 ---
 
 <article class:list={["panel", "project-card", project.isFeatured && 'project-card-featured']}>
@@ -30,20 +28,13 @@ const remainingTechCount = Math.max(project.tech.length - visibleTech.length, 0)
 		<p class="project-card-caption">{coverImage?.caption}</p>
 	</div>
 
-	<div class="project-kicker">
+	<!-- <div class="project-kicker">
 		<span>{project.name}</span>
 		<span>{project.isFeatured ? 'Proyecto principal' : `Prioridad ${project.priority}`}</span>
-	</div>
+	</div> -->
 
-	<h3 class="card-title">{project.summary}</h3>
-	<p class="card-copy">{project.highlight}</p>
-
-	<ul class="pill-list">
-		{visibleTech.map((item) => (
-			<li>{item}</li>
-		))}
-		{remainingTechCount > 0 && <li class="pill-list-more">+{remainingTechCount}</li>}
-	</ul>
+	<h3 class="card-title">{project.name}</h3>
+	<p class="card-copy">{project.summary}</p>
 
 	<div class="project-card-actions">
 		{primaryLink && (

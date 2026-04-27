@@ -23,5 +23,5 @@ Java, Spring, PostgreSQL, React, Angular, Django, Docker
 
 Proyectos
 - Kairos: sistema de gestion empresarial con control de ventas, inventario, reportes y roles.
-- Home Manager: sistema de gestion del hogar con control de gastos, inventario y compras.
+- DomusOps: sistema de gestion del hogar con control de gastos, inventario y compras.
 - Kairos Web: landing enfocada en captacion de clientes y validacion comercial del producto.

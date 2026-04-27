@@ -142,85 +142,85 @@ export const projects: ProjectEntry[] = [
 		]
 	},
 	{
-		slug: 'home-manager',
-		name: 'Home Manager',
+		slug: 'domusops',
+		name: 'DomusOps',
 		priority: 2,
 		eyebrow: 'Sistema de organizacion domestica',
 		isFeatured: false,
 		summary:
-			'Sistema de gestion del hogar con control de gastos, inventario y planificacion de compras.',
+			'Sistema de gestion domestica con inventario, compras y control financiero mensual en una sola interfaz.',
 		longDescription:
-			'Proyecto orientado a organizar informacion domestica y automatizar decisiones recurrentes a partir de reglas de negocio simples pero utiles.',
-		highlight: 'Caso para mostrar versatilidad, modelado de datos y orden operativo.',
-		tech: ['Django', 'React', 'Data modeling', 'Automation flows'],
+			'Proyecto orientado a centralizar inventario, compras y finanzas del hogar mediante reglas configurables, lectura mensual del gasto y una operacion cotidiana mas ordenada.',
+		highlight: 'Caso para mostrar modelado de datos, reglas configurables y una operacion domestica mas visible.',
+		tech: ['Django', 'Django REST Framework', 'React', 'Vite', 'Data modeling', 'Business rules'],
 		features: [
-			'Seguimiento de gastos y categorias para visualizar consumo mensual.',
-			'Inventario domestico con alertas para productos recurrentes.',
-			'Planificacion de compras a partir de necesidades y frecuencia de uso.'
+			'Dashboard operativo con alertas de stock bajo, productos proximos a vencer y gasto mensual estimado.',
+			'Modulo financiero con ingresos, gastos fijos, gastos variables, eventos auditables y cierre mensual.',
+			'Configuracion dinamica de categorias, unidades, alertas, moneda y buckets presupuestarios para adaptar reglas sin tocar codigo.'
 		],
 		technicalDecisions: [
-			'Estructura de datos pensada para relacionar gastos, stock y compras futuras.',
-			'Logica de negocio enfocada en simplificar tareas repetitivas y reducir olvidos.',
-			'Interfaces orientadas a lectura rapida y actualizacion frecuente de datos.'
+			'Separo el dominio en configuracion, compras, gastos y reportes para mantener entidades y servicios acotados pero conectados.',
+			'La configuracion operativa se centraliza en un singleton editable para que categorias, ratios y umbrales no dependan de hardcodes.',
+			'Los reportes combinan estimaciones de inventario, gastos reales e ingresos para dar una lectura mensual util sin sobredimensionar el sistema.'
 		],
 		results: [
-			'Expone capacidad para modelar datos alrededor de rutinas cotidianas y decisiones recurrentes.',
-			'Muestra criterio para convertir necesidades comunes en un flujo digital mas claro.',
-			'Refuerza versatilidad mas alla del dominio empresarial estricto.'
+			'Expone capacidad para modelar datos cotidianos con impacto operativo real en inventario, compras y finanzas.',
+			'Muestra criterio para convertir reglas domesticas simples en dashboards, alertas y cierres mensuales accionables.',
+			'Refuerza versatilidad al resolver un problema no corporativo con el mismo nivel de estructura que un sistema de negocio.'
 		],
 		caseStudy: {
 			problem: {
-				title: 'Ordenar gastos, stock y compras en un flujo domestico util.',
+				title: 'Unificar inventario, compras y finanzas en un flujo domestico realmente util.',
 				description:
-					'La necesidad principal era evitar desorden operativo en la gestion del hogar y dar visibilidad a lo que se consume, se compra y se repone.',
+					'La necesidad principal era evitar informacion fragmentada entre stock, compras y gastos, y construir una lectura mensual clara para decidir mejor.',
 				points: [
-					'Los gastos no estaban ligados a categorias ni a contexto temporal claro.',
-					'El inventario de productos recurrentes se controlaba de manera improvisada.',
-					'La planificacion de compras dependia demasiado de memoria o notas dispersas.'
+					'El inventario y los gastos del hogar se seguian con poca relacion entre si.',
+					'No habia una vista mensual que mezclara ingresos, compromisos fijos y consumo variable.',
+					'Las reglas de categorias, alertas y presupuesto quedaban demasiado dependientes de ajustes manuales.'
 				]
 			},
 			solution: {
-				title: 'Diseñar un sistema simple pero util para decisiones repetitivas.',
+				title: 'Diseñar un sistema compacto, configurable y orientado a lectura cotidiana.',
 				description:
-					'La solucion priorizo claridad, actualizacion rapida y una relacion coherente entre gastos, inventario y compras futuras.',
+					'La solucion priorizo una operacion diaria simple, una capa de configuracion flexible y reportes que conectan inventario con lectura financiera mensual.',
 				points: [
-					'Registro centralizado de gastos y categorias para lectura mensual.',
-					'Inventario domestico con foco en frecuencia de uso y reposicion.',
-					'Planificacion asistida de compras en base al estado del stock.'
+					'Inventario con categorias, frecuencias de uso, stock minimo y alertas operativas.',
+					'Modulo financiero con ingresos, gastos fijos, gastos variables, timeline de eventos y cierre mensual.',
+					'Reportes con composicion del gasto, tendencia historica y lectura de la regla 50/30/20.'
 				]
 			},
 			architecture: {
-				title: 'Arquitectura ligera con foco en datos y experiencia de uso.',
+				title: 'Arquitectura ligera por dominios con configuracion centralizada.',
 				description:
-					'El proyecto necesitaba una estructura flexible, suficiente para sostener reglas utiles sin sobredimensionar el sistema.',
+					'El proyecto necesitaba una estructura flexible, capaz de sostener reglas utiles y evolucionar sin convertir la operacion diaria en una complejidad innecesaria.',
 				layers: [
 					{
 						name: 'Modelado',
-						description: 'Entidades que relacionan consumo, categorias, stock y compras.'
+						description: 'Entidades para productos, ingresos, gastos, eventos financieros, cierres mensuales y configuracion operativa.'
 					},
 					{
 						name: 'Logica',
-						description: 'Reglas para alertas, necesidades de reposicion y lectura de patrones de gasto.'
+						description: 'Servicios para resumen mensual, proyeccion de gasto, buckets presupuestarios, auditoria de movimientos y cierres automaticos.'
 					},
 					{
 						name: 'Interfaz',
-						description: 'Pantallas pensadas para carga rapida y lectura cotidiana.'
+						description: 'Dashboard, paneles de gastos, reportes y configuracion pensados para consulta rapida y actualizacion frecuente.'
 					}
 				]
 			},
 			technologiesNote:
-				'El stack se usa aqui como soporte para logica de negocio y organizacion de datos, no como fin en si mismo.'
+				'El stack se usa aqui para sostener reglas de negocio configurables y una experiencia de uso clara; la tecnologia acompaña al modelo operativo, no lo define.'
 		},
 		links: [
 			{ label: 'Demo', href: '#', kind: 'demo', available: false },
-			{ label: 'GitHub', href: 'https://github.com/ortiz-ivan/home-manager', kind: 'github', available: true },
-			{ label: 'Caso de estudio', href: '/projects/home-manager', kind: 'case-study', available: true }
+			{ label: 'GitHub', href: 'https://github.com/ortiz-ivan/domusops', kind: 'github', available: true },
+			{ label: 'Caso de estudio', href: '/projects/domusops', kind: 'case-study', available: true }
 		],
 		images: [
 			{
 				role: 'cover',
-				alt: 'Vista general de Home Manager',
-				caption: 'Resumen visual del control de gastos, inventario y compras.',
+				alt: 'Vista general de DomusOps',
+				caption: 'Resumen visual del dashboard domestico con inventario, gastos y reportes mensuales.',
 				status: 'planned'
 			}
 		]
