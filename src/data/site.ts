@@ -4,6 +4,10 @@ export interface HeroContent {
 	positioning: string;
 	subtitle: string;
 	narrative: string;
+	notes: string[];
+	panelSummary: string;
+	focus: string;
+	focusNote: string;
 	primaryCta: {
 		label: string;
 		href: string;
@@ -16,23 +20,17 @@ export interface HeroContent {
 	};
 }
 
-export interface ThinkingPrinciple {
-	title: string;
-	copy: string;
-}
-
-export interface ThinkingSection {
-	kicker: string;
-	title: string;
-	intro: string;
-	principles: ThinkingPrinciple[];
-}
-
 export interface ContactItem {
 	label: string;
 	value: string;
-	href: string;
+	href?: string;
 	description: string;
+	protected?: {
+		scheme: 'mailto' | 'tel';
+		parts: string[];
+		displayParts: string[];
+		actionLabel: string;
+	};
 }
 
 export interface ExperienceItem {
@@ -68,44 +66,28 @@ export interface FooterContent {
 export const heroContent: HeroContent = {
 	name: 'Iván Ortiz',
 	role: 'Fullstack Developer',
-	positioning: 'Fullstack Developer (Java + Angular)',
-	subtitle: 'Desarrollo sistemas de gestion y automatizacion para operaciones reales.',
+	positioning: 'Sobre mi',
+	subtitle:
+		'Soy desarrollador fullstack y disfruto construir software util, claro y mantenible para problemas reales.',
 	narrative:
-		'Conecto negocio, arquitectura y producto para construir soluciones mantenibles.',
+		'Actualmente trabajo en sistemas empresariales donde backend, integraciones, datos y producto se cruzan todos los dias. Me interesa entender primero como funciona la operacion antes de decidir la forma del sistema.',
+	notes: [
+		
+	],
+	panelSummary:
+		'Trabajo con foco en productos internos, automatizacion e integraciones que impactan el dia a dia de una operacion.',
+	focus: 'Backend + integraciones',
+	focusNote:
+		'Java, Spring, Angular y PostgreSQL forman hoy mi base para entregar soluciones utiles sin complejidad innecesaria.',
 	primaryCta: {
 		label: 'Ver proyectos',
 		href: '#projects'
 	},
 	secondaryCta: {
 		label: 'Descargar CV',
-		href: '/ivan-ortiz-cv.txt',
+		href: '/ivanortiz_cv_2026.pdf',
 		download: true
 	}
-};
-
-export const thinkingSection: ThinkingSection = {
-	kicker: 'Cómo pienso como desarrollador',
-	title: 'Pienso desde el problema y ejecuto con foco en producto real.',
-	intro:
-		'Asi abordo el desarrollo: entender el negocio, ordenar la arquitectura y ejecutar con criterio.',
-
-	principles: [
-		{
-			title: 'Cómo abordo problemas',
-			copy:
-				'Analizo el flujo real antes de escribir codigo y convierto fricciones operativas en requisitos claros.'
-		},
-		{
-			title: 'Cómo estructuro proyectos',
-			copy:
-				'Diseño sistemas modulares, con responsabilidades claras y una base que soporte crecimiento sin reescrituras.'
-		},
-		{
-			title: 'Cómo decido tecnologías',
-			copy:
-				'Elijo tecnologias por contexto: velocidad de entrega, mantenimiento simple y ajuste al problema real.'
-		}
-	]
 };
 
 export const projectSection = {
@@ -145,9 +127,14 @@ export const contactSection: ContactSection = {
 	items: [
 		{
 			label: 'Telefono',
-			value: '+595 986 805831',
-			href: 'tel:+595986805831',
-			description: 'Llamadas o contacto directo por telefono.'
+			value: 'Mostrar telefono',
+			description: 'Llamadas o contacto directo por telefono.',
+			protected: {
+				scheme: 'tel',
+				parts: ['+595', '986', '805', '831'],
+				displayParts: ['+595', '986', '805', '831'],
+				actionLabel: 'Mostrar y abrir telefono'
+			}
 		},
 		{
 			label: 'LinkedIn',
@@ -157,9 +144,14 @@ export const contactSection: ContactSection = {
 		},
 		{
 			label: 'Email',
-			value: 'ortiz.ivan.dev@gmail.com',
-			href: 'mailto:ortiz.ivan.dev@gmail.com',
-			description: 'Contacto directo para propuestas y colaboraciones.'
+			value: 'Mostrar email',
+			description: 'Contacto directo para propuestas y colaboraciones.',
+			protected: {
+				scheme: 'mailto',
+				parts: ['ortiz', '.', 'ivan', '.', 'dev', '@', 'gmail', '.', 'com'],
+				displayParts: ['ortiz', '.', 'ivan', '.', 'dev', '@', 'gmail', '.', 'com'],
+				actionLabel: 'Mostrar y abrir email'
+			}
 		},
 		{
 			label: 'GitHub',
@@ -175,7 +167,6 @@ export const footerContent: FooterContent = {
 	links: [
 		{ label: 'Proyectos', href: '#projects' },
 		{ label: 'Experiencia', href: '#experience' },
-		{ label: 'Como pienso', href: '#thinking' },
 		{ label: 'Contacto', href: '#contact' }
 	]
 };

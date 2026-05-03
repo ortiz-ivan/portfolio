@@ -1,4 +1,5 @@
 ---
+import type { HeroContent } from '../data/site';
 import ProjectCard from '../components/ProjectCard.astro';
 import Layout from '../layouts/Layout.astro';
 import { projects } from '../data/projects';
@@ -7,10 +8,10 @@ import {
 	experienceSection,
 	footerContent,
 	heroContent,
-	projectSection,
-	thinkingSection
+	projectSection
 } from '../data/site';
 
+const hero: HeroContent = heroContent;
 const featuredProjects = [...projects].sort((left, right) => left.priority - right.priority);
 const heroStack = ['Java', 'Spring', 'Angular', 'PostgreSQL', 'Docker'];
 const contactIcons: Record<string, { viewBox: string; path: string }> = {
@@ -41,40 +42,45 @@ const contactIcons: Record<string, { viewBox: string; path: string }> = {
 		<section class="hero section container" aria-label="Presentación principal">
 			<div class="hero-grid">
 				<div class="hero-copy">
-					<span class="eyebrow">{heroContent.positioning}</span>
-					<h1 class="title-display">{heroContent.name}</h1>
-					<p class="hero-role">{heroContent.role}</p>
+					<span class="eyebrow">{hero.positioning}</span>
+					<h1 class="title-display">{hero.name}</h1>
+					<p class="hero-role">{hero.role}</p>
 					<p class="lead">
-						{heroContent.subtitle}
+						{hero.subtitle}
 					</p>
 					<p class="body-copy">
-						{heroContent.narrative}
+						{hero.narrative}
 					</p>
+					<ul class="compact-list hero-about-list">
+						{hero.notes.map((note: string) => (
+							<li>{note}</li>
+						))}
+					</ul>
 					<div class="button-row">
-						<a class="button" href={heroContent.primaryCta.href}>{heroContent.primaryCta.label}</a>
+						<a class="button" href={hero.primaryCta.href}>{hero.primaryCta.label}</a>
 						<a
 							class="button button-secondary"
-							href={heroContent.secondaryCta.href}
-							download={heroContent.secondaryCta.download}
+							href={hero.secondaryCta.href}
+							download={hero.secondaryCta.download}
 						>
-							{heroContent.secondaryCta.label}</a
+							{hero.secondaryCta.label}</a
 						>
 					</div>
 				</div>
 
-				<aside class="panel hero-panel" aria-label="Dirección del portfolio">
+				<aside class="panel hero-panel" aria-label="Resumen personal">
 					<div class="stack-list">
 						<div class="hero-panel-brand">
 							<span class="hero-panel-brand-mark">
 								<img src="/logo_final.png" alt="Logo Gemi" width="96" height="96" />
 							</span>
 							<div class="hero-panel-brand-copy">
-								<span class="meta-label">Identidad y especialidad</span>
-								<p class="meta-value">Acompaño con un enfoque en sistemas de gestion, automatizacion e integraciones para negocio.</p>
+								<span class="meta-label">Hoy en mi trabajo</span>
+								<p class="meta-value">{hero.panelSummary}</p>
 							</div>
 						</div>
 						<div class="meta-block">
-							<span class="meta-label">Stack base</span>
+							<span class="meta-label">Herramientas frecuentes</span>
 							<ul class="pill-list">
 								{heroStack.map((item) => <li>{item}</li>)}
 							</ul>
@@ -82,9 +88,9 @@ const contactIcons: Record<string, { viewBox: string; path: string }> = {
 					</div>
 
 					<div class="metric">
-						<span class="metric-label">Enfoque</span>
-						<span class="metric-value">Negocio + arquitectura</span>
-						<p class="muted-note">Menos discurso, mas sistemas utiles y decisiones claras.</p>
+						<span class="metric-label">Enfoque actual</span>
+						<span class="metric-value">{hero.focus}</span>
+						<p class="muted-note">{hero.focusNote}</p>
 					</div>
 				</aside>
 			</div>
@@ -142,25 +148,6 @@ const contactIcons: Record<string, { viewBox: string; path: string }> = {
 			</div>
 		</section>
 
-		<section id="thinking" class="section container" aria-labelledby="thinking-title">
-			<div class="section-heading">
-				<span class="eyebrow">{thinkingSection.kicker}</span>
-				<h2 id="thinking-title" class="title-section">{thinkingSection.title}</h2>
-				<p class="section-copy">
-					{thinkingSection.intro}
-				</p>
-			</div>
-
-			<div class="card-grid">
-				{thinkingSection.principles.map((principle) => (
-					<article class="panel principle-card">
-						<h3 class="card-title">{principle.title}</h3>
-						<p class="card-copy">{principle.copy}</p>
-					</article>
-				))}
-			</div>
-		</section>
-
 		<section id="contact" class="section container" aria-labelledby="contact-title">
 			<span class="section-anchor" aria-hidden="true"></span>
 			<div class="panel contact-panel">
@@ -169,7 +156,7 @@ const contactIcons: Record<string, { viewBox: string; path: string }> = {
 					<h2 id="contact-title" class="title-section">{contactSection.title}</h2>
 					<p class="section-copy">{contactSection.intro}</p>
 					<div class="contact-actions">
-						<a class="button button-secondary" href="/ivan-ortiz-cv.txt" download>
+						<a class="button button-secondary" href="/ivanortiz_cv_2026.pdf" download>
 							Descargar CV
 						</a>
 					</div>
@@ -179,17 +166,11 @@ const contactIcons: Record<string, { viewBox: string; path: string }> = {
 					{contactSection.items.map((item) => {
 						const icon = contactIcons[item.label.toLowerCase()];
 						const contactKind = item.label.toLowerCase();
-						const isExternal = item.href.startsWith('http');
+						const isProtected = Boolean(item.protected);
+						const isExternal = item.href?.startsWith('http') ?? false;
 
-						return (
-							<a
-								class="contact-item"
-								data-contact-kind={contactKind}
-								href={item.href}
-								target={isExternal ? '_blank' : undefined}
-								rel={isExternal ? 'noreferrer' : undefined}
-								role="listitem"
-							>
+						const cardContent = (
+							<>
 								<div class="contact-item-header">
 									<span class="contact-icon">
 										{icon && (
@@ -201,6 +182,37 @@ const contactIcons: Record<string, { viewBox: string; path: string }> = {
 									<span class="contact-label">{item.label}</span>
 								</div>
 								<strong class="contact-value">{item.value}</strong>
+							</>
+						);
+
+						if (isProtected && item.protected) {
+							return (
+								<button
+									type="button"
+									class="contact-item contact-item-protected"
+									data-contact-kind={contactKind}
+									data-contact-protected
+									data-contact-scheme={item.protected.scheme}
+									data-contact-parts={item.protected.parts.join('|')}
+									data-contact-display-parts={item.protected.displayParts.join('|')}
+									aria-label={item.protected.actionLabel}
+									role="listitem"
+								>
+									{cardContent}
+								</button>
+							);
+						}
+
+						return (
+							<a
+								class="contact-item"
+								data-contact-kind={contactKind}
+								href={item.href}
+								target={isExternal ? '_blank' : undefined}
+								rel={isExternal ? 'noreferrer' : undefined}
+								role="listitem"
+							>
+								{cardContent}
 							</a>
 						);
 					})}
@@ -218,3 +230,48 @@ const contactIcons: Record<string, { viewBox: string; path: string }> = {
 		</footer>
 	</main>
 </Layout>
+
+<script>
+	const decodeContactValue = (value: string) => value.split('|').join('');
+	const openProtectedContact = (scheme: string, value: string) => {
+		if (scheme === 'mailto') {
+			const gmailComposeUrl = new URL('https://mail.google.com/mail/');
+			gmailComposeUrl.searchParams.set('view', 'cm');
+			gmailComposeUrl.searchParams.set('fs', '1');
+			gmailComposeUrl.searchParams.set('to', value);
+			window.open(gmailComposeUrl.toString(), '_blank', 'noopener,noreferrer');
+			return;
+		}
+
+		window.location.href = `${scheme}:${value}`;
+	};
+
+	const protectedContacts = document.querySelectorAll('[data-contact-protected]');
+
+	for (const contact of protectedContacts) {
+		if (!(contact instanceof HTMLButtonElement)) continue;
+
+		const scheme = contact.dataset.contactScheme;
+		const parts = contact.dataset.contactParts;
+		const displayParts = contact.dataset.contactDisplayParts;
+		const valueNode = contact.querySelector('.contact-value');
+
+		if (!scheme || !parts || !displayParts || !(valueNode instanceof HTMLElement)) continue;
+
+		const decodedHrefValue = decodeContactValue(parts);
+		const decodedDisplayValue = decodeContactValue(displayParts);
+
+		contact.addEventListener('click', () => {
+			valueNode.textContent = decodedDisplayValue;
+			openProtectedContact(scheme, decodedHrefValue);
+		});
+
+		contact.addEventListener('keydown', (event) => {
+			if (event.key !== 'Enter' && event.key !== ' ') return;
+
+			event.preventDefault();
+			valueNode.textContent = decodedDisplayValue;
+			openProtectedContact(scheme, decodedHrefValue);
+		});
+	}
+</script>
