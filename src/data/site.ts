@@ -126,17 +126,6 @@ export const contactSection: ContactSection = {
 
 	items: [
 		{
-			label: 'Telefono',
-			value: 'Mostrar telefono',
-			description: 'Llamadas o contacto directo por telefono.',
-			protected: {
-				scheme: 'tel',
-				parts: ['+595', '986', '805', '831'],
-				displayParts: ['+595', '986', '805', '831'],
-				actionLabel: 'Mostrar y abrir telefono'
-			}
-		},
-		{
 			label: 'LinkedIn',
 			value: 'Ivan Ortiz',
 			href: 'https://www.linkedin.com/in/ortiz-ivan08/',
