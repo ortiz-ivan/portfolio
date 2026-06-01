@@ -4,8 +4,6 @@ export interface HeroContent {
 	subtitle: string;
 	narrative: string;
 	panelSummary: string;
-	focus: string;
-	focusNote: string;
 	primaryCta: {
 		label: string;
 		href: string;
@@ -56,14 +54,11 @@ export const heroContent: HeroContent = {
 	name: 'Iván Ortiz',
 	role: 'Fullstack Developer',
 	subtitle:
-		'Soy desarrollador fullstack y disfruto construir software util, claro y mantenible para problemas reales.',
+		'Soy desarrollador fullstack y disfruto construir software útil, claro y mantenible para problemas reales.',
 	narrative:
-		'Actualmente trabajo en sistemas empresariales donde backend, integraciones, datos y producto se cruzan todos los dias. Me interesa entender primero como funciona la operacion antes de decidir la forma del sistema.',
+		'Actualmente trabajo en sistemas empresariales donde backend, integraciones, datos y producto se cruzan todos los días. Me interesa entender primero cómo funciona la operación antes de decidir la forma del sistema.',
 	panelSummary:
-		'Trabajo con foco en productos internos, automatizacion e integraciones que impactan el dia a dia de una operacion.',
-	focus: 'Backend + integraciones',
-	focusNote:
-		'Java, Spring, Angular y PostgreSQL forman hoy mi base para entregar soluciones utiles sin complejidad innecesaria.',
+		'Trabajo con foco en productos internos, automatización e integraciones que impactan el día a día de una operación.',
 	primaryCta: {
 		label: 'Ver proyectos',
 		href: '#projects'
@@ -85,9 +80,9 @@ export const experienceSection: ExperienceSection = {
 				'Desarrollo y mantengo sistemas empresariales con foco en backend, integraciones y rendimiento.',
 			responsibilities: [
 				'Desarrollo de APIs REST con Java y Spring, separadas por capas y DTOs.',
-				'Optimizacion de consultas SQL en vistas criticas, bajando respuestas de ~3s a ~1s.',
-				'Integracion y mantenimiento de endpoints clave, incluyendo SIFEN para facturacion electronica.',
-				'Evolucion de modelos en PostgreSQL y apoyo en frontend sobre React y Angular.'
+				'Optimización de consultas SQL en vistas críticas, bajando respuestas de ~3s a ~1s.',
+				'Integración y mantenimiento de endpoints clave, incluyendo SIFEN para facturación electrónica.',
+				'Evolución de modelos en PostgreSQL y apoyo en frontend sobre React y Angular.'
 			],
 			tech: ['Java', 'Spring', 'PostgreSQL', 'React', 'Angular', 'Django', 'Docker']
 		}
@@ -101,7 +96,7 @@ export const contactSection: ContactSection = {
 			label: 'LinkedIn',
 			value: 'Ivan Ortiz',
 			href: 'https://www.linkedin.com/in/ortiz-ivan08/',
-			description: 'Perfil profesional y recorrido tecnico.'
+			description: 'Perfil profesional y recorrido técnico.'
 		},
 		{
 			label: 'Email',
@@ -118,11 +113,11 @@ export const contactSection: ContactSection = {
 			label: 'GitHub',
 			value: 'ortiz-ivan',
 			href: 'https://github.com/ortiz-ivan',
-			description: 'Proyectos y evolucion tecnica.'
+			description: 'Proyectos y evolución técnica.'
 		}
 	]
 };
 
 export const footerContent: FooterContent = {
-	copy: 'Iván Ortiz, Fullstack Developer enfocado en sistemas de gestion y automatizacion.'
+	copy: 'Iván Ortiz, Fullstack Developer enfocado en sistemas de gestión y automatización.'
 };

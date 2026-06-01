@@ -58,10 +58,10 @@ export const projects: ProjectEntry[] = [
 		priority: 1,
 		eyebrow: 'Caso de estudio principal',
 		isFeatured: true,
-		summary: 'Sistema de gestion empresarial con control de ventas, inventario, reportes y roles.',
+		summary: 'Sistema de gestión empresarial con control de ventas, inventario, reportes y roles.',
 		longDescription:
 			'Sistema completo para operaciones comerciales, pensado para centralizar ventas, stock y trazabilidad interna en una arquitectura desacoplada.',
-		highlight: 'Proyecto estrella para mostrar criterio tecnico y valor real de negocio.',
+		highlight: 'Proyecto estrella para mostrar criterio técnico y valor real de negocio.',
 		tech: ['Django REST', 'React', 'PostgreSQL', 'Roles y permisos'],
 		features: [
 			'Sistema de roles y permisos por tipo de usuario.',
@@ -71,46 +71,46 @@ export const projects: ProjectEntry[] = [
 		technicalDecisions: [
 			'Arquitectura basada en APIs REST desacopladas para separar frontend y backend.',
 			'Manejo de estado en frontend para mantener una interfaz fluida sobre flujos de negocio complejos.',
-			'Diseno modular para escalar nuevas entidades y reportes sin rehacer el sistema.'
+			'Diseño modular para escalar nuevas entidades y reportes sin rehacer el sistema.'
 		],
 		results: [
 			'Muestra capacidad para modelar un sistema con varias entidades, permisos y flujos operativos.',
 			'Demuestra criterio para separar frontend y backend sin perder consistencia en la experiencia.',
-			'Presenta una base clara para crecer hacia reportes, auditoria y nuevas areas del negocio.'
+			'Presenta una base clara para crecer hacia reportes, auditoría y nuevas áreas del negocio.'
 		],
 		caseStudy: {
 			problem: {
-				title: 'Centralizar operacion comercial dispersa en un solo sistema.',
+				title: 'Centralizar operación comercial dispersa en un solo sistema.',
 				description:
-					'El reto era organizar ventas, inventario y reportes en una unica herramienta que permitiera operar con menos friccion y mayor control.',
+					'El reto era organizar ventas, inventario y reportes en una única herramienta que permitiera operar con menos fricción y mayor control.',
 				points: [
-					'La informacion critica quedaba repartida entre procesos manuales y vistas aisladas.',
+					'La información crítica quedaba repartida entre procesos manuales y vistas aisladas.',
 					'Los permisos por rol necesitaban restringir acciones sin romper el flujo diario.',
-					'El negocio exigia trazabilidad sobre productos, clientes y movimientos de venta.'
+					'El negocio exigía trazabilidad sobre productos, clientes y movimientos de venta.'
 				]
 			},
 			solution: {
-				title: 'Construir una plataforma desacoplada, modular y orientada a operacion real.',
+				title: 'Construir una plataforma desacoplada, modular y orientada a operación real.',
 				description:
-					'La solucion se planteo como un sistema con backend API y frontend dedicado, donde cada modulo responde a una necesidad concreta del negocio.',
+					'La solución se planteó como un sistema con backend API y frontend dedicado, donde cada módulo responde a una necesidad concreta del negocio.',
 				points: [
-					'Frontend en React para gestionar interfaces dinamicas y flujos con varios estados.',
+					'Frontend en React para gestionar interfaces dinámicas y flujos con varios estados.',
 					'Backend con Django REST para encapsular reglas de negocio y exponer endpoints consistentes.',
-					'Modulos preparados para extender ventas, inventario, usuarios y reportes sin rehacer la base.'
+					'Módulos preparados para extender ventas, inventario, usuarios y reportes sin rehacer la base.'
 				]
 			},
 			architecture: {
-				title: 'Una arquitectura que separa responsabilidades y facilita evolucion.',
+				title: 'Una arquitectura que separa responsabilidades y facilita evolución.',
 				description:
-					'La estructura del proyecto se penso para aislar la logica sensible del negocio y sostener crecimiento sin acoplamientos innecesarios.',
+					'La estructura del proyecto se pensó para aislar la lógica sensible del negocio y sostener crecimiento sin acoplamientos innecesarios.',
 				layers: [
 					{
 						name: 'Frontend',
-						description: 'Interfaz en React para operaciones, formularios, tablas y navegacion por contexto de usuario.'
+						description: 'Interfaz en React para operaciones, formularios, tablas y navegación por contexto de usuario.'
 					},
 					{
 						name: 'API',
-						description: 'Capa REST con Django para exponer entidades, permisos y reglas de validacion.'
+						description: 'Capa REST con Django para exponer entidades, permisos y reglas de validación.'
 					},
 					{
 						name: 'Persistencia',
@@ -119,7 +119,7 @@ export const projects: ProjectEntry[] = [
 				]
 			},
 			technologiesNote:
-				'El stack se eligio por su equilibrio entre velocidad de desarrollo, control del dominio y capacidad de escalar un sistema de gestion con multiples modulos.'
+				'El stack se eligió por su equilibrio entre velocidad de desarrollo, control del dominio y capacidad de escalar un sistema de gestión con múltiples módulos.'
 		},
 		links: [
 			{ label: 'Demo', href: '#', kind: 'demo', available: false },
@@ -136,7 +136,7 @@ export const projects: ProjectEntry[] = [
 			{
 				role: 'dashboard',
 				alt: 'Dashboard operativo de Kairos',
-				caption: 'Captura del panel principal con metricas y accesos por rol.',
+				caption: 'Captura del panel principal con métricas y accesos por rol.',
 				status: 'planned'
 			}
 		]
@@ -145,71 +145,93 @@ export const projects: ProjectEntry[] = [
 		slug: 'domusops',
 		name: 'DomusOps',
 		priority: 2,
-		eyebrow: 'Sistema de organizacion domestica',
+		eyebrow: 'Sistema de organización doméstica',
 		isFeatured: false,
 		summary:
-			'Sistema de gestion domestica con inventario, compras y control financiero mensual en una sola interfaz.',
+			'Aplicación web personal que unifica inventario doméstico, compras planificadas, ' +
+			'gastos variables y fijos, y reportes financieros mensuales con seguimiento de la ' +
+			'regla 50/30/20, proyecciones de fin de mes y detección automática de anomalías de gasto.',
 		longDescription:
-			'Proyecto orientado a centralizar inventario, compras y finanzas del hogar mediante reglas configurables, lectura mensual del gasto y una operacion cotidiana mas ordenada.',
-		highlight: 'Caso para mostrar modelado de datos, reglas configurables y una operacion domestica mas visible.',
-		tech: ['Django', 'Django REST Framework', 'React', 'Vite', 'Data modeling', 'Business rules'],
+			'Proyecto orientado a centralizar inventario, compras y finanzas del hogar mediante reglas configurables, lectura mensual del gasto y una operación cotidiana más ordenada.',
+		highlight: 'Caso para mostrar modelado de datos, reglas configurables y una operación doméstica más visible.',
+		tech: [
+			'Django 5',
+			'Django REST Framework',
+			'PostgreSQL',
+			'React 19',
+			'TanStack Query v5',
+			'Tailwind CSS v4',
+			'Vite',
+			'Vitest',
+			'pytest'
+		],
 		features: [
-			'Dashboard operativo con alertas de stock bajo, productos proximos a vencer y gasto mensual estimado.',
-			'Modulo financiero con ingresos, gastos fijos, gastos variables, eventos auditables y cierre mensual.',
-			'Configuracion dinamica de categorias, unidades, alertas, moneda y buckets presupuestarios para adaptar reglas sin tocar codigo.'
+			'Dashboard operativo con alertas de stock bajo, productos próximos a vencer y gasto mensual estimado.',
+			'Módulo financiero con ingresos, gastos fijos, gastos variables, eventos auditables y cierre mensual.',
+			'Configuración dinámica de categorías, unidades, alertas, moneda y buckets presupuestarios para adaptar reglas sin tocar código.'
 		],
 		technicalDecisions: [
-			'Separo el dominio en configuracion, compras, gastos y reportes para mantener entidades y servicios acotados pero conectados.',
-			'La configuracion operativa se centraliza en un singleton editable para que categorias, ratios y umbrales no dependan de hardcodes.',
-			'Los reportes combinan estimaciones de inventario, gastos reales e ingresos para dar una lectura mensual util sin sobredimensionar el sistema.'
+			'Separó el dominio en configuración, compras, gastos y reportes para mantener entidades y servicios acotados pero conectados.',
+			'La configuración operativa se centraliza en un singleton editable para que categorías, ratios y umbrales no dependan de hardcodes.',
+			'Los reportes combinan estimaciones de inventario, gastos reales e ingresos para dar una lectura mensual útil sin sobredimensionar el sistema.'
 		],
 		results: [
-			'Expone capacidad para modelar datos cotidianos con impacto operativo real en inventario, compras y finanzas.',
-			'Muestra criterio para convertir reglas domesticas simples en dashboards, alertas y cierres mensuales accionables.',
-			'Refuerza versatilidad al resolver un problema no corporativo con el mismo nivel de estructura que un sistema de negocio.'
+			'Expone capacidad para modelar datos cotidianos de inventario, compras y finanzas.',
+			'Muestra criterio para convertir reglas domésticas simples en dashboards, alertas y cierres mensuales accionables.',
+			'Refuerza versatilidad al resolver un problema de estructura equivalente al de un sistema de negocio.'
 		],
 		caseStudy: {
 			problem: {
-				title: 'Unificar inventario, compras y finanzas en un flujo domestico realmente util.',
+				title: 'Unificar inventario, compras y finanzas en una lectura mensual realmente útil.',
 				description:
-					'La necesidad principal era evitar informacion fragmentada entre stock, compras y gastos, y construir una lectura mensual clara para decidir mejor.',
+					'La necesidad principal era evitar información fragmentada entre stock, compras y gastos, ' +
+					'y construir una lectura mensual clara para decidir mejor.',
 				points: [
-					'El inventario y los gastos del hogar se seguian con poca relacion entre si.',
-					'No habia una vista mensual que mezclara ingresos, compromisos fijos y consumo variable.',
-					'Las reglas de categorias, alertas y presupuesto quedaban demasiado dependientes de ajustes manuales.'
+					'El inventario y los gastos del hogar se seguían con poca relación entre sí.',
+					'No había una vista mensual que mezclara ingresos, compromisos fijos y consumo variable.',
+					'Las reglas de categorías, alertas y umbrales eran estáticas o dependientes de ajustes manuales.'
 				]
 			},
 			solution: {
-				title: 'Diseñar un sistema compacto, configurable y orientado a lectura cotidiana.',
+				title: 'Diseñar un sistema compacto y confiable para la operación cotidiana.',
 				description:
-					'La solucion priorizo una operacion diaria simple, una capa de configuracion flexible y reportes que conectan inventario con lectura financiera mensual.',
+					'La solución priorizó una operación diaria simple, una capa de configuración flexible ' +
+					'y reportes que conectan inventario con lectura financiera mensual.',
 				points: [
-					'Inventario con categorias, frecuencias de uso, stock minimo y alertas operativas.',
-					'Modulo financiero con ingresos, gastos fijos, gastos variables, timeline de eventos y cierre mensual.',
-					'Reportes con composicion del gasto, tendencia historica y lectura de la regla 50/30/20.'
+					'Inventario con categorías, frecuencias de uso, stock mínimo y alertas operativas.',
+					'Módulo financiero con ingresos, gastos variables y fijos, timeline de eventos y cierre mensual.',
+					'Reportes con composición del gasto, tendencia histórica y lectura de la regla 50/30/20.'
 				]
 			},
 			architecture: {
-				title: 'Arquitectura ligera por dominios con configuracion centralizada.',
+				title: 'Arquitectura ligera por dominios aislados.',
 				description:
-					'El proyecto necesitaba una estructura flexible, capaz de sostener reglas utiles y evolucionar sin convertir la operacion diaria en una complejidad innecesaria.',
+					'El proyecto necesitaba una estructura que permitiera aplicar reglas útiles y evolucionar ' +
+					'sin convertir la operación diaria en una complejidad innecesaria.',
 				layers: [
 					{
 						name: 'Modelado',
-						description: 'Entidades para productos, ingresos, gastos, eventos financieros, cierres mensuales y configuracion operativa.'
+						description:
+							'Entidades para productos de inventario, movimientos financieros, cierres mensuales ' +
+							'y configuración operativa.'
 					},
 					{
-						name: 'Logica',
-						description: 'Servicios para resumen mensual, proyeccion de gasto, buckets presupuestarios, auditoria de movimientos y cierres automaticos.'
+						name: 'Lógica',
+						description:
+							'Servicios para reposición de stock, buckets presupuestarios, auditoría de ' +
+							'movimientos y cierres automáticos.'
 					},
 					{
 						name: 'Interfaz',
-						description: 'Dashboard, paneles de gastos, reportes y configuracion pensados para consulta rapida y actualizacion frecuente.'
+						description:
+							'Dashboard, paneles por sección y vistas de calendario pensados para consulta ' +
+							'rápida y actualización frecuente.'
 					}
 				]
 			},
 			technologiesNote:
-				'El stack se usa aqui para sostener reglas de negocio configurables y una experiencia de uso clara; la tecnologia acompaña al modelo operativo, no lo define.'
+				'El stack se usa aquí para sostener reglas de negocio claras y una experiencia de uso ' +
+				'fluida; la tecnología acompaña al modelo operativo, no lo define.'
 		},
 		links: [
 			{ label: 'Demo', href: '#', kind: 'demo', available: false },
@@ -220,7 +242,7 @@ export const projects: ProjectEntry[] = [
 			{
 				role: 'cover',
 				alt: 'Vista general de DomusOps',
-				caption: 'Resumen visual del dashboard domestico con inventario, gastos y reportes mensuales.',
+				caption: 'Resumen visual del dashboard doméstico con inventario, gastos y reportes mensuales.',
 				status: 'planned'
 			}
 		]
