@@ -1,0 +1,150 @@
+/* ============================================================
+   editorial-project.css — página de caso de estudio
+   Extiende editorial-home.css (requiere .ed-home en el padre).
+   Importado desde ProjectDetail.astro.
+   ============================================================ */
+
+/* ---------- Split layout (problema / solución / stack) ---------- */
+.cs-split {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+	gap: clamp(2rem, 5vw, 5rem);
+	align-items: start;
+	padding-top: clamp(1.5rem, 3vw, 2.5rem);
+	border-top: 1px solid var(--line);
+}
+
+.cs-split-head {
+	position: sticky;
+	top: 5.5rem;
+}
+
+.cs-split-title {
+	font-family: var(--font-display);
+	font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+	font-weight: 400;
+	letter-spacing: -0.02em;
+	line-height: 1.12;
+	margin: 0;
+	text-wrap: balance;
+}
+
+.cs-split-body {
+	display: grid;
+	gap: 1.5rem;
+}
+
+/* ---------- Architecture ---------- */
+.cs-arch-intro {
+	padding-top: clamp(1.5rem, 3vw, 2.5rem);
+	border-top: 1px solid var(--line);
+	margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.cs-arch-title {
+	font-family: var(--font-display);
+	font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+	font-weight: 400;
+	letter-spacing: -0.02em;
+	line-height: 1.12;
+	margin: 0 0 1rem;
+	text-wrap: balance;
+}
+
+.cs-arch-text {
+	color: var(--text-2);
+	font-size: 1rem;
+	line-height: 1.7;
+	margin: 0;
+	max-width: 56ch;
+}
+
+.cs-layers {
+	display: grid;
+	gap: 0;
+}
+
+.cs-layer {
+	display: grid;
+	grid-template-columns: minmax(0, 0.55fr) minmax(0, 1.45fr);
+	gap: clamp(1.5rem, 5vw, 4rem);
+	padding-block: clamp(1.4rem, 2.5vw, 2rem);
+	border-top: 1px solid var(--line);
+	align-items: baseline;
+}
+
+.cs-layer:last-child {
+	border-bottom: 1px solid var(--line);
+}
+
+.cs-layer-name {
+	font-family: var(--font-display);
+	font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+	font-weight: 400;
+	letter-spacing: -0.01em;
+	color: var(--text);
+}
+
+.cs-layer-desc {
+	color: var(--text-2);
+	font-size: 0.98rem;
+	line-height: 1.65;
+	margin: 0;
+}
+
+/* ---------- Stack y decisiones ---------- */
+.cs-tech-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+	gap: clamp(2rem, 5vw, 5rem);
+	align-items: start;
+	padding-top: clamp(1.5rem, 3vw, 2.5rem);
+	border-top: 1px solid var(--line);
+}
+
+/* ---------- Resultados ---------- */
+.cs-results {
+	display: grid;
+	gap: 0;
+	border-top: 1px solid var(--line);
+}
+
+.cs-result {
+	display: grid;
+	grid-template-columns: 3ch 1fr;
+	gap: clamp(1.5rem, 4vw, 3.5rem);
+	padding-block: clamp(1.4rem, 2.5vw, 2rem);
+	border-bottom: 1px solid var(--line);
+	align-items: baseline;
+}
+
+.cs-result-num {
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.1em;
+	color: var(--faint);
+}
+
+.cs-result-text {
+	color: var(--text-2);
+	font-size: 1.05rem;
+	line-height: 1.65;
+	margin: 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+	.cs-split,
+	.cs-tech-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.cs-split-head {
+		position: static;
+	}
+
+	.cs-layer {
+		grid-template-columns: 1fr;
+		gap: 0.5rem;
+	}
+}

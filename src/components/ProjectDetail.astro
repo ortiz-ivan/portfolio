@@ -1,5 +1,7 @@
 ---
 import type { ProjectEntry } from '../data/projects';
+import '../styles/editorial-home.css';
+import '../styles/editorial-project.css';
 
 interface Props {
 	project: ProjectEntry;
@@ -8,133 +10,270 @@ interface Props {
 const { project } = Astro.props;
 ---
 
-<article class="project-detail">
-	<section class="section container project-hero" aria-labelledby="project-title">
-		<div class="project-hero-grid">
-			<div class="project-hero-copy">
-				<span class="eyebrow">{project.eyebrow}</span>
-				<h1 id="project-title" class="title-display project-title-display">{project.name}</h1>
-				<p class="lead">{project.summary}</p>
-				<p class="body-copy">{project.longDescription}</p>
-				<div class="project-meta-grid">
-					<div class="panel project-meta-card">
-						<span class="meta-label">Impacto</span>
-						<p class="meta-value">{project.results[0]}</p>
-					</div>
-					<div class="panel project-meta-card">
-						<span class="meta-label">Rol del proyecto</span>
-						<p class="meta-value">{project.highlight}</p>
-					</div>
-				</div>
+<main class="ed-home" id="top">
+	<!-- ============ NAV ============ -->
+	<header class="nav" id="proj-nav">
+		<div class="wrap nav-inner">
+			<a class="brand" href="/" aria-label="Inicio">
+				<span class="mark">
+					<img src="/logo_final.png" alt="Iván Ortiz" width="26" height="26" />
+				</span>
+				<span>Iván Ortiz</span>
+			</a>
+			<nav class="nav-links" id="projNavLinks" aria-label="Navegación">
+				<a class="nav-link" href="/#projects">
+					<span class="idx">←</span> Proyectos
+				</a>
+				<a class="nav-link" href="/#contact">Contacto</a>
+			</nav>
+			<button class="nav-toggle" id="projNavToggle" aria-label="Abrir menú" aria-expanded="false">
+				<span></span><span></span><span></span>
+			</button>
+		</div>
+	</header>
+
+	<!-- ============ HERO ============ -->
+	<section class="ed-hero">
+		<div class="wrap">
+			<div class="hero-top reveal">
+				<span class="ed-eyebrow"><span class="dot"></span>{project.eyebrow}</span>
+				<a class="tlink" href="/#projects">← Todos los proyectos <span class="arrow">↗</span></a>
 			</div>
 
-			<aside class="panel project-showcase" aria-label={`Vista de ${project.name}`}>
-				<div class="project-showcase-window">
-					<div class="project-showcase-bar"></div>
-					<div class="project-showcase-body">
-						<div class="project-showcase-sidebar"></div>
-						<div class="project-showcase-content">
-							<span></span>
-							<span></span>
-							<span></span>
+			<h1 class="hero-title display reveal">
+				<span class="line">{project.name}</span>
+			</h1>
+
+			<div class="ed-hero-grid">
+				<div class="ed-hero-copy reveal">
+					<p class="hero-intro">{project.summary}</p>
+					<div class="hero-narr-wrap">
+						<p class="hero-narrative">{project.longDescription}</p>
+					</div>
+					<div class="cta-row">
+						{project.links.map((l) =>
+							l.available ? (
+								<a
+									class="btn"
+									href={l.href}
+									target={l.href.startsWith('http') ? '_blank' : undefined}
+									rel={l.href.startsWith('http') ? 'noopener' : undefined}
+								>
+									{l.label} <span class="arrow">↗</span>
+								</a>
+							) : (
+								<span class="btn btn-ghost" style="opacity:0.4;cursor:default">
+									{l.label} · pronto
+								</span>
+							)
+						)}
+					</div>
+				</div>
+
+				<aside class="hero-meta reveal">
+					<div class="meta-row">
+						<span class="meta-k">Propósito</span>
+						<span class="meta-v">{project.highlight}</span>
+					</div>
+					<div class="meta-row">
+						<span class="meta-k">Resultado clave</span>
+						<span class="meta-v">{project.results[0]}</span>
+					</div>
+					<div class="meta-row">
+						<span class="meta-k">Stack</span>
+						<div class="tag-row">
+							{project.tech.map((t) => <span class="tag">{t}</span>)}
 						</div>
 					</div>
-				</div>
-				<p class="muted-note">{project.images[0]?.caption}</p>
-			</aside>
+				</aside>
+			</div>
 		</div>
 	</section>
 
-	<section class="section container project-content-grid">
-		<div class="panel detail-panel">
-			<span class="meta-label">Problema</span>
-			<h2 class="title-section detail-title">{project.caseStudy.problem.title}</h2>
-			<p class="card-copy">{project.caseStudy.problem.description}</p>
-			<ul class="compact-list">
-				{project.caseStudy.problem.points.map((point) => (
-					<li>{point}</li>
-				))}
-			</ul>
+	<!-- ============ 01 — PROBLEMA ============ -->
+	<section class="ed-section">
+		<div class="wrap">
+			<div class="sec-head reveal">
+				<span class="sec-num">(01)</span>
+				<span class="sec-label">Problema</span>
+				<span class="rule-flex"></span>
+			</div>
+			<div class="cs-split reveal">
+				<div class="cs-split-head">
+					<h2 class="cs-split-title">{project.caseStudy.problem.title}</h2>
+				</div>
+				<div class="cs-split-body">
+					<p class="hero-narrative">{project.caseStudy.problem.description}</p>
+					<ol class="exp-resp">
+						{project.caseStudy.problem.points.map((p) => <li>{p}</li>)}
+					</ol>
+				</div>
+			</div>
 		</div>
+	</section>
 
-		<div class="panel detail-panel">
-			<span class="meta-label">Solucion</span>
-			<h2 class="title-section detail-title">{project.caseStudy.solution.title}</h2>
-			<p class="card-copy">{project.caseStudy.solution.description}</p>
-			<ul class="compact-list">
-				{project.caseStudy.solution.points.map((point) => (
-					<li>{point}</li>
-				))}
-			</ul>
+	<!-- ============ 02 — SOLUCIÓN ============ -->
+	<section class="ed-section">
+		<div class="wrap">
+			<div class="sec-head reveal">
+				<span class="sec-num">(02)</span>
+				<span class="sec-label">Solución</span>
+				<span class="rule-flex"></span>
+			</div>
+			<div class="cs-split reveal">
+				<div class="cs-split-head">
+					<h2 class="cs-split-title">{project.caseStudy.solution.title}</h2>
+				</div>
+				<div class="cs-split-body">
+					<p class="hero-narrative">{project.caseStudy.solution.description}</p>
+					<ol class="exp-resp">
+						{project.caseStudy.solution.points.map((p) => <li>{p}</li>)}
+					</ol>
+				</div>
+			</div>
 		</div>
+	</section>
 
-		<div class="panel detail-panel detail-panel-wide">
-			<span class="meta-label">Arquitectura</span>
-			<h2 class="title-section detail-title">{project.caseStudy.architecture.title}</h2>
-			<p class="card-copy">{project.caseStudy.architecture.description}</p>
-			<div class="architecture-list">
+	<!-- ============ 03 — ARQUITECTURA ============ -->
+	<section class="ed-section">
+		<div class="wrap">
+			<div class="sec-head reveal">
+				<span class="sec-num">(03)</span>
+				<span class="sec-label">Arquitectura</span>
+				<span class="rule-flex"></span>
+			</div>
+			<div class="cs-arch-intro reveal">
+				<h2 class="cs-arch-title">{project.caseStudy.architecture.title}</h2>
+				<p class="cs-arch-text">{project.caseStudy.architecture.description}</p>
+			</div>
+			<div class="cs-layers">
 				{project.caseStudy.architecture.layers.map((layer) => (
-					<div class="architecture-item">
-						<strong>{layer.name}</strong>
-						<p>{layer.description}</p>
+					<div class="cs-layer reveal">
+						<span class="cs-layer-name">{layer.name}</span>
+						<p class="cs-layer-desc">{layer.description}</p>
 					</div>
 				))}
 			</div>
 		</div>
 	</section>
 
-	<section class="section container project-secondary-grid">
-		<div class="panel detail-panel">
-			<span class="meta-label">Tecnologias</span>
-			<h2 class="title-section detail-title">Stack seleccionado para el contexto real.</h2>
-			<p class="card-copy">{project.caseStudy.technologiesNote}</p>
-			<ul class="pill-list">
-				{project.tech.map((item) => (
-					<li>{item}</li>
-				))}
-			</ul>
-		</div>
-
-		<div class="panel detail-panel">
-			<span class="meta-label">Resultados</span>
-			<h2 class="title-section detail-title">Lo que este proyecto demuestra.</h2>
-			<ul class="compact-list">
-				{project.results.map((result) => (
-					<li>{result}</li>
-				))}
-			</ul>
-		</div>
-	</section>
-
-	<section class="section container" aria-labelledby="decisions-title">
-		<div class="section-heading">
-			<span class="eyebrow">Decisiones tecnicas</span>
-			<h2 id="decisions-title" class="title-section">Criterios que sostienen el proyecto en el tiempo.</h2>
-		</div>
-		<div class="card-grid decision-grid">
-			{project.technicalDecisions.map((decision) => (
-				<article class="panel principle-card">
-					<p class="card-copy">{decision}</p>
-				</article>
-			))}
-		</div>
-	</section>
-
-	<section class="section container project-cta-panel">
-		<div class="panel contact-panel project-bottom-panel">
-			<div class="section-heading">
-				<span class="eyebrow">Siguiente paso</span>
-				<h2 class="title-section">Este caso de estudio conecta negocio, producto y ejecucion tecnica.</h2>
-				<p class="section-copy">
-					Si quieres revisar el resto de proyectos o conversar sobre una oportunidad similar, la home
-					queda a un clic y el contacto ya esta preparado.
-				</p>
+	<!-- ============ 04 — STACK Y DECISIONES ============ -->
+	<section class="ed-section">
+		<div class="wrap">
+			<div class="sec-head reveal">
+				<span class="sec-num">(04)</span>
+				<span class="sec-label">Stack y decisiones</span>
+				<span class="rule-flex"></span>
 			</div>
-
-			<div class="button-row project-bottom-actions">
-				<a class="button" href="/">Volver al inicio</a>
-				<a class="button button-secondary" href="/#contact">Contactar</a>
+			<div class="cs-tech-grid reveal">
+				<div>
+					<p class="hero-narrative">{project.caseStudy.technologiesNote}</p>
+					<div class="tag-row" style="margin-top: 1.8rem;">
+						{project.tech.map((t) => <span class="tag">{t}</span>)}
+					</div>
+				</div>
+				<div>
+					<ol class="exp-resp">
+						{project.technicalDecisions.map((d) => <li>{d}</li>)}
+					</ol>
+				</div>
 			</div>
 		</div>
 	</section>
-</article>
+
+	<!-- ============ 05 — RESULTADOS ============ -->
+	<section class="ed-section">
+		<div class="wrap">
+			<div class="sec-head reveal">
+				<span class="sec-num">(05)</span>
+				<span class="sec-label">Resultados</span>
+				<span class="rule-flex"></span>
+			</div>
+			<div class="cs-results">
+				{project.results.map((r, i) => (
+					<div class="cs-result reveal">
+						<span class="cs-result-num">{String(i + 1).padStart(2, '0')}</span>
+						<p class="cs-result-text">{r}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- ============ CONTACTO / CTA ============ -->
+	<section class="contact">
+		<div class="wrap">
+			<div class="sec-head reveal">
+				<span class="sec-num">(06)</span>
+				<span class="sec-label">Siguiente paso</span>
+				<span class="rule-flex"></span>
+			</div>
+
+			<h2 class="contact-head display reveal">
+				¿Hablamos sobre una oportunidad similar?
+			</h2>
+
+			<div class="cta-row reveal">
+				<a class="btn" href="/">Inicio <span class="arrow">↗</span></a>
+				<a class="btn btn-ghost" href="/#contact">Contactar <span class="arrow">↗</span></a>
+			</div>
+
+			<footer class="footer">
+				<p class="footer-copy">Diseñado y construido con criterio técnico por Iván Ortiz.</p>
+				<div class="footer-meta">
+					<a class="footer-top" href="#top">Volver arriba <span class="arrow">↑</span></a>
+					<div class="footer-year">© {new Date().getFullYear()} · Iván Ortiz</div>
+				</div>
+			</footer>
+		</div>
+	</section>
+</main>
+
+<script>
+	// ---- Nav background on scroll ----
+	const nav = document.getElementById('proj-nav');
+	const onScroll = () => {
+		if (!nav) return;
+		nav.classList.toggle('scrolled', window.scrollY > 24);
+	};
+	window.addEventListener('scroll', onScroll, { passive: true });
+	onScroll();
+
+	// ---- Mobile menu ----
+	const toggle = document.getElementById('projNavToggle');
+	const links = document.getElementById('projNavLinks');
+	if (toggle && links) {
+		toggle.addEventListener('click', () => {
+			const open = links.classList.toggle('open');
+			toggle.classList.toggle('open', open);
+			toggle.setAttribute('aria-expanded', String(open));
+		});
+		links.querySelectorAll('.nav-link').forEach((a) =>
+			a.addEventListener('click', () => {
+				links.classList.remove('open');
+				toggle.classList.remove('open');
+				toggle.setAttribute('aria-expanded', 'false');
+			})
+		);
+	}
+
+	// ---- Reveal on scroll ----
+	const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const revealEls = Array.from(document.querySelectorAll('.reveal'));
+	if (reduce) {
+		revealEls.forEach((el) => el.classList.add('in'));
+	} else {
+		const ro = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((e) => {
+					if (e.isIntersecting) {
+						e.target.classList.add('in');
+						ro.unobserve(e.target);
+					}
+				});
+			},
+			{ rootMargin: '0px 0px -10% 0px', threshold: 0.08 }
+		);
+		revealEls.forEach((el) => ro.observe(el));
+	}
+</script>

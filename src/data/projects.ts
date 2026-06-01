@@ -226,88 +226,88 @@ export const projects: ProjectEntry[] = [
 		]
 	},
 	{
-		slug: 'kairos-web',
-		name: 'Kairos Web',
-		priority: 3,
-		eyebrow: 'Landing orientada a conversion',
-		isFeatured: false,
-		summary: 'Landing page enfocada en captacion de clientes y validacion comercial del producto.',
-		longDescription:
-			'Pieza orientada a comunicar propuesta de valor, estructurar mejor la conversion y alinear interfaz con objetivos de negocio.',
-		highlight: 'Proyecto estrategico para mostrar criterio en UI, UX y conversion.',
-		tech: ['Astro', 'UI/UX', 'Copywriting', 'Conversion design'],
-		features: [
-			'Jerarquia de mensajes enfocada en propuesta de valor y captacion.',
-			'Secciones pensadas para reducir friccion y guiar al contacto.',
-			'Base visual alineada con una imagen profesional del producto.'
-		],
-		technicalDecisions: [
-			'Arquitectura ligera para priorizar velocidad de carga y despliegue rapido.',
-			'Diseno centrado en claridad de oferta antes que en ornamentacion visual.',
-			'Sistema de secciones reutilizable para iterar mensajes comerciales.'
-		],
-		results: [
-			'Muestra que tambien puedes pensar producto desde conversion y comunicacion.',
-			'Vende criterio de UI y UX orientado a negocio.',
-			'Complementa el portfolio con una pieza menos operativa y mas estrategica.'
-		],
-		caseStudy: {
-			problem: {
-				title: 'Comunicar mejor la propuesta de valor y reducir friccion comercial.',
-				description:
-					'El objetivo era ordenar el mensaje del producto y construir una pagina capaz de guiar mejor la atencion del usuario hacia la accion.',
-				points: [
-					'La propuesta de valor necesitaba una jerarquia mas clara.',
-					'El recorrido visual debia dirigir mejor hacia el contacto.',
-					'La experiencia debia transmitir profesionalismo sin exceso visual.'
-				]
-			},
-			solution: {
-				title: 'Construir una landing sobria, rapida y orientada a conversion.',
-				description:
-					'Se priorizo una estructura clara de secciones, con mensajes breves y visuales consistentes para dar confianza y enfocar la accion.',
-				points: [
-					'Jerarquia fuerte en hero, beneficios y CTA.',
-					'Lenguaje visual profesional alineado al producto.',
-					'Base reutilizable para probar mejoras de comunicacion.'
-				]
-			},
-			architecture: {
-				title: 'Arquitectura de pagina ligera y mantenible.',
-				description:
-					'La estructura tecnica se mantuvo simple para iterar rapido y preservar rendimiento, especialmente en un sitio de presentacion.',
-				layers: [
-					{
-						name: 'Contenido',
-						description: 'Secciones enfocadas en propuesta de valor, credibilidad y conversion.'
-					},
-					{
-						name: 'Presentacion',
-						description: 'Sistema visual reutilizable para mantener consistencia y velocidad.'
-					},
-					{
-						name: 'Deploy',
-						description: 'Base ligera preparada para publicar e iterar sin friccion.'
-					}
-				]
-			},
-			technologiesNote:
-				'En este proyecto la tecnologia se eligio por ligereza, velocidad de carga y facilidad para ajustar mensaje y estructura.'
-		},
-		links: [
-			{ label: 'Demo', href: '#', kind: 'demo', available: false },
-			{ label: 'GitHub', href: '#', kind: 'github', available: false },
-			{ label: 'Caso de estudio', href: '/projects/kairos-web', kind: 'case-study', available: true }
-		],
-		images: [
-			{
-				role: 'cover',
-				alt: 'Portada de Kairos Web',
-				caption: 'Captura del landing orientado a negocio y conversion.',
-				status: 'planned'
-			}
-		]
-	}
+    slug: 'habita',
+    name: 'Habita',
+    priority: 3,
+    eyebrow: 'Gestión de alquileres',
+    isFeatured: false,
+    summary: 'Aplicación full-stack para administrar edificios de alquiler: habitaciones, inquilinos, contratos y pagos.',
+    longDescription:
+        'Sistema interno de gestión de propiedades residenciales construido con React y Django. Cubre el ciclo completo: registrar unidades, asignar inquilinos, generar contratos y hacer seguimiento de pagos con estados de mora.',
+    highlight: 'Proyecto que muestra criterio en arquitectura full-stack, modelado de dominio y UX funcional sin ornamentación.',
+    tech: ['React 19', 'Django 5', 'PostgreSQL', 'React Query', 'Tailwind CSS', 'JWT'],
+    features: [
+        'Panel de control con métricas de unidades vacantes, contratos activos y pagos vencidos.',
+        'Flujo completo de gestión: habitaciones → contratos → pagos, con estados y filtros.',
+        'Autenticación JWT con refresh automático de tokens y rutas protegidas.'
+    ],
+    technicalDecisions: [
+        'Separación estricta de settings por entorno (base / local / producción) en Django.',
+        'React Query como capa de estado del servidor con invalidación de caché por mutación.',
+        'Capa de servicios HTTP por dominio para mantener los componentes sin lógica de red.'
+    ],
+    results: [
+        'Demuestra capacidad de diseñar y construir un producto funcional de principio a fin.',
+        'Evidencia criterio de arquitectura en un stack moderno y profesional.',
+        'Muestra que podés modelar dominio real con relaciones no triviales (habitación → contrato → pago).'
+    ],
+    caseStudy: {
+        problem: {
+            title: 'Gestionar un edificio de alquiler sin herramientas adecuadas genera fricción operativa.',
+            description:
+                'El objetivo era construir una herramienta interna que centralizara la administración de unidades, contratos y pagos, eliminando el seguimiento manual disperso en planillas.',
+            points: [
+                'El seguimiento de pagos y mora era manual y propenso a errores.',
+                'No había forma de ver rápido el estado de ocupación del edificio.',
+                'Cada contrato y su historial de pagos vivía en documentos separados sin relación.'
+            ]
+        },
+        solution: {
+            title: 'Aplicación full-stack con dominio modelado alrededor del ciclo de alquiler.',
+            description:
+                'Se construyó un sistema con módulos independientes por dominio (habitaciones, inquilinos, contratos, pagos) con un dashboard que centraliza el estado general del edificio.',
+            points: [
+                'Dashboard con indicadores clave: vacantes, mora y contratos activos.',
+                'Registro y seguimiento de pagos con estados (pendiente, pagado, parcial, vencido).',
+                'Formulario rápido de pago accesible desde cualquier pantalla del sistema.'
+            ]
+        },
+        architecture: {
+            title: 'Stack full-stack desacoplado con frontend en React y API REST en Django.',
+            description:
+                'El backend expone una API versionada con DRF y JWT. El frontend consume esa API con React Query, manteniendo estado del servidor y cliente separados.',
+            layers: [
+                {
+                    name: 'Frontend',
+                    description: 'React 19 + React Router 7 con React Query para server state y Zustand para auth.'
+                },
+                {
+                    name: 'API',
+                    description: 'Django REST Framework con serializers, filtros y autenticación JWT por dominio.'
+                },
+                {
+                    name: 'Base de datos',
+                    description: 'PostgreSQL con relaciones entre habitaciones, contratos e inquilinos modeladas en Django ORM.'
+                }
+            ]
+        },
+        technologiesNote:
+            'El stack combina Django REST Framework y React para un sistema de gestión robusto, con separación clara entre API y frontend que facilita escalar cada capa de forma independiente.'
+    },
+    links: [
+        { label: 'Demo', href: '#', kind: 'demo', available: false },
+        { label: 'GitHub', href: 'https://github.com/ortiz-ivan/habita', kind: 'github', available: false },
+        { label: 'Caso de estudio', href: '/projects/habita', kind: 'case-study', available: true }
+    ],
+    images: [
+        {
+            role: 'cover',
+            alt: 'Dashboard de Habita',
+            caption: 'Panel principal con métricas de ocupación, contratos y pagos.',
+            status: 'planned'
+        }
+    ]
+}
 ];
 
 export function getProjectBySlug(slug: string) {

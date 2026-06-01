@@ -1,0 +1,112 @@
+/* ============================================================
+   contact.css — sección de contacto y footer
+   ============================================================ */
+
+.contact {
+	padding-top: var(--section-gap);
+	padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+.contact-head {
+	font-family: var(--font-display);
+	font-weight: 400;
+	font-size: clamp(2.4rem, 6.5vw, 5.5rem);
+	line-height: 1.02;
+	letter-spacing: -0.025em;
+	margin: 0 0 clamp(2.5rem, 5vw, 3.5rem);
+	max-width: 16ch;
+	text-wrap: balance;
+}
+
+/* Grid de items de contacto */
+.contact-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	border-top: 1px solid var(--line);
+}
+.ed-contact-item {
+	display: grid;
+	gap: 0.5rem;
+	padding: clamp(1.5rem, 3vw, 2.2rem) 0;
+	padding-right: 1.5rem;
+	border-bottom: 1px solid var(--line);
+	position: relative;
+	transition: padding-left 0.4s var(--ease);
+}
+.ed-contact-item:hover { padding-left: 0.8rem; }
+.contact-k {
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+.contact-v {
+	font-family: var(--font-display);
+	font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+	letter-spacing: -0.01em;
+	color: var(--text);
+	display: inline-flex;
+	align-items: center;
+	gap: 0.6rem;
+	cursor: pointer;
+	background: none;
+	border: 0;
+	padding: 0;
+	text-align: left;
+}
+a.contact-v:hover, button.contact-v:hover { color: var(--text-2); }
+.contact-v .arrow {
+	font-family: var(--font-mono);
+	font-size: 0.95rem;
+	color: var(--muted);
+	transition: transform 0.35s var(--ease);
+}
+.ed-contact-item:hover .contact-v .arrow { transform: translate(3px, -3px); color: var(--text); }
+.contact-desc {
+	font-size: 0.88rem;
+	color: var(--muted);
+	line-height: 1.5;
+	max-width: 30ch;
+}
+
+/* Footer */
+.footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 1.5rem;
+	flex-wrap: wrap;
+	padding-top: clamp(3rem, 6vw, 5rem);
+}
+.footer-copy {
+	font-family: var(--font-mono);
+	font-size: 0.74rem;
+	letter-spacing: 0.04em;
+	color: var(--muted);
+	max-width: 44ch;
+	line-height: 1.7;
+}
+.footer-meta {
+	font-family: var(--font-mono);
+	font-size: 0.74rem;
+	letter-spacing: 0.06em;
+	color: var(--faint);
+	text-align: right;
+}
+.footer-top {
+	font-family: var(--font-mono);
+	font-size: 0.74rem;
+	letter-spacing: 0.06em;
+	color: var(--muted);
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	transition: color 0.3s var(--ease);
+}
+.footer-top:hover { color: var(--text); }
+.footer-top .arrow { transition: transform 0.35s var(--ease); }
+.footer-top:hover .arrow { transform: translateY(-3px); }
+
+/* Helpers */
+.ed-home .footer-year { margin-top: 0.8rem; }
+.ed-home .contact-v-label { font: inherit; }

@@ -1,0 +1,13 @@
+/* ============================================================
+   editorial-home.css — entry point del sistema de diseño
+   Importado desde index.astro y ProjectDetail.astro.
+   El orden importa: tokens primero, responsive último.
+   ============================================================ */
+
+@import './editorial/tokens.css';
+@import './editorial/nav.css';
+@import './editorial/hero.css';
+@import './editorial/projects.css';
+@import './editorial/experience.css';
+@import './editorial/contact.css';
+@import './editorial/responsive.css';

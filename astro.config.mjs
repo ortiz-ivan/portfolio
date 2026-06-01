@@ -1,15 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
-import tailwindcss from '@tailwindcss/vite';
+const SITE_URL = 'https://ortizivandev.netlify.app';
 
-import react from '@astrojs/react';
-
-// https://astro.build/config
 export default defineConfig({
-  vite: {
-    plugins: [tailwindcss()]
-  },
-
-  integrations: [react()]
+	site: SITE_URL,
+	integrations: [sitemap()]
 });

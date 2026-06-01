@@ -1,0 +1,77 @@
+/* ============================================================
+   experience.css — sección de experiencia laboral
+   ============================================================ */
+
+.exp-entry {
+	display: grid;
+	grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.6fr);
+	gap: clamp(1.5rem, 5vw, 4rem);
+	padding-top: clamp(2rem, 4vw, 3rem);
+	border-top: 1px solid var(--line);
+}
+.exp-left { display: grid; gap: 1rem; align-content: start; }
+.exp-company {
+	font-family: var(--font-display);
+	font-size: clamp(2rem, 4vw, 3rem);
+	line-height: 1;
+	letter-spacing: -0.02em;
+	margin: 0;
+}
+.exp-period {
+	font-family: var(--font-mono);
+	font-size: 0.76rem;
+	letter-spacing: 0.06em;
+	color: var(--muted);
+}
+.exp-role {
+	font-size: 1rem;
+	color: var(--text-2);
+}
+.exp-right { display: grid; gap: 1.6rem; align-content: start; }
+.exp-desc {
+	font-family: var(--font-display);
+	font-weight: 300;
+	font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+	line-height: 1.4;
+	color: var(--text);
+	letter-spacing: -0.01em;
+	margin: 0;
+	max-width: 32ch;
+}
+
+/* Lista numerada con counter CSS */
+.exp-resp {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 0.9rem;
+	max-width: 56ch;
+	counter-reset: resp;
+}
+.exp-resp li {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 0.9rem;
+	color: var(--text-2);
+	font-size: 0.98rem;
+	line-height: 1.55;
+	padding-top: 0.9rem;
+	border-top: 1px solid var(--line-soft);
+}
+.exp-resp li::before {
+	content: counter(resp, decimal-leading-zero);
+	counter-increment: resp;
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	color: var(--faint);
+	letter-spacing: 0.06em;
+	padding-top: 0.15rem;
+}
+
+.exp-tech {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-top: 0.3rem;
+}

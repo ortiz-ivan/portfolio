@@ -1,17 +1,14 @@
 export interface HeroContent {
 	name: string;
 	role: string;
-	positioning: string;
 	subtitle: string;
 	narrative: string;
-	notes: string[];
 	panelSummary: string;
 	focus: string;
 	focusNote: string;
 	primaryCta: {
 		label: string;
 		href: string;
-		download?: boolean;
 	};
 	secondaryCta: {
 		label: string;
@@ -43,37 +40,25 @@ export interface ExperienceItem {
 }
 
 export interface ExperienceSection {
-	kicker: string;
-	title: string;
 	items: ExperienceItem[];
 }
 
 export interface ContactSection {
-	kicker: string;
 	title: string;
-	intro: string;
 	items: ContactItem[];
 }
 
 export interface FooterContent {
 	copy: string;
-	links: Array<{
-		label: string;
-		href: string;
-	}>;
 }
 
 export const heroContent: HeroContent = {
 	name: 'Iván Ortiz',
 	role: 'Fullstack Developer',
-	positioning: 'Sobre mi',
 	subtitle:
 		'Soy desarrollador fullstack y disfruto construir software util, claro y mantenible para problemas reales.',
 	narrative:
 		'Actualmente trabajo en sistemas empresariales donde backend, integraciones, datos y producto se cruzan todos los dias. Me interesa entender primero como funciona la operacion antes de decidir la forma del sistema.',
-	notes: [
-		
-	],
 	panelSummary:
 		'Trabajo con foco en productos internos, automatizacion e integraciones que impactan el dia a dia de una operacion.',
 	focus: 'Backend + integraciones',
@@ -90,16 +75,7 @@ export const heroContent: HeroContent = {
 	}
 };
 
-export const projectSection = {
-	kicker: 'Proyectos seleccionados',
-	title: 'Proyectos seleccionados.',
-	intro:
-		'Sistemas fullstack orientados a negocio, con foco en gestion, automatizacion y decisiones tecnicas sostenibles.'
-};
-
 export const experienceSection: ExperienceSection = {
-	kicker: 'Experiencia',
-	title: 'Experiencia construyendo sistemas empresariales.',
 	items: [
 		{
 			company: 'Airam',
@@ -119,11 +95,7 @@ export const experienceSection: ExperienceSection = {
 };
 
 export const contactSection: ContactSection = {
-	kicker: 'Contacto',
 	title: 'Abierto a oportunidades en productos reales y sistemas escalables.',
-	intro:
-		'Canales directos para conversar sobre desarrollo fullstack y arquitectura de software.',
-
 	items: [
 		{
 			label: 'LinkedIn',
@@ -133,7 +105,7 @@ export const contactSection: ContactSection = {
 		},
 		{
 			label: 'Email',
-			value: 'Mostrar email',
+			value: 'Enviar email',
 			description: 'Contacto directo para propuestas y colaboraciones.',
 			protected: {
 				scheme: 'mailto',
@@ -152,10 +124,5 @@ export const contactSection: ContactSection = {
 };
 
 export const footerContent: FooterContent = {
-	copy: 'Iván Ortiz, Fullstack Developer enfocado en sistemas de gestion y automatizacion.',
-	links: [
-		{ label: 'Proyectos', href: '#projects' },
-		{ label: 'Experiencia', href: '#experience' },
-		{ label: 'Contacto', href: '#contact' }
-	]
+	copy: 'Iván Ortiz, Fullstack Developer enfocado en sistemas de gestion y automatizacion.'
 };

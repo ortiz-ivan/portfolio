@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ortizivandev.netlify.app/sitemap-index.xml
