@@ -42,7 +42,7 @@ export interface ExperienceSection {
 }
 
 export interface ContactSection {
-	title: string;
+	title?: string;
 	items: ContactItem[];
 }
 
@@ -90,7 +90,6 @@ export const experienceSection: ExperienceSection = {
 };
 
 export const contactSection: ContactSection = {
-	title: 'Abierto a oportunidades en productos reales y sistemas escalables.',
 	items: [
 		{
 			label: 'LinkedIn',
