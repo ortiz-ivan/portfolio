@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
 	title?: string;
@@ -56,15 +57,18 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 		<meta name="twitter:image" content={ogImageURL} />
 
 		<title>{title}</title>
+		<ClientRouter />
 	</head>
 	<body>
 		<slot />
 		<script>
-			const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-			const revealEls = Array.from(document.querySelectorAll('.reveal'));
-			if (reduce) {
-				revealEls.forEach((el) => el.classList.add('in'));
-			} else {
+			function initReveal() {
+				const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+				const els = Array.from(document.querySelectorAll<HTMLElement>('.reveal:not(.in)'));
+				if (reduce) {
+					els.forEach((el) => el.classList.add('in'));
+					return;
+				}
 				const ro = new IntersectionObserver(
 					(entries) => {
 						entries.forEach((e) => {
@@ -76,8 +80,9 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 					},
 					{ rootMargin: '0px 0px -10% 0px', threshold: 0.08 }
 				);
-				revealEls.forEach((el) => ro.observe(el));
+				els.forEach((el) => ro.observe(el));
 			}
+			document.addEventListener('astro:page-load', initReveal);
 		</script>
 	</body>
 </html>

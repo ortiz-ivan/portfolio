@@ -14,7 +14,7 @@ interface Props {
 const { name, brandHref = '#top', items } = Astro.props;
 ---
 
-<header class="nav" id="nav">
+<header class="nav" id="nav" transition:animate="none">
 	<div class="wrap nav-inner">
 		<a class="brand" href={brandHref} aria-label="Inicio">
 			<span class="mark">
@@ -37,25 +37,33 @@ const { name, brandHref = '#top', items } = Astro.props;
 </header>
 
 <script>
-	const nav = document.getElementById('nav');
-	const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 24);
-	window.addEventListener('scroll', onScroll, { passive: true });
-	onScroll();
+	let navEl: HTMLElement | null = null;
 
-	const toggle = document.getElementById('navToggle');
-	const links = document.getElementById('navLinks');
-	if (toggle && links) {
-		toggle.addEventListener('click', () => {
-			const open = links.classList.toggle('open');
-			toggle.classList.toggle('open', open);
-			toggle.setAttribute('aria-expanded', String(open));
-		});
-		links.querySelectorAll('.nav-link').forEach((a) =>
-			a.addEventListener('click', () => {
-				links.classList.remove('open');
-				toggle.classList.remove('open');
-				toggle.setAttribute('aria-expanded', 'false');
-			})
-		);
+	function onNavScroll() {
+		navEl?.classList.toggle('scrolled', window.scrollY > 24);
 	}
+	window.addEventListener('scroll', onNavScroll, { passive: true });
+
+	function initNav() {
+		navEl = document.getElementById('nav');
+		if (navEl) onNavScroll();
+
+		const toggle = document.getElementById('navToggle');
+		const links = document.getElementById('navLinks');
+		if (toggle && links) {
+			toggle.addEventListener('click', () => {
+				const open = links.classList.toggle('open');
+				toggle.classList.toggle('open', open);
+				toggle.setAttribute('aria-expanded', String(open));
+			});
+			links.querySelectorAll('.nav-link').forEach((a) =>
+				a.addEventListener('click', () => {
+					links.classList.remove('open');
+					toggle.classList.remove('open');
+					toggle.setAttribute('aria-expanded', 'false');
+				})
+			);
+		}
+	}
+	document.addEventListener('astro:page-load', initNav);
 </script>

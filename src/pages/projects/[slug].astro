@@ -17,8 +17,9 @@ interface Props {
 }
 
 const { project } = Astro.props;
+const { slug } = Astro.params;
 ---
 
 <Layout title={`${project.name} | Ivan Ortiz`} description={project.summary}>
-	<ProjectDetail project={project} />
+	<ProjectDetail project={project} slug={slug} />
 </Layout>

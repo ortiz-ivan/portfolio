@@ -6,9 +6,10 @@ import '../styles/editorial-project.css';
 
 interface Props {
 	project: CollectionEntry<'projects'>['data'];
+	slug: string;
 }
 
-const { project } = Astro.props;
+const { project, slug } = Astro.props;
 
 const projNavItems = [
 	{ href: '/#projects', label: 'Proyectos', index: '←' },
@@ -29,7 +30,7 @@ const year = new Date().getFullYear();
 				<a class="tlink" href="/#projects">← Todos los proyectos <span class="arrow">↗</span></a>
 			</div>
 
-			<h1 class="hero-title display reveal">
+			<h1 class="hero-title display reveal" transition:name={`proj-name-${slug}`}>
 				<span class="line">{project.name}</span>
 			</h1>
 

@@ -73,7 +73,8 @@ const year = new Date().getFullYear();
 
 <script>
 	const decode = (v: string) => v.split('|').join('');
-	const openContact = (scheme: string, value: string) => {
+
+	function openContact(scheme: string, value: string) {
 		if (scheme === 'mailto') {
 			const url = new URL('https://mail.google.com/mail/');
 			url.searchParams.set('view', 'cm');
@@ -83,25 +84,28 @@ const year = new Date().getFullYear();
 			return;
 		}
 		window.location.href = `${scheme}:${value}`;
-	};
+	}
 
-	document.querySelectorAll<HTMLButtonElement>('[data-contact-protected]').forEach((btn) => {
-		const scheme = btn.dataset.contactScheme;
-		const parts = btn.dataset.contactParts;
-		const display = btn.dataset.contactDisplay;
-		const labelNode = btn.querySelector('.contact-v-label');
-		if (!scheme || !parts || !display || !labelNode) return;
+	function initContactProtection() {
+		document.querySelectorAll<HTMLButtonElement>('[data-contact-protected]').forEach((btn) => {
+			const scheme = btn.dataset.contactScheme;
+			const parts = btn.dataset.contactParts;
+			const display = btn.dataset.contactDisplay;
+			const labelNode = btn.querySelector('.contact-v-label');
+			if (!scheme || !parts || !display || !labelNode) return;
 
-		const reveal = () => {
-			labelNode.textContent = decode(display);
-			openContact(scheme, decode(parts));
-		};
-		btn.addEventListener('click', reveal);
-		btn.addEventListener('keydown', (ev) => {
-			if (ev.key === 'Enter' || ev.key === ' ') {
-				ev.preventDefault();
-				reveal();
-			}
+			const reveal = () => {
+				labelNode.textContent = decode(display);
+				openContact(scheme, decode(parts));
+			};
+			btn.addEventListener('click', reveal);
+			btn.addEventListener('keydown', (ev) => {
+				if (ev.key === 'Enter' || ev.key === ' ') {
+					ev.preventDefault();
+					reveal();
+				}
+			});
 		});
-	});
+	}
+	document.addEventListener('astro:page-load', initContactProtection);
 </script>

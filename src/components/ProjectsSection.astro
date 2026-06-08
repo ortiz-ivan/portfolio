@@ -31,7 +31,7 @@ const cover = (entry: CollectionEntry<'projects'>) =>
 				<article class="proj-featured reveal">
 					<div class="proj-featured-body">
 						<span class="proj-index">01 — {featured.data.eyebrow}</span>
-						<h3 class="proj-name">{featured.data.name}</h3>
+						<h3 class="proj-name" transition:name={`proj-name-${featured.id}`}>{featured.data.name}</h3>
 						<p class="proj-summary">{featured.data.summary}</p>
 						<div class="proj-tags">
 							{featured.data.tech.map((t) => <span class="tag">{t}</span>)}
@@ -67,7 +67,7 @@ const cover = (entry: CollectionEntry<'projects'>) =>
 					<article class="proj-row reveal">
 						<span class="r-index">{String(i + 2).padStart(2, '0')}</span>
 						<span class="r-name">
-							{p.data.name}
+							<span transition:name={`proj-name-${p.id}`}>{p.data.name}</span>
 							<span class="r-eyebrow">{p.data.eyebrow}</span>
 						</span>
 						<div class="r-desc">

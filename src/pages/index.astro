@@ -39,20 +39,25 @@ const navItems = [
 
 <script>
 	// Scrollspy — home only
-	const ids = ['sobre-mi', 'projects', 'experience', 'contact'];
-	const sections = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
-	const navLinkEls = Array.from(document.querySelectorAll<HTMLAnchorElement>('.nav-link'));
-	const spy = new IntersectionObserver(
-		(entries) => {
-			entries.forEach((e) => {
-				if (e.isIntersecting) {
-					navLinkEls.forEach((l) =>
-						l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id)
-					);
-				}
-			});
-		},
-		{ rootMargin: '-45% 0px -50% 0px', threshold: 0 }
-	);
-	sections.forEach((s) => spy.observe(s));
+	function initScrollspy() {
+		const ids = ['sobre-mi', 'projects', 'experience', 'contact'];
+		const sections = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+		if (sections.length === 0) return;
+
+		const navLinkEls = Array.from(document.querySelectorAll<HTMLAnchorElement>('.nav-link'));
+		const spy = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((e) => {
+					if (e.isIntersecting) {
+						navLinkEls.forEach((l) =>
+							l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id)
+						);
+					}
+				});
+			},
+			{ rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+		);
+		sections.forEach((s) => spy.observe(s));
+	}
+	document.addEventListener('astro:page-load', initScrollspy);
 </script>
