@@ -18,14 +18,8 @@ export interface HeroContent {
 export interface ContactItem {
 	label: string;
 	value: string;
-	href?: string;
+	href: string;
 	description: string;
-	protected?: {
-		scheme: 'mailto' | 'tel';
-		parts: string[];
-		displayParts: string[];
-		actionLabel: string;
-	};
 }
 
 export interface ExperienceItem {
@@ -97,18 +91,7 @@ export const contactSection: ContactSection = {
 			href: 'https://www.linkedin.com/in/ortiz-ivan08/',
 			description: 'Perfil profesional y recorrido técnico.'
 		},
-		{
-			label: 'Email',
-			value: 'Enviar email',
-			description: 'Contacto directo para propuestas y colaboraciones.',
-			protected: {
-				scheme: 'mailto',
-				parts: ['ortiz', '.', 'ivan', '.', 'dev', '@', 'gmail', '.', 'com'],
-				displayParts: ['ortiz', '.', 'ivan', '.', 'dev', '@', 'gmail', '.', 'com'],
-				actionLabel: 'Mostrar y abrir email'
-			}
-		},
-		{
+{
 			label: 'GitHub',
 			value: 'ortiz-ivan',
 			href: 'https://github.com/ortiz-ivan',

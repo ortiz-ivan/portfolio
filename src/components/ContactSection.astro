@@ -19,46 +19,104 @@ const year = new Date().getFullYear();
 			<span class="rule-flex"></span>
 		</div>
 
-		<div class="contact-grid reveal">
-			{data.items.map((item) => {
-				const isProtected = Boolean(item.protected);
-				const external = item.href?.startsWith('http') ?? false;
+		<div class="contact-layout">
+			<!-- Columna izquierda: intro + form + éxito -->
+			<div class="contact-form-col">
+				<p class="contact-intro reveal">
+					¿Tenés una propuesta, pregunta o simplemente querés hablar de software? Escribime directamente.
+				</p>
+				<form
+					class="contact-form reveal"
+					id="contactForm"
+					name="contact"
+					method="POST"
+					data-netlify="true"
+					netlify-honeypot="bot-field"
+				>
+					<input type="hidden" name="form-name" value="contact" />
+					<p class="form-honeypot" aria-hidden="true">
+						<label>No completes este campo: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+					</p>
 
-				if (isProtected && item.protected) {
+					<div class="form-row">
+						<div class="form-field">
+							<label class="form-label" for="f-name">Nombre</label>
+							<input
+								class="form-input"
+								type="text"
+								id="f-name"
+								name="name"
+								required
+								placeholder="Tu nombre"
+								autocomplete="name"
+							/>
+						</div>
+						<div class="form-field">
+							<label class="form-label" for="f-email">Email</label>
+							<input
+								class="form-input"
+								type="email"
+								id="f-email"
+								name="email"
+								required
+								placeholder="tu@email.com"
+								autocomplete="email"
+							/>
+						</div>
+					</div>
+
+					<div class="form-field">
+						<label class="form-label" for="f-message">Mensaje</label>
+						<textarea
+							class="form-input form-textarea"
+							id="f-message"
+							name="message"
+							required
+							rows="5"
+							placeholder="¿En qué puedo ayudarte?"
+						></textarea>
+					</div>
+
+					<div class="form-actions">
+						<button class="btn" type="submit" id="formSubmit">
+							Enviar mensaje <span class="arrow" aria-hidden="true">↗</span>
+						</button>
+						<p class="form-error" id="formError" role="alert" aria-live="polite"></p>
+					</div>
+				</form>
+
+				<div class="form-success" id="formSuccess" hidden aria-live="polite">
+					<span class="form-success-mark" aria-hidden="true">✓</span>
+					<div>
+						<p class="form-success-title">Mensaje enviado.</p>
+						<p class="form-success-desc">
+							Te respondo a la brevedad. Mientras tanto, también me encontrás en LinkedIn o GitHub.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Columna derecha: links -->
+			<aside class="contact-links reveal">
+				<p class="contact-links-label">Encontrame en</p>
+				{data.items.map((item) => {
+					const external = item.href.startsWith('http');
 					return (
 						<div class="ed-contact-item">
 							<span class="contact-k">{item.label}</span>
-							<button
-								type="button"
+							<a
 								class="contact-v"
-								data-contact-protected
-								data-contact-scheme={item.protected.scheme}
-								data-contact-parts={item.protected.parts.join('|')}
-								data-contact-display={item.protected.displayParts.join('|')}
-								aria-label={item.protected.actionLabel}
+								href={item.href}
+								target={external ? '_blank' : undefined}
+								rel={external ? 'noopener' : undefined}
 							>
-								<span class="contact-v-label">{item.value}</span> <span class="arrow">↗</span>
-							</button>
+								{item.value} <span class="arrow">↗</span>
+							</a>
 							<span class="contact-desc">{item.description}</span>
 						</div>
 					);
-				}
-
-				return (
-					<div class="ed-contact-item">
-						<span class="contact-k">{item.label}</span>
-						<a
-							class="contact-v"
-							href={item.href}
-							target={external ? '_blank' : undefined}
-							rel={external ? 'noopener' : undefined}
-						>
-							{item.value} <span class="arrow">↗</span>
-						</a>
-						<span class="contact-desc">{item.description}</span>
-					</div>
-				);
-			})}
+				})}
+			</aside>
 		</div>
 
 		<footer class="footer">
@@ -72,40 +130,40 @@ const year = new Date().getFullYear();
 </section>
 
 <script>
-	const decode = (v: string) => v.split('|').join('');
+	function initContactForm() {
+		const form = document.getElementById('contactForm') as HTMLFormElement | null;
+		const submitBtn = document.getElementById('formSubmit') as HTMLButtonElement | null;
+		const errorEl = document.getElementById('formError');
+		const successEl = document.getElementById('formSuccess');
+		if (!form || !submitBtn || !errorEl || !successEl) return;
 
-	function openContact(scheme: string, value: string) {
-		if (scheme === 'mailto') {
-			const url = new URL('https://mail.google.com/mail/');
-			url.searchParams.set('view', 'cm');
-			url.searchParams.set('fs', '1');
-			url.searchParams.set('to', value);
-			window.open(url.toString(), '_blank', 'noopener,noreferrer');
-			return;
-		}
-		window.location.href = `${scheme}:${value}`;
-	}
+		form.addEventListener('submit', async (e) => {
+			e.preventDefault();
+			submitBtn.disabled = true;
+			submitBtn.innerHTML = 'Enviando… <span class="arrow" aria-hidden="true">↗</span>';
+			errorEl.textContent = '';
 
-	function initContactProtection() {
-		document.querySelectorAll<HTMLButtonElement>('[data-contact-protected]').forEach((btn) => {
-			const scheme = btn.dataset.contactScheme;
-			const parts = btn.dataset.contactParts;
-			const display = btn.dataset.contactDisplay;
-			const labelNode = btn.querySelector('.contact-v-label');
-			if (!scheme || !parts || !display || !labelNode) return;
+			const body = Array.from(new FormData(form).entries())
+				.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v as string)}`)
+				.join('&');
 
-			const reveal = () => {
-				labelNode.textContent = decode(display);
-				openContact(scheme, decode(parts));
-			};
-			btn.addEventListener('click', reveal);
-			btn.addEventListener('keydown', (ev) => {
-				if (ev.key === 'Enter' || ev.key === ' ') {
-					ev.preventDefault();
-					reveal();
-				}
-			});
+			try {
+				const res = await fetch('/', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body
+				});
+				if (!res.ok) throw new Error('Network error');
+				form.hidden = true;
+				successEl.hidden = false;
+			} catch {
+				errorEl.textContent =
+					'Algo salió mal. Intentá de nuevo o escribime directamente por email.';
+				submitBtn.disabled = false;
+				submitBtn.innerHTML = 'Enviar mensaje <span class="arrow" aria-hidden="true">↗</span>';
+			}
 		});
 	}
-	document.addEventListener('astro:page-load', initContactProtection);
+
+	document.addEventListener('astro:page-load', initContactForm);
 </script>
