@@ -1,36 +1,25 @@
 ---
-import type { ProjectEntry } from '../data/projects';
+import type { CollectionEntry } from 'astro:content';
+import NavBar from './NavBar.astro';
 import '../styles/editorial-home.css';
 import '../styles/editorial-project.css';
 
 interface Props {
-	project: ProjectEntry;
+	project: CollectionEntry<'projects'>['data'];
 }
 
 const { project } = Astro.props;
+
+const projNavItems = [
+	{ href: '/#projects', label: 'Proyectos', index: '←' },
+	{ href: '/#contact', label: 'Contacto' }
+];
+
+const year = new Date().getFullYear();
 ---
 
 <main class="ed-home" id="top">
-	<!-- ============ NAV ============ -->
-	<header class="nav" id="proj-nav">
-		<div class="wrap nav-inner">
-			<a class="brand" href="/" aria-label="Inicio">
-				<span class="mark">
-					<img src="/logo_final.png" alt="Iván Ortiz" width="26" height="26" />
-				</span>
-				<span>Iván Ortiz</span>
-			</a>
-			<nav class="nav-links" id="projNavLinks" aria-label="Navegación">
-				<a class="nav-link" href="/#projects">
-					<span class="idx">←</span> Proyectos
-				</a>
-				<a class="nav-link" href="/#contact">Contacto</a>
-			</nav>
-			<button class="nav-toggle" id="projNavToggle" aria-label="Abrir menú" aria-expanded="false">
-				<span></span><span></span><span></span>
-			</button>
-		</div>
-	</header>
+	<NavBar name="Iván Ortiz" brandHref="/" items={projNavItems} />
 
 	<!-- ============ HERO ============ -->
 	<section class="ed-hero">
@@ -222,58 +211,9 @@ const { project } = Astro.props;
 				<p class="footer-copy">Diseñado y construido con criterio técnico por Iván Ortiz.</p>
 				<div class="footer-meta">
 					<a class="footer-top" href="#top">Volver arriba <span class="arrow">↑</span></a>
-					<div class="footer-year">© {new Date().getFullYear()} · Iván Ortiz</div>
+					<div class="footer-year">© {year} · Iván Ortiz</div>
 				</div>
 			</footer>
 		</div>
 	</section>
 </main>
-
-<script>
-	// ---- Nav background on scroll ----
-	const nav = document.getElementById('proj-nav');
-	const onScroll = () => {
-		if (!nav) return;
-		nav.classList.toggle('scrolled', window.scrollY > 24);
-	};
-	window.addEventListener('scroll', onScroll, { passive: true });
-	onScroll();
-
-	// ---- Mobile menu ----
-	const toggle = document.getElementById('projNavToggle');
-	const links = document.getElementById('projNavLinks');
-	if (toggle && links) {
-		toggle.addEventListener('click', () => {
-			const open = links.classList.toggle('open');
-			toggle.classList.toggle('open', open);
-			toggle.setAttribute('aria-expanded', String(open));
-		});
-		links.querySelectorAll('.nav-link').forEach((a) =>
-			a.addEventListener('click', () => {
-				links.classList.remove('open');
-				toggle.classList.remove('open');
-				toggle.setAttribute('aria-expanded', 'false');
-			})
-		);
-	}
-
-	// ---- Reveal on scroll ----
-	const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-	const revealEls = Array.from(document.querySelectorAll('.reveal'));
-	if (reduce) {
-		revealEls.forEach((el) => el.classList.add('in'));
-	} else {
-		const ro = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((e) => {
-					if (e.isIntersecting) {
-						e.target.classList.add('in');
-						ro.unobserve(e.target);
-					}
-				});
-			},
-			{ rootMargin: '0px 0px -10% 0px', threshold: 0.08 }
-		);
-		revealEls.forEach((el) => ro.observe(el));
-	}
-</script>

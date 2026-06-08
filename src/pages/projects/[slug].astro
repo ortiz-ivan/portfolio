@@ -1,23 +1,24 @@
 ---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import ProjectDetail from '../../components/ProjectDetail.astro';
-import { getProjectBySlug, projects } from '../../data/projects';
 import Layout from '../../layouts/Layout.astro';
 
-export function getStaticPaths() {
-	return projects.map((project) => ({
-		params: { slug: project.slug },
-		props: { project }
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+	return projects.map((entry) => ({
+		params: { slug: entry.id },
+		props: { project: entry.data }
 	}));
 }
 
-const { project } = Astro.props;
-const currentProject = project ?? getProjectBySlug(Astro.params.slug ?? '');
-
-if (!currentProject) {
-	return Astro.redirect('/');
+interface Props {
+	project: CollectionEntry<'projects'>['data'];
 }
+
+const { project } = Astro.props;
 ---
 
-<Layout title={`${currentProject.name} | Ivan Ortiz`} description={currentProject.summary}>
-	<ProjectDetail project={currentProject} />
+<Layout title={`${project.name} | Ivan Ortiz`} description={project.summary}>
+	<ProjectDetail project={project} />
 </Layout>

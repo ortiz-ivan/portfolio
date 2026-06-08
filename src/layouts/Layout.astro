@@ -59,5 +59,25 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 	</head>
 	<body>
 		<slot />
+		<script>
+			const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const revealEls = Array.from(document.querySelectorAll('.reveal'));
+			if (reduce) {
+				revealEls.forEach((el) => el.classList.add('in'));
+			} else {
+				const ro = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((e) => {
+							if (e.isIntersecting) {
+								e.target.classList.add('in');
+								ro.unobserve(e.target);
+							}
+						});
+					},
+					{ rootMargin: '0px 0px -10% 0px', threshold: 0.08 }
+				);
+				revealEls.forEach((el) => ro.observe(el));
+			}
+		</script>
 	</body>
 </html>

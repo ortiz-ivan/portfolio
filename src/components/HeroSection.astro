@@ -1,0 +1,61 @@
+---
+import type { HeroContent } from '../data/site';
+
+interface Props {
+	hero: HeroContent;
+	heroStack: string[];
+}
+
+const { hero, heroStack } = Astro.props;
+const [firstName, ...rest] = hero.name.split(' ');
+const lastName = rest.join(' ');
+---
+
+<section class="ed-hero" id="sobre-mi" data-screen-label="Hero / Sobre mí">
+	<div class="wrap">
+		<div class="hero-top reveal">
+			<span class="ed-eyebrow"><span class="dot"></span>{hero.role}</span>
+			<span class="hero-availability">Disponible para oportunidades</span>
+		</div>
+
+		<h1 class="hero-title display reveal">
+			<span class="line">{firstName}</span>
+			<span class="line"><em>{lastName}</em></span>
+		</h1>
+
+		<div class="ed-hero-grid">
+			<div class="ed-hero-copy reveal">
+				<p class="hero-intro">{hero.subtitle}</p>
+				<div class="hero-narr-wrap">
+					<p class="hero-narrative">{hero.narrative}</p>
+					<p class="hero-narrative">{hero.panelSummary}</p>
+				</div>
+				<div class="cta-row">
+					<a class="btn" href={hero.primaryCta.href}>
+						{hero.primaryCta.label} <span class="arrow">↗</span>
+					</a>
+					<a
+						class="btn btn-ghost"
+						href={hero.secondaryCta.href}
+						download={hero.secondaryCta.download}
+					>
+						{hero.secondaryCta.label} <span class="arrow">↓</span>
+					</a>
+				</div>
+			</div>
+
+			<aside class="hero-meta reveal">
+				<div class="meta-row">
+					<span class="meta-k">Stack principal</span>
+					<div class="tag-row">
+						{heroStack.map((t) => <span class="tag">{t}</span>)}
+					</div>
+				</div>
+				<div class="meta-row">
+					<span class="meta-k">Enfoque</span>
+					<span class="meta-v">Entender la operación antes que el sistema. Decisiones técnicas sostenibles.</span>
+				</div>
+			</aside>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,107 @@
+---
+import type { ContactSection, FooterContent } from '../data/site';
+
+interface Props {
+	data: ContactSection;
+	footer: FooterContent;
+	authorName: string;
+}
+
+const { data, footer, authorName } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<section class="contact" id="contact" data-screen-label="Contacto">
+	<div class="wrap">
+		<div class="sec-head reveal">
+			<span class="sec-num">(04)</span>
+			<span class="sec-label">Contacto</span>
+			<span class="rule-flex"></span>
+		</div>
+
+		<div class="contact-grid reveal">
+			{data.items.map((item) => {
+				const isProtected = Boolean(item.protected);
+				const external = item.href?.startsWith('http') ?? false;
+
+				if (isProtected && item.protected) {
+					return (
+						<div class="ed-contact-item">
+							<span class="contact-k">{item.label}</span>
+							<button
+								type="button"
+								class="contact-v"
+								data-contact-protected
+								data-contact-scheme={item.protected.scheme}
+								data-contact-parts={item.protected.parts.join('|')}
+								data-contact-display={item.protected.displayParts.join('|')}
+								aria-label={item.protected.actionLabel}
+							>
+								<span class="contact-v-label">{item.value}</span> <span class="arrow">↗</span>
+							</button>
+							<span class="contact-desc">{item.description}</span>
+						</div>
+					);
+				}
+
+				return (
+					<div class="ed-contact-item">
+						<span class="contact-k">{item.label}</span>
+						<a
+							class="contact-v"
+							href={item.href}
+							target={external ? '_blank' : undefined}
+							rel={external ? 'noopener' : undefined}
+						>
+							{item.value} <span class="arrow">↗</span>
+						</a>
+						<span class="contact-desc">{item.description}</span>
+					</div>
+				);
+			})}
+		</div>
+
+		<footer class="footer">
+			<p class="footer-copy">{footer.copy}</p>
+			<div class="footer-meta">
+				<a class="footer-top" href="#top">Volver arriba <span class="arrow">↑</span></a>
+				<div class="footer-year">© {year} · Diseñado y construido por {authorName}</div>
+			</div>
+		</footer>
+	</div>
+</section>
+
+<script>
+	const decode = (v: string) => v.split('|').join('');
+	const openContact = (scheme: string, value: string) => {
+		if (scheme === 'mailto') {
+			const url = new URL('https://mail.google.com/mail/');
+			url.searchParams.set('view', 'cm');
+			url.searchParams.set('fs', '1');
+			url.searchParams.set('to', value);
+			window.open(url.toString(), '_blank', 'noopener,noreferrer');
+			return;
+		}
+		window.location.href = `${scheme}:${value}`;
+	};
+
+	document.querySelectorAll<HTMLButtonElement>('[data-contact-protected]').forEach((btn) => {
+		const scheme = btn.dataset.contactScheme;
+		const parts = btn.dataset.contactParts;
+		const display = btn.dataset.contactDisplay;
+		const labelNode = btn.querySelector('.contact-v-label');
+		if (!scheme || !parts || !display || !labelNode) return;
+
+		const reveal = () => {
+			labelNode.textContent = decode(display);
+			openContact(scheme, decode(parts));
+		};
+		btn.addEventListener('click', reveal);
+		btn.addEventListener('keydown', (ev) => {
+			if (ev.key === 'Enter' || ev.key === ' ') {
+				ev.preventDefault();
+				reveal();
+			}
+		});
+	});
+</script>

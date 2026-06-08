@@ -1,0 +1,94 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	featured: CollectionEntry<'projects'> | undefined;
+	rest: CollectionEntry<'projects'>[];
+}
+
+const { featured, rest } = Astro.props;
+
+const primaryLink = (entry: CollectionEntry<'projects'>) =>
+	entry.data.links.find((l) => l.kind === 'case-study' && l.available) ??
+	entry.data.links.find((l) => l.available) ??
+	entry.data.links.find((l) => l.kind === 'case-study') ??
+	entry.data.links[0];
+
+const cover = (entry: CollectionEntry<'projects'>) =>
+	entry.data.images.find((i) => i.role === 'cover') ?? entry.data.images[0];
+---
+
+<section class="ed-section" id="projects" data-screen-label="Proyectos">
+	<div class="wrap">
+		<div class="sec-head reveal">
+			<span class="sec-num">(02)</span>
+			<span class="sec-label">Proyectos seleccionados</span>
+			<span class="rule-flex"></span>
+		</div>
+
+		<div class="projects-list">
+			{featured && (
+				<article class="proj-featured reveal">
+					<div class="proj-featured-body">
+						<span class="proj-index">01 — {featured.data.eyebrow}</span>
+						<h3 class="proj-name">{featured.data.name}</h3>
+						<p class="proj-summary">{featured.data.summary}</p>
+						<div class="proj-tags">
+							{featured.data.tech.map((t) => <span class="tag">{t}</span>)}
+						</div>
+						<div class="proj-links">
+							{featured.data.links.map((l) =>
+								l.available ? (
+									<a
+										class="tlink"
+										href={l.href}
+										target={l.href.startsWith('http') ? '_blank' : undefined}
+										rel={l.href.startsWith('http') ? 'noopener' : undefined}
+									>
+										{l.label} <span class="arrow">↗</span>
+									</a>
+								) : (
+									<span class="tlink disabled">{l.label} · pronto</span>
+								)
+							)}
+						</div>
+					</div>
+					<div class="proj-visual">
+						<span class="corner">[ cover ]</span>
+						<p class="ph">{cover(featured)?.caption ?? featured.data.name}</p>
+					</div>
+				</article>
+			)}
+
+			{rest.map((p, i) => {
+				const link = primaryLink(p);
+				const external = link?.available && link.href.startsWith('http');
+				return (
+					<article class="proj-row reveal">
+						<span class="r-index">{String(i + 2).padStart(2, '0')}</span>
+						<span class="r-name">
+							{p.data.name}
+							<span class="r-eyebrow">{p.data.eyebrow}</span>
+						</span>
+						<div class="r-desc">
+							{p.data.summary}
+							<div class="r-tags">
+								{p.data.tech.slice(0, 4).map((t) => <span class="tag">{t}</span>)}
+							</div>
+						</div>
+						<a
+							class="r-action"
+							href={link?.available ? link.href : '#contact'}
+							target={external ? '_blank' : undefined}
+							rel={external ? 'noopener' : undefined}
+							aria-label={`${p.data.name} — ${link?.label ?? 'ver más'}`}
+						>
+							<span class="tlink">{link?.available ? link.label : 'Detalles pronto'}</span>
+							<span class="r-arrow">↗</span>
+						</a>
+					</article>
+				);
+			})}
+		</div>
+	</div>
+</section>

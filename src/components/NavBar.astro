@@ -1,0 +1,61 @@
+---
+interface NavItem {
+	href: string;
+	label: string;
+	index?: string;
+}
+
+interface Props {
+	name: string;
+	brandHref?: string;
+	items: NavItem[];
+}
+
+const { name, brandHref = '#top', items } = Astro.props;
+---
+
+<header class="nav" id="nav">
+	<div class="wrap nav-inner">
+		<a class="brand" href={brandHref} aria-label="Inicio">
+			<span class="mark">
+				<img src="/logo_final.png" alt={name} width="26" height="26" />
+			</span>
+			<span>{name}</span>
+		</a>
+		<nav class="nav-links" id="navLinks" aria-label="Navegación principal">
+			{items.map((item) => (
+				<a class="nav-link" href={item.href}>
+					{item.index && <span class="idx">{item.index}</span>}
+					{item.label}
+				</a>
+			))}
+		</nav>
+		<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+			<span></span><span></span><span></span>
+		</button>
+	</div>
+</header>
+
+<script>
+	const nav = document.getElementById('nav');
+	const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 24);
+	window.addEventListener('scroll', onScroll, { passive: true });
+	onScroll();
+
+	const toggle = document.getElementById('navToggle');
+	const links = document.getElementById('navLinks');
+	if (toggle && links) {
+		toggle.addEventListener('click', () => {
+			const open = links.classList.toggle('open');
+			toggle.classList.toggle('open', open);
+			toggle.setAttribute('aria-expanded', String(open));
+		});
+		links.querySelectorAll('.nav-link').forEach((a) =>
+			a.addEventListener('click', () => {
+				links.classList.remove('open');
+				toggle.classList.remove('open');
+				toggle.setAttribute('aria-expanded', 'false');
+			})
+		);
+	}
+</script>

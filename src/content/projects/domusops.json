@@ -1,0 +1,87 @@
+{
+	"name": "DomusOps",
+	"priority": 2,
+	"eyebrow": "Sistema de organización doméstica",
+	"isFeatured": false,
+	"summary": "Aplicación web personal que unifica inventario doméstico, compras planificadas, gastos variables y fijos, y reportes financieros mensuales con seguimiento de la regla 50/30/20, proyecciones de fin de mes y detección automática de anomalías de gasto.",
+	"longDescription": "Proyecto orientado a centralizar inventario, compras y finanzas del hogar mediante reglas configurables, lectura mensual del gasto y una operación cotidiana más ordenada.",
+	"highlight": "Caso para mostrar modelado de datos, reglas configurables y una operación doméstica más visible.",
+	"tech": [
+		"Django 5",
+		"Django REST Framework",
+		"PostgreSQL",
+		"React 19",
+		"TanStack Query v5",
+		"Tailwind CSS v4",
+		"Vite",
+		"Vitest",
+		"pytest"
+	],
+	"features": [
+		"Dashboard operativo con alertas de stock bajo, productos próximos a vencer y gasto mensual estimado.",
+		"Módulo financiero con ingresos, gastos fijos, gastos variables, eventos auditables y cierre mensual.",
+		"Configuración dinámica de categorías, unidades, alertas, moneda y buckets presupuestarios para adaptar reglas sin tocar código."
+	],
+	"technicalDecisions": [
+		"Separó el dominio en configuración, compras, gastos y reportes para mantener entidades y servicios acotados pero conectados.",
+		"La configuración operativa se centraliza en un singleton editable para que categorías, ratios y umbrales no dependan de hardcodes.",
+		"Los reportes combinan estimaciones de inventario, gastos reales e ingresos para dar una lectura mensual útil sin sobredimensionar el sistema."
+	],
+	"results": [
+		"Expone capacidad para modelar datos cotidianos de inventario, compras y finanzas.",
+		"Muestra criterio para convertir reglas domésticas simples en dashboards, alertas y cierres mensuales accionables.",
+		"Refuerza versatilidad al resolver un problema de estructura equivalente al de un sistema de negocio."
+	],
+	"caseStudy": {
+		"problem": {
+			"title": "Unificar inventario, compras y finanzas en una lectura mensual realmente útil.",
+			"description": "La necesidad principal era evitar información fragmentada entre stock, compras y gastos, y construir una lectura mensual clara para decidir mejor.",
+			"points": [
+				"El inventario y los gastos del hogar se seguían con poca relación entre sí.",
+				"No había una vista mensual que mezclara ingresos, compromisos fijos y consumo variable.",
+				"Las reglas de categorías, alertas y umbrales eran estáticas o dependientes de ajustes manuales."
+			]
+		},
+		"solution": {
+			"title": "Diseñar un sistema compacto y confiable para la operación cotidiana.",
+			"description": "La solución priorizó una operación diaria simple, una capa de configuración flexible y reportes que conectan inventario con lectura financiera mensual.",
+			"points": [
+				"Inventario con categorías, frecuencias de uso, stock mínimo y alertas operativas.",
+				"Módulo financiero con ingresos, gastos variables y fijos, timeline de eventos y cierre mensual.",
+				"Reportes con composición del gasto, tendencia histórica y lectura de la regla 50/30/20."
+			]
+		},
+		"architecture": {
+			"title": "Arquitectura ligera por dominios aislados.",
+			"description": "El proyecto necesitaba una estructura que permitiera aplicar reglas útiles y evolucionar sin convertir la operación diaria en una complejidad innecesaria.",
+			"layers": [
+				{
+					"name": "Modelado",
+					"description": "Entidades para productos de inventario, movimientos financieros, cierres mensuales y configuración operativa."
+				},
+				{
+					"name": "Lógica",
+					"description": "Servicios para reposición de stock, buckets presupuestarios, auditoría de movimientos y cierres automáticos."
+				},
+				{
+					"name": "Interfaz",
+					"description": "Dashboard, paneles por sección y vistas de calendario pensados para consulta rápida y actualización frecuente."
+				}
+			]
+		},
+		"technologiesNote": "El stack se usa aquí para sostener reglas de negocio claras y una experiencia de uso fluida; la tecnología acompaña al modelo operativo, no lo define."
+	},
+	"links": [
+		{ "label": "Demo", "href": "#", "kind": "demo", "available": false },
+		{ "label": "GitHub", "href": "https://github.com/ortiz-ivan/domusops", "kind": "github", "available": true },
+		{ "label": "Caso de estudio", "href": "/projects/domusops", "kind": "case-study", "available": true }
+	],
+	"images": [
+		{
+			"role": "cover",
+			"alt": "Vista general de DomusOps",
+			"caption": "Resumen visual del dashboard doméstico con inventario, gastos y reportes mensuales.",
+			"status": "planned"
+		}
+	]
+}

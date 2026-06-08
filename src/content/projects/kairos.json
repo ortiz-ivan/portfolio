@@ -1,0 +1,83 @@
+{
+	"name": "Kairos",
+	"priority": 1,
+	"eyebrow": "Caso de estudio principal",
+	"isFeatured": true,
+	"summary": "Sistema de gestión empresarial con control de ventas, inventario, reportes y roles.",
+	"longDescription": "Sistema completo para operaciones comerciales, pensado para centralizar ventas, stock y trazabilidad interna en una arquitectura desacoplada.",
+	"highlight": "Proyecto estrella para mostrar criterio técnico y valor real de negocio.",
+	"tech": ["Django REST", "React", "PostgreSQL", "Roles y permisos"],
+	"features": [
+		"Sistema de roles y permisos por tipo de usuario.",
+		"CRUD completo para clientes, productos y ventas.",
+		"Reportes operativos para seguimiento comercial y control interno."
+	],
+	"technicalDecisions": [
+		"Arquitectura basada en APIs REST desacopladas para separar frontend y backend.",
+		"Manejo de estado en frontend para mantener una interfaz fluida sobre flujos de negocio complejos.",
+		"Diseño modular para escalar nuevas entidades y reportes sin rehacer el sistema."
+	],
+	"results": [
+		"Muestra capacidad para modelar un sistema con varias entidades, permisos y flujos operativos.",
+		"Demuestra criterio para separar frontend y backend sin perder consistencia en la experiencia.",
+		"Presenta una base clara para crecer hacia reportes, auditoría y nuevas áreas del negocio."
+	],
+	"caseStudy": {
+		"problem": {
+			"title": "Centralizar operación comercial dispersa en un solo sistema.",
+			"description": "El reto era organizar ventas, inventario y reportes en una única herramienta que permitiera operar con menos fricción y mayor control.",
+			"points": [
+				"La información crítica quedaba repartida entre procesos manuales y vistas aisladas.",
+				"Los permisos por rol necesitaban restringir acciones sin romper el flujo diario.",
+				"El negocio exigía trazabilidad sobre productos, clientes y movimientos de venta."
+			]
+		},
+		"solution": {
+			"title": "Construir una plataforma desacoplada, modular y orientada a operación real.",
+			"description": "La solución se planteó como un sistema con backend API y frontend dedicado, donde cada módulo responde a una necesidad concreta del negocio.",
+			"points": [
+				"Frontend en React para gestionar interfaces dinámicas y flujos con varios estados.",
+				"Backend con Django REST para encapsular reglas de negocio y exponer endpoints consistentes.",
+				"Módulos preparados para extender ventas, inventario, usuarios y reportes sin rehacer la base."
+			]
+		},
+		"architecture": {
+			"title": "Una arquitectura que separa responsabilidades y facilita evolución.",
+			"description": "La estructura del proyecto se pensó para aislar la lógica sensible del negocio y sostener crecimiento sin acoplamientos innecesarios.",
+			"layers": [
+				{
+					"name": "Frontend",
+					"description": "Interfaz en React para operaciones, formularios, tablas y navegación por contexto de usuario."
+				},
+				{
+					"name": "API",
+					"description": "Capa REST con Django para exponer entidades, permisos y reglas de validación."
+				},
+				{
+					"name": "Persistencia",
+					"description": "Modelo relacional preparado para ventas, productos, clientes y reportes operativos."
+				}
+			]
+		},
+		"technologiesNote": "El stack se eligió por su equilibrio entre velocidad de desarrollo, control del dominio y capacidad de escalar un sistema de gestión con múltiples módulos."
+	},
+	"links": [
+		{ "label": "Demo", "href": "#", "kind": "demo", "available": false },
+		{ "label": "GitHub", "href": "#", "kind": "github", "available": false },
+		{ "label": "Caso de estudio", "href": "/projects/kairos", "kind": "case-study", "available": true }
+	],
+	"images": [
+		{
+			"role": "cover",
+			"alt": "Vista general del sistema Kairos",
+			"caption": "Hero visual del sistema con foco en ventas, inventario y reportes.",
+			"status": "planned"
+		},
+		{
+			"role": "dashboard",
+			"alt": "Dashboard operativo de Kairos",
+			"caption": "Captura del panel principal con métricas y accesos por rol.",
+			"status": "planned"
+		}
+	]
+}
