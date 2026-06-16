@@ -79,9 +79,10 @@
 	"images": [
 		{
 			"role": "cover",
-			"alt": "Vista general de DomusOps",
-			"caption": "Resumen visual del dashboard doméstico con inventario, gastos y reportes mensuales.",
-			"status": "planned"
+			"alt": "Dashboard de DomusOps con inventario doméstico, presupuesto 50/30/20 y gastos mensuales",
+			"src": "/mockups/domusops-cover.svg",
+			"caption": "Dashboard con alertas de stock, regla presupuestaria 50/30/20 y gastos recientes.",
+			"status": "ready"
 		}
 	]
 }

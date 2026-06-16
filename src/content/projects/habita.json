@@ -69,9 +69,10 @@
 	"images": [
 		{
 			"role": "cover",
-			"alt": "Dashboard de Habita",
-			"caption": "Panel principal con métricas de ocupación, contratos y pagos.",
-			"status": "planned"
+			"alt": "Dashboard de Habita con ocupación de habitaciones, pagos y estado de contratos",
+			"src": "/mockups/habita-cover.svg",
+			"caption": "Panel de gestión con ocupación, estado de pagos por habitación y resumen mensual.",
+			"status": "ready"
 		}
 	]
 }

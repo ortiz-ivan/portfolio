@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#100f0d"/>
+
+  <!-- Nav bar -->
+  <rect width="800" height="44" fill="#161513"/>
+  <line x1="0" y1="44" x2="800" y2="44" stroke="#f4f2ee" stroke-opacity="0.10" stroke-width="1"/>
+  <text x="20" y="28" font-family="Georgia, serif" font-size="15" fill="#f4f2ee" font-style="italic">DomusOps</text>
+  <text x="120" y="27" font-family="monospace" font-size="10" fill="#c8c4bc">Dashboard</text>
+  <text x="202" y="27" font-family="monospace" font-size="10" fill="#5f5c55">Inventario</text>
+  <text x="280" y="27" font-family="monospace" font-size="10" fill="#5f5c55">Compras</text>
+  <text x="350" y="27" font-family="monospace" font-size="10" fill="#5f5c55">Finanzas</text>
+  <text x="420" y="27" font-family="monospace" font-size="10" fill="#5f5c55">Reportes</text>
+  <text x="720" y="27" font-family="monospace" font-size="9" fill="#5f5c55">jun. 2026</text>
+
+  <!-- Alert cards row -->
+  <!-- Card 1: Stock bajo -->
+  <rect x="20" y="62" width="238" height="68" rx="3" fill="#161513" stroke="#d4a664" stroke-opacity="0.30" stroke-width="1"/>
+  <rect x="20" y="62" width="4" height="68" rx="2" fill="#d4a664"/>
+  <text x="36" y="80" font-family="monospace" font-size="8" fill="#d4a664">STOCK BAJO</text>
+  <text x="36" y="101" font-family="Georgia, serif" font-size="24" fill="#f4f2ee">4</text>
+  <text x="36" y="120" font-family="monospace" font-size="8" fill="#8f8b82">productos bajo mínimo</text>
+
+  <!-- Card 2: Por vencer -->
+  <rect x="270" y="62" width="238" height="68" rx="3" fill="#161513" stroke="#e07070" stroke-opacity="0.25" stroke-width="1"/>
+  <rect x="270" y="62" width="4" height="68" rx="2" fill="#e07070"/>
+  <text x="286" y="80" font-family="monospace" font-size="8" fill="#e07070">PRÓXIMOS A VENCER</text>
+  <text x="286" y="101" font-family="Georgia, serif" font-size="24" fill="#f4f2ee">2</text>
+  <text x="286" y="120" font-family="monospace" font-size="8" fill="#8f8b82">vencen esta semana</text>
+
+  <!-- Card 3: Gasto mes -->
+  <rect x="520" y="62" width="260" height="68" rx="3" fill="#161513" stroke="#f4f2ee" stroke-opacity="0.10" stroke-width="1"/>
+  <rect x="520" y="62" width="4" height="68" rx="2" fill="#7fd6a0"/>
+  <text x="536" y="80" font-family="monospace" font-size="8" fill="#8f8b82">GASTO MES ESTIMADO</text>
+  <text x="536" y="101" font-family="Georgia, serif" font-size="22" fill="#f4f2ee">₲ 1.84M</text>
+  <text x="536" y="120" font-family="monospace" font-size="8" fill="#7fd6a0">dentro del presupuesto</text>
+
+  <!-- Budget section: 50/30/20 -->
+  <text x="20" y="160" font-family="monospace" font-size="9" fill="#8f8b82" letter-spacing="1">PRESUPUESTO MENSUAL · REGLA 50/30/20</text>
+  <line x1="20" y1="168" x2="476" y2="168" stroke="#f4f2ee" stroke-opacity="0.10" stroke-width="1"/>
+
+  <!-- Needs (50%) -->
+  <text x="20" y="190" font-family="monospace" font-size="10" fill="#c8c4bc">Necesidades</text>
+  <text x="132" y="190" font-family="monospace" font-size="9" fill="#5f5c55">50%</text>
+  <!-- track -->
+  <rect x="20" y="196" width="440" height="8" rx="4" fill="#f4f2ee" fill-opacity="0.05"/>
+  <!-- fill: 68% used of 50% budget -->
+  <rect x="20" y="196" width="299" height="8" rx="4" fill="#7fd6a0" fill-opacity="0.55"/>
+  <text x="466" y="203" font-family="monospace" font-size="8" fill="#c8c4bc">₲ 920k / 1.35M</text>
+
+  <!-- Wants (30%) -->
+  <text x="20" y="228" font-family="monospace" font-size="10" fill="#c8c4bc">Deseos</text>
+  <text x="82" y="228" font-family="monospace" font-size="9" fill="#5f5c55">30%</text>
+  <rect x="20" y="234" width="440" height="8" rx="4" fill="#f4f2ee" fill-opacity="0.05"/>
+  <rect x="20" y="234" width="180" height="8" rx="4" fill="#d4a664" fill-opacity="0.50"/>
+  <text x="466" y="241" font-family="monospace" font-size="8" fill="#c8c4bc">₲ 490k / 810k</text>
+
+  <!-- Savings (20%) -->
+  <text x="20" y="266" font-family="monospace" font-size="10" fill="#c8c4bc">Ahorro</text>
+  <text x="78" y="266" font-family="monospace" font-size="9" fill="#5f5c55">20%</text>
+  <rect x="20" y="272" width="440" height="8" rx="4" fill="#f4f2ee" fill-opacity="0.05"/>
+  <rect x="20" y="272" width="108" height="8" rx="4" fill="#f4f2ee" fill-opacity="0.20"/>
+  <text x="466" y="279" font-family="monospace" font-size="8" fill="#8f8b82">₲ 270k / 540k</text>
+
+  <!-- Total budget label -->
+  <text x="20" y="302" font-family="monospace" font-size="9" fill="#5f5c55">Presupuesto mensual total: ₲ 2.700.000 · Comprometido: ₲ 1.680.000 (62%)</text>
+
+  <!-- Gastos recientes (left) -->
+  <text x="20" y="334" font-family="monospace" font-size="9" fill="#8f8b82" letter-spacing="1">GASTOS RECIENTES</text>
+  <line x1="20" y1="342" x2="390" y2="342" stroke="#f4f2ee" stroke-opacity="0.10" stroke-width="1"/>
+
+  <!-- Expense rows -->
+  <line x1="20" y1="358" x2="390" y2="358" stroke="#f4f2ee" stroke-opacity="0.05" stroke-width="1"/>
+  <text x="20" y="373" font-family="monospace" font-size="10" fill="#c8c4bc">Supermercado</text>
+  <text x="240" y="373" font-family="monospace" font-size="10" fill="#f4f2ee">₲ 285.000</text>
+  <rect x="335" y="363" width="50" height="16" rx="8" fill="#f4f2ee" fill-opacity="0.05"/>
+  <text x="360" y="375" font-family="monospace" font-size="8" fill="#8f8b82" text-anchor="middle">hogar</text>
+
+  <line x1="20" y1="384" x2="390" y2="384" stroke="#f4f2ee" stroke-opacity="0.05" stroke-width="1"/>
+  <text x="20" y="399" font-family="monospace" font-size="10" fill="#c8c4bc">Farmacia</text>
+  <text x="240" y="399" font-family="monospace" font-size="10" fill="#f4f2ee">₲ 142.000</text>
+  <rect x="335" y="389" width="50" height="16" rx="8" fill="#f4f2ee" fill-opacity="0.05"/>
+  <text x="360" y="401" font-family="monospace" font-size="8" fill="#8f8b82" text-anchor="middle">salud</text>
+
+  <line x1="20" y1="410" x2="390" y2="410" stroke="#f4f2ee" stroke-opacity="0.05" stroke-width="1"/>
+  <text x="20" y="425" font-family="monospace" font-size="10" fill="#c8c4bc">Servicios (luz/agua)</text>
+  <text x="240" y="425" font-family="monospace" font-size="10" fill="#f4f2ee">₲ 210.000</text>
+  <rect x="335" y="415" width="50" height="16" rx="8" fill="#f4f2ee" fill-opacity="0.05"/>
+  <text x="360" y="427" font-family="monospace" font-size="8" fill="#8f8b82" text-anchor="middle">fijo</text>
+
+  <line x1="20" y1="436" x2="390" y2="436" stroke="#f4f2ee" stroke-opacity="0.05" stroke-width="1"/>
+  <text x="20" y="451" font-family="monospace" font-size="10" fill="#c8c4bc">Limpieza</text>
+  <text x="240" y="451" font-family="monospace" font-size="10" fill="#f4f2ee">₲ 98.000</text>
+  <rect x="335" y="441" width="50" height="16" rx="8" fill="#f4f2ee" fill-opacity="0.05"/>
+  <text x="360" y="453" font-family="monospace" font-size="8" fill="#8f8b82" text-anchor="middle">hogar</text>
+
+  <line x1="20" y1="462" x2="390" y2="462" stroke="#f4f2ee" stroke-opacity="0.05" stroke-width="1"/>
+  <text x="20" y="477" font-family="monospace" font-size="10" fill="#c8c4bc">Streaming</text>
+  <text x="240" y="477" font-family="monospace" font-size="10" fill="#f4f2ee">₲ 75.000</text>
+  <rect x="335" y="467" width="50" height="16" rx="8" fill="#f4f2ee" fill-opacity="0.05"/>
+  <text x="360" y="479" font-family="monospace" font-size="8" fill="#8f8b82" text-anchor="middle">ocio</text>
+  <line x1="20" y1="488" x2="390" y2="488" stroke="#f4f2ee" stroke-opacity="0.05" stroke-width="1"/>
+
+  <!-- Inventory section (right) -->
+  <text x="412" y="334" font-family="monospace" font-size="9" fill="#8f8b82" letter-spacing="1">INVENTARIO · ALERTAS</text>
+  <line x1="412" y1="342" x2="776" y2="342" stroke="#f4f2ee" stroke-opacity="0.10" stroke-width="1"/>
+
+  <!-- Inventory items with stock bar -->
+  <text x="412" y="364" font-family="monospace" font-size="10" fill="#c8c4bc">Arroz 1kg</text>
+  <rect x="580" y="356" width="120" height="7" rx="3" fill="#f4f2ee" fill-opacity="0.05"/>
+  <rect x="580" y="356" width="96" height="7" rx="3" fill="#7fd6a0" fill-opacity="0.45"/>
+  <text x="708" y="364" font-family="monospace" font-size="9" fill="#8f8b82">8 / 10</text>
+
+  <text x="412" y="390" font-family="monospace" font-size="10" fill="#c8c4bc">Aceite 1L</text>
+  <rect x="580" y="382" width="120" height="7" rx="3" fill="#f4f2ee" fill-opacity="0.05"/>
+  <rect x="580" y="382" width="36" height="7" rx="3" fill="#d4a664" fill-opacity="0.55"/>
+  <text x="708" y="390" font-family="monospace" font-size="9" fill="#d4a664">3 / 10</text>
+
+  <text x="412" y="416" font-family="monospace" font-size="10" fill="#c8c4bc">Detergente</text>
+  <rect x="580" y="408" width="120" height="7" rx="3" fill="#f4f2ee" fill-opacity="0.05"/>
+  <rect x="580" y="408" width="12" height="7" rx="3" fill="#e07070" fill-opacity="0.60"/>
+  <text x="708" y="416" font-family="monospace" font-size="9" fill="#e07070">1 / 10</text>
+
+  <text x="412" y="442" font-family="monospace" font-size="10" fill="#c8c4bc">Azúcar 1kg</text>
+  <rect x="580" y="434" width="120" height="7" rx="3" fill="#f4f2ee" fill-opacity="0.05"/>
+  <rect x="580" y="434" width="60" height="7" rx="3" fill="#d4a664" fill-opacity="0.50"/>
+  <text x="708" y="442" font-family="monospace" font-size="9" fill="#d4a664">5 / 10</text>
+
+  <text x="412" y="468" font-family="monospace" font-size="10" fill="#c8c4bc">Pasta dental</text>
+  <rect x="580" y="460" width="120" height="7" rx="3" fill="#f4f2ee" fill-opacity="0.05"/>
+  <rect x="580" y="460" width="108" height="7" rx="3" fill="#7fd6a0" fill-opacity="0.40"/>
+  <text x="708" y="468" font-family="monospace" font-size="9" fill="#8f8b82">9 / 10</text>
+
+  <text x="412" y="494" font-family="monospace" font-size="10" fill="#c8c4bc">Papel higiénico</text>
+  <rect x="580" y="486" width="120" height="7" rx="3" fill="#f4f2ee" fill-opacity="0.05"/>
+  <rect x="580" y="486" width="24" height="7" rx="3" fill="#e07070" fill-opacity="0.55"/>
+  <text x="708" y="494" font-family="monospace" font-size="9" fill="#e07070">2 / 10</text>
+
+  <!-- Mini monthly trend -->
+  <text x="20" y="520" font-family="monospace" font-size="9" fill="#8f8b82" letter-spacing="1">TENDENCIA · ÚLTIMOS 6 MESES</text>
+  <line x1="20" y1="528" x2="776" y2="528" stroke="#f4f2ee" stroke-opacity="0.08" stroke-width="1"/>
+
+  <!-- Sparkline-style area chart (simplified) -->
+  <polyline
+    points="20,556 138,548 255,558 372,542 490,546 607,534 725,538"
+    fill="none"
+    stroke="#f4f2ee"
+    stroke-opacity="0.20"
+    stroke-width="1.5"
+  />
+  <!-- Labels -->
+  <text x="20" y="572" font-family="monospace" font-size="8" fill="#5f5c55">Ene</text>
+  <text x="124" y="572" font-family="monospace" font-size="8" fill="#5f5c55">Feb</text>
+  <text x="241" y="572" font-family="monospace" font-size="8" fill="#5f5c55">Mar</text>
+  <text x="358" y="572" font-family="monospace" font-size="8" fill="#5f5c55">Abr</text>
+  <text x="476" y="572" font-family="monospace" font-size="8" fill="#5f5c55">May</text>
+  <text x="594" y="572" font-family="monospace" font-size="8" fill="#5f5c55">Jun</text>
+
+  <!-- Status bar -->
+  <rect x="0" y="580" width="800" height="20" fill="#161513"/>
+  <line x1="0" y1="580" x2="800" y2="580" stroke="#f4f2ee" stroke-opacity="0.07" stroke-width="1"/>
+  <circle cx="12" cy="590" r="4" fill="#7fd6a0"/>
+  <text x="22" y="594" font-family="monospace" font-size="8" fill="#5f5c55">sincronizado · 4 alertas activas · cierre mensual en 14 días</text>
+</svg>

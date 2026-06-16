@@ -53,9 +53,22 @@ const cover = (entry: CollectionEntry<'projects'>) =>
 							)}
 						</div>
 					</div>
-					<div class="proj-visual">
-						<span class="corner">[ cover ]</span>
-						<p class="ph">{cover(featured)?.caption ?? featured.data.name}</p>
+					<div class:list={['proj-visual', { 'has-img': !!cover(featured)?.src }]}>
+						{cover(featured)?.src ? (
+							<img
+								src={cover(featured)!.src}
+								alt={cover(featured)!.alt}
+								class="proj-cover-img"
+								loading="lazy"
+								width="800"
+								height="600"
+							/>
+						) : (
+							<>
+								<span class="corner">[ cover ]</span>
+								<p class="ph">{cover(featured)?.caption ?? featured.data.name}</p>
+							</>
+						)}
 					</div>
 				</article>
 			)}

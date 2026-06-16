@@ -11,6 +11,10 @@ interface Props {
 
 const { project, slug } = Astro.props;
 
+const readyImages = project.images.filter(
+	(img): img is typeof img & { src: string } => img.status === 'ready' && !!img.src
+);
+
 const projNavItems = [
 	{ href: '/#projects', label: 'Proyectos', index: '←' },
 	{ href: '/#contact', label: 'Contacto' }
@@ -30,53 +34,119 @@ const year = new Date().getFullYear();
 				<a class="tlink" href="/#projects">← Todos los proyectos <span class="arrow">↗</span></a>
 			</div>
 
-			<h1 class="hero-title display reveal" transition:name={`proj-name-${slug}`}>
-				<span class="line">{project.name}</span>
-			</h1>
+			{readyImages.length > 0 ? (
+				<>
+					<div class="cs-proj-hero-grid">
+						<div class="cs-hero-left reveal">
+							<h1 class="hero-title display" transition:name={`proj-name-${slug}`}>
+								<span class="line">{project.name}</span>
+							</h1>
+							<p class="hero-intro">{project.summary}</p>
+							<div class="hero-narr-wrap">
+								<p class="hero-narrative">{project.longDescription}</p>
+							</div>
+							<div class="cta-row">
+								{project.links.map((l) =>
+									l.available ? (
+										<a
+											class="btn"
+											href={l.href}
+											target={l.href.startsWith('http') ? '_blank' : undefined}
+											rel={l.href.startsWith('http') ? 'noopener' : undefined}
+										>
+											{l.label} <span class="arrow">↗</span>
+										</a>
+									) : (
+										<span class="btn btn-ghost" style="opacity:0.4;cursor:default">
+											{l.label} · pronto
+										</span>
+									)
+								)}
+							</div>
+						</div>
 
-			<div class="ed-hero-grid">
-				<div class="ed-hero-copy reveal">
-					<p class="hero-intro">{project.summary}</p>
-					<div class="hero-narr-wrap">
-						<p class="hero-narrative">{project.longDescription}</p>
+						<figure class="cs-hero-visual reveal">
+							<div class="cs-screenshot-frame">
+								<img
+									src={readyImages[0].src}
+									alt={readyImages[0].alt}
+									loading="eager"
+									width="800"
+									height="600"
+								/>
+							</div>
+							<figcaption class="cs-screenshot-caption">{readyImages[0].caption}</figcaption>
+						</figure>
 					</div>
-					<div class="cta-row">
-						{project.links.map((l) =>
-							l.available ? (
-								<a
-									class="btn"
-									href={l.href}
-									target={l.href.startsWith('http') ? '_blank' : undefined}
-									rel={l.href.startsWith('http') ? 'noopener' : undefined}
-								>
-									{l.label} <span class="arrow">↗</span>
-								</a>
-							) : (
-								<span class="btn btn-ghost" style="opacity:0.4;cursor:default">
-									{l.label} · pronto
-								</span>
-							)
-						)}
-					</div>
-				</div>
 
-				<aside class="hero-meta reveal">
-					<div class="meta-row">
-						<span class="meta-k">Propósito</span>
-						<span class="meta-v">{project.highlight}</span>
-					</div>
-					<div class="meta-row">
-						<span class="meta-k">Resultado clave</span>
-						<span class="meta-v">{project.results[0]}</span>
-					</div>
-					<div class="meta-row">
-						<span class="meta-k">Stack</span>
-						<div class="tag-row">
-							{project.tech.map((t) => <span class="tag">{t}</span>)}
+					<div class="cs-proj-hero-meta reveal">
+						<div class="meta-row">
+							<span class="meta-k">Propósito</span>
+							<span class="meta-v">{project.highlight}</span>
+						</div>
+						<div class="meta-row">
+							<span class="meta-k">Resultado clave</span>
+							<span class="meta-v">{project.results[0]}</span>
+						</div>
+						<div class="meta-row">
+							<span class="meta-k">Stack</span>
+							<div class="tag-row">
+								{project.tech.map((t) => <span class="tag">{t}</span>)}
+							</div>
 						</div>
 					</div>
-				</aside>
-			</div>
+				</>
+			) : (
+				<>
+					<h1 class="hero-title display reveal" transition:name={`proj-name-${slug}`}>
+						<span class="line">{project.name}</span>
+					</h1>
+
+					<div class="ed-hero-grid">
+						<div class="ed-hero-copy reveal">
+							<p class="hero-intro">{project.summary}</p>
+							<div class="hero-narr-wrap">
+								<p class="hero-narrative">{project.longDescription}</p>
+							</div>
+							<div class="cta-row">
+								{project.links.map((l) =>
+									l.available ? (
+										<a
+											class="btn"
+											href={l.href}
+											target={l.href.startsWith('http') ? '_blank' : undefined}
+											rel={l.href.startsWith('http') ? 'noopener' : undefined}
+										>
+											{l.label} <span class="arrow">↗</span>
+										</a>
+									) : (
+										<span class="btn btn-ghost" style="opacity:0.4;cursor:default">
+											{l.label} · pronto
+										</span>
+									)
+								)}
+							</div>
+						</div>
+
+						<aside class="hero-meta reveal">
+							<div class="meta-row">
+								<span class="meta-k">Propósito</span>
+								<span class="meta-v">{project.highlight}</span>
+							</div>
+							<div class="meta-row">
+								<span class="meta-k">Resultado clave</span>
+								<span class="meta-v">{project.results[0]}</span>
+							</div>
+							<div class="meta-row">
+								<span class="meta-k">Stack</span>
+								<div class="tag-row">
+									{project.tech.map((t) => <span class="tag">{t}</span>)}
+								</div>
+							</div>
+						</aside>
+					</div>
+				</>
+			)}
 		</div>
 	</section>
 
@@ -123,6 +193,28 @@ const year = new Date().getFullYear();
 			</div>
 		</div>
 	</section>
+
+	<!-- ============ SCREENSHOTS (imágenes adicionales, no la del hero) ============ -->
+	{readyImages.length > 1 && (
+		<section class="cs-screenshots">
+			<div class="wrap">
+				{readyImages.slice(1).map((img) => (
+					<figure class="cs-screenshot reveal">
+						<div class="cs-screenshot-frame">
+							<img
+								src={img.src}
+								alt={img.alt}
+								loading="lazy"
+								width="800"
+								height="600"
+							/>
+						</div>
+						<figcaption class="cs-screenshot-caption">{img.caption}</figcaption>
+					</figure>
+				))}
+			</div>
+		</section>
+	)}
 
 	<!-- ============ 03 — ARQUITECTURA ============ -->
 	<section class="ed-section">

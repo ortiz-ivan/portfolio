@@ -69,9 +69,10 @@
 	"images": [
 		{
 			"role": "cover",
-			"alt": "Vista general del sistema Kairos",
-			"caption": "Hero visual del sistema con foco en ventas, inventario y reportes.",
-			"status": "planned"
+			"alt": "Dashboard del sistema Kairos con ventas, inventario y reportes",
+			"src": "/mockups/kairos-cover.svg",
+			"caption": "Panel principal con métricas de ventas, stock crítico y últimas órdenes.",
+			"status": "ready"
 		},
 		{
 			"role": "dashboard",
