@@ -65,21 +65,35 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 			function initReveal() {
 				const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 				const els = Array.from(document.querySelectorAll<HTMLElement>('.reveal:not(.in)'));
-				if (reduce) {
-					els.forEach((el) => el.classList.add('in'));
-					return;
-				}
+				if (reduce) { els.forEach((el) => el.classList.add('in')); return; }
+
+				const STAGGER = 70;    // ms entre elementos del mismo batch
+				const DURATION = 750;  // debe coincidir con la transition del CSS
+
 				const ro = new IntersectionObserver(
 					(entries) => {
-						entries.forEach((e) => {
-							if (e.isIntersecting) {
-								e.target.classList.add('in');
-								ro.unobserve(e.target);
+						// Ordenar las entradas visibles por posición en el DOM
+						const batch = entries
+							.filter((e) => e.isIntersecting)
+							.map((e) => e.target as HTMLElement)
+							.sort((a, b) =>
+								a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1
+							);
+
+						batch.forEach((el, i) => {
+							const delay = i * STAGGER;
+							el.style.transitionDelay = `${delay}ms`;
+							el.classList.add('in');
+							ro.unobserve(el);
+							// Limpiar el delay para no interferir con hovers futuros
+							if (delay > 0) {
+								setTimeout(() => { el.style.transitionDelay = ''; }, delay + DURATION);
 							}
 						});
 					},
-					{ rootMargin: '0px 0px -10% 0px', threshold: 0.08 }
+					{ rootMargin: '0px 0px -8% 0px', threshold: 0.06 }
 				);
+
 				els.forEach((el) => ro.observe(el));
 			}
 			document.addEventListener('astro:page-load', initReveal);

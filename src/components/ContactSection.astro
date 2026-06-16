@@ -9,6 +9,7 @@ interface Props {
 
 const { data, footer, authorName } = Astro.props;
 const year = new Date().getFullYear();
+const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 ---
 
 <section class="contact" id="contact" data-screen-label="Contacto">
@@ -28,15 +29,13 @@ const year = new Date().getFullYear();
 				<form
 					class="contact-form reveal"
 					id="contactForm"
-					name="contact"
 					method="POST"
-					data-netlify="true"
-					netlify-honeypot="bot-field"
+					action="https://api.web3forms.com/submit"
 				>
-					<input type="hidden" name="form-name" value="contact" />
-					<p class="form-honeypot" aria-hidden="true">
-						<label>No completes este campo: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
-					</p>
+					<input type="hidden" name="access_key" value={w3fKey} />
+					<input type="hidden" name="subject" value="Nuevo mensaje desde el portfolio" />
+					<input type="hidden" name="from_name" value="Portfolio Contact" />
+					<input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
 
 					<div class="form-row">
 						<div class="form-field">
@@ -143,17 +142,14 @@ const year = new Date().getFullYear();
 			submitBtn.innerHTML = 'Enviando… <span class="arrow" aria-hidden="true">↗</span>';
 			errorEl.textContent = '';
 
-			const body = Array.from(new FormData(form).entries())
-				.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v as string)}`)
-				.join('&');
-
 			try {
-				const res = await fetch('/', {
+				const res = await fetch('https://api.web3forms.com/submit', {
 					method: 'POST',
-					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-					body
+					headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+					body: JSON.stringify(Object.fromEntries(new FormData(form)))
 				});
-				if (!res.ok) throw new Error('Network error');
+				const json = await res.json();
+				if (!json.success) throw new Error(json.message ?? 'Error');
 				form.hidden = true;
 				successEl.hidden = false;
 			} catch {
