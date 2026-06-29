@@ -1,9 +1,9 @@
 {
 	"name": "DomusOps",
-	"priority": 2,
+	"priority": 3,
 	"eyebrow": "Sistema de organización doméstica",
 	"isFeatured": false,
-	"summary": "Aplicación web personal que unifica inventario doméstico, compras planificadas, gastos variables y fijos, y reportes financieros mensuales con seguimiento de la regla 50/30/20, proyecciones de fin de mes y detección automática de anomalías de gasto.",
+	"summary": "Aplicación web personal que unifica inventario doméstico, compras planificadas, gastos variables y fijos, y reportes financieros mensuales.",
 	"longDescription": "Proyecto orientado a centralizar inventario, compras y finanzas del hogar mediante reglas configurables, lectura mensual del gasto y una operación cotidiana más ordenada.",
 	"highlight": "Caso para mostrar modelado de datos, reglas configurables y una operación doméstica más visible.",
 	"tech": [

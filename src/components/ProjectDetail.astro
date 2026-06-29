@@ -4,6 +4,14 @@ import NavBar from './NavBar.astro';
 import '../styles/editorial-home.css';
 import '../styles/editorial-project.css';
 
+function buildSrcset(src: string): string {
+	const dot = src.lastIndexOf('.');
+	if (dot < 0) return src;
+	const base = src.slice(0, dot);
+	const ext = src.slice(dot);
+	return `${base}-640${ext} 640w, ${src} 924w`;
+}
+
 interface Props {
 	project: CollectionEntry<'projects'>['data'];
 	slug: string;
@@ -46,7 +54,7 @@ const year = new Date().getFullYear();
 								<p class="hero-narrative">{project.longDescription}</p>
 							</div>
 							<div class="cta-row">
-								{project.links.map((l) =>
+								{project.links.filter((l) => l.kind !== 'case-study').map((l) =>
 									l.available ? (
 										<a
 											class="btn"
@@ -65,17 +73,38 @@ const year = new Date().getFullYear();
 							</div>
 						</div>
 
-						<figure class="cs-hero-visual reveal">
-							<div class="cs-screenshot-frame">
-								<img
-									src={readyImages[0].src}
-									alt={readyImages[0].alt}
-									loading="eager"
-									width="800"
-									height="600"
-								/>
+						<figure class="cs-carousel reveal">
+							<div class="cs-carousel-viewport">
+								<div class="cs-carousel-track" id="cs-track">
+									{readyImages.map((img, i) => (
+										<div class="cs-carousel-slide" data-caption={img.caption}>
+											<div class="cs-screenshot-frame">
+												<img
+													src={img.src}
+													srcset={buildSrcset(img.src)}
+													sizes="(max-width: 920px) calc(100vw - 2.5rem), min(54vw, 680px)"
+													alt={img.alt}
+													loading={i === 0 ? "eager" : "lazy"}
+													width="924"
+													height="540"
+												/>
+											</div>
+										</div>
+									))}
+								</div>
 							</div>
-							<figcaption class="cs-screenshot-caption">{readyImages[0].caption}</figcaption>
+							<div class="cs-carousel-footer">
+								<figcaption class="cs-screenshot-caption" id="cs-caption">
+									{readyImages[0].caption}
+								</figcaption>
+								{readyImages.length > 1 && (
+									<div class="cs-carousel-controls">
+										<button class="cs-carousel-btn" id="cs-prev" aria-label="Anterior">←</button>
+										<span class="cs-carousel-counter" id="cs-counter">1 / {readyImages.length}</span>
+										<button class="cs-carousel-btn" id="cs-next" aria-label="Siguiente">→</button>
+									</div>
+								)}
+							</div>
 						</figure>
 					</div>
 
@@ -109,7 +138,7 @@ const year = new Date().getFullYear();
 								<p class="hero-narrative">{project.longDescription}</p>
 							</div>
 							<div class="cta-row">
-								{project.links.map((l) =>
+								{project.links.filter((l) => l.kind !== 'case-study').map((l) =>
 									l.available ? (
 										<a
 											class="btn"
@@ -194,27 +223,6 @@ const year = new Date().getFullYear();
 		</div>
 	</section>
 
-	<!-- ============ SCREENSHOTS (imágenes adicionales, no la del hero) ============ -->
-	{readyImages.length > 1 && (
-		<section class="cs-screenshots">
-			<div class="wrap">
-				{readyImages.slice(1).map((img) => (
-					<figure class="cs-screenshot reveal">
-						<div class="cs-screenshot-frame">
-							<img
-								src={img.src}
-								alt={img.alt}
-								loading="lazy"
-								width="800"
-								height="600"
-							/>
-						</div>
-						<figcaption class="cs-screenshot-caption">{img.caption}</figcaption>
-					</figure>
-				))}
-			</div>
-		</section>
-	)}
 
 	<!-- ============ 03 — ARQUITECTURA ============ -->
 	<section class="ed-section">
@@ -310,3 +318,31 @@ const year = new Date().getFullYear();
 		</div>
 	</section>
 </main>
+
+<script>
+	function initCaseStudyCarousel() {
+		const track = document.getElementById('cs-track') as HTMLElement | null;
+		const captionEl = document.getElementById('cs-caption');
+		const counterEl = document.getElementById('cs-counter');
+		const prevBtn = document.getElementById('cs-prev');
+		const nextBtn = document.getElementById('cs-next');
+
+		if (!track) return;
+
+		const slides = Array.from(track.querySelectorAll<HTMLElement>('.cs-carousel-slide'));
+		const total = slides.length;
+		let current = 0;
+
+		function goTo(index: number) {
+			current = ((index % total) + total) % total;
+			track!.style.transform = `translateX(-${current * 100}%)`;
+			if (captionEl) captionEl.textContent = slides[current].dataset.caption ?? '';
+			if (counterEl) counterEl.textContent = `${current + 1} / ${total}`;
+		}
+
+		prevBtn?.addEventListener('click', () => goTo(current - 1));
+		nextBtn?.addEventListener('click', () => goTo(current + 1));
+	}
+
+	document.addEventListener('astro:page-load', initCaseStudyCarousel);
+</script>

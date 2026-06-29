@@ -67,7 +67,7 @@ export const heroContent: HeroContent = {
 export const experienceSection: ExperienceSection = {
 	items: [
 		{
-			company: 'Airam',
+			company: 'Airam S.A.',
 			role: 'Desarrollador Fullstack',
 			period: 'Febrero 2026 – Actualidad',
 			description:

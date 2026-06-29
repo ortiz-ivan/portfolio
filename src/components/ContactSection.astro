@@ -10,7 +10,6 @@ interface Props {
 const { data, footer, authorName } = Astro.props;
 const year = new Date().getFullYear();
 const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
-const hcaptchaKey = import.meta.env.PUBLIC_HCAPTCHA_SITE_KEY ?? '';
 ---
 
 <section class="contact" id="contact" data-screen-label="Contacto">
@@ -77,8 +76,6 @@ const hcaptchaKey = import.meta.env.PUBLIC_HCAPTCHA_SITE_KEY ?? '';
 						></textarea>
 					</div>
 
-					<div class="h-captcha" data-sitekey={hcaptchaKey} data-theme="dark"></div>
-
 					<div class="form-actions">
 						<button class="btn" type="submit" id="formSubmit">
 							Enviar mensaje <span class="arrow" aria-hidden="true">↗</span>
@@ -139,12 +136,6 @@ const hcaptchaKey = import.meta.env.PUBLIC_HCAPTCHA_SITE_KEY ?? '';
 		const successEl = document.getElementById('formSuccess');
 		if (!form || !submitBtn || !errorEl || !successEl) return;
 
-		// Re-render hCaptcha widget si ya estaba cargado (View Transitions)
-		const captchaEl = form.querySelector<HTMLElement>('.h-captcha');
-		if (captchaEl && (window as any).hcaptcha) {
-			try { (window as any).hcaptcha.render(captchaEl); } catch { /* ya renderizado */ }
-		}
-
 		form.addEventListener('submit', async (e) => {
 			e.preventDefault();
 			submitBtn.disabled = true;
@@ -166,7 +157,6 @@ const hcaptchaKey = import.meta.env.PUBLIC_HCAPTCHA_SITE_KEY ?? '';
 					'Algo salió mal. Intentá de nuevo o escribime directamente por email.';
 				submitBtn.disabled = false;
 				submitBtn.innerHTML = 'Enviar mensaje <span class="arrow" aria-hidden="true">↗</span>';
-				if ((window as any).hcaptcha) (window as any).hcaptcha.reset();
 			}
 		});
 	}

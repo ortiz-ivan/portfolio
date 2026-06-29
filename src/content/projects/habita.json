@@ -1,6 +1,6 @@
 {
 	"name": "Habita",
-	"priority": 3,
+	"priority": 2,
 	"eyebrow": "Gestión de alquileres",
 	"isFeatured": false,
 	"summary": "Aplicación full-stack para administrar edificios de alquiler: habitaciones, inquilinos, contratos y pagos.",
@@ -63,7 +63,7 @@
 	},
 	"links": [
 		{ "label": "Demo", "href": "#", "kind": "demo", "available": false },
-		{ "label": "GitHub", "href": "https://github.com/ortiz-ivan/habita", "kind": "github", "available": false },
+		{ "label": "GitHub", "href": "https://github.com/ortiz-ivan/Habita", "kind": "github", "available": true },
 		{ "label": "Caso de estudio", "href": "/projects/habita", "kind": "case-study", "available": true }
 	],
 	"images": [

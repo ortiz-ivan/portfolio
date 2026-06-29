@@ -2,6 +2,30 @@
    tokens.css — design tokens, base, primitivos compartidos
    ============================================================ */
 
+/* ---------- Scrollbar ---------- */
+:root {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(244, 242, 238, 0.14) #100f0d;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: #100f0d;
+}
+
+::-webkit-scrollbar-thumb {
+	background: rgba(244, 242, 238, 0.14);
+	border-radius: 999px;
+	border: 2px solid #100f0d;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(244, 242, 238, 0.28);
+}
+
 /* ---------- Tokens ---------- */
 .ed-home {
 	color-scheme: dark;

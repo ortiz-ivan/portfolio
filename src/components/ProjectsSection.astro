@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import '../styles/editorial-project.css';
 
 interface Props {
 	featured: CollectionEntry<'projects'> | undefined;
@@ -8,14 +9,13 @@ interface Props {
 
 const { featured, rest } = Astro.props;
 
-const primaryLink = (entry: CollectionEntry<'projects'>) =>
-	entry.data.links.find((l) => l.kind === 'case-study' && l.available) ??
-	entry.data.links.find((l) => l.available) ??
-	entry.data.links.find((l) => l.kind === 'case-study') ??
-	entry.data.links[0];
+const allProjects = [...(featured ? [featured] : []), ...rest];
 
-const cover = (entry: CollectionEntry<'projects'>) =>
-	entry.data.images.find((i) => i.role === 'cover') ?? entry.data.images[0];
+function projectImages(entry: CollectionEntry<'projects'>): string[] {
+	return entry.data.images
+		.filter((img): img is typeof img & { src: string } => img.status === 'ready' && !!img.src)
+		.map((img) => img.src);
+}
 ---
 
 <section class="ed-section" id="projects" data-screen-label="Proyectos">
@@ -27,58 +27,15 @@ const cover = (entry: CollectionEntry<'projects'>) =>
 		</div>
 
 		<div class="projects-list">
-			{featured && (
-				<article class="proj-featured reveal">
-					<div class="proj-featured-body">
-						<span class="proj-index">01 — {featured.data.eyebrow}</span>
-						<h3 class="proj-name" transition:name={`proj-name-${featured.id}`}>{featured.data.name}</h3>
-						<p class="proj-summary">{featured.data.summary}</p>
-						<div class="proj-tags">
-							{featured.data.tech.map((t) => <span class="tag">{t}</span>)}
-						</div>
-						<div class="proj-links">
-							{featured.data.links.map((l) =>
-								l.available ? (
-									<a
-										class="tlink"
-										href={l.href}
-										target={l.href.startsWith('http') ? '_blank' : undefined}
-										rel={l.href.startsWith('http') ? 'noopener' : undefined}
-									>
-										{l.label} <span class="arrow">↗</span>
-									</a>
-								) : (
-									<span class="tlink disabled">{l.label} · pronto</span>
-								)
-							)}
-						</div>
-					</div>
-					<div class:list={['proj-visual', { 'has-img': !!cover(featured)?.src }]}>
-						{cover(featured)?.src ? (
-							<img
-								src={cover(featured)!.src}
-								alt={cover(featured)!.alt}
-								class="proj-cover-img"
-								loading="lazy"
-								width="800"
-								height="600"
-							/>
-						) : (
-							<>
-								<span class="corner">[ cover ]</span>
-								<p class="ph">{cover(featured)?.caption ?? featured.data.name}</p>
-							</>
-						)}
-					</div>
-				</article>
-			)}
-
-			{rest.map((p, i) => {
-				const link = primaryLink(p);
-				const external = link?.available && link.href.startsWith('http');
+			{allProjects.map((p, i) => {
+				const images = projectImages(p);
+				const availableLinks = p.data.links.filter((l) => l.available);
 				return (
-					<article class="proj-row reveal">
-						<span class="r-index">{String(i + 2).padStart(2, '0')}</span>
+					<article
+						class="proj-row reveal"
+						data-preview-images={images.length ? JSON.stringify(images) : undefined}
+					>
+						<span class="r-index">{String(i + 1).padStart(2, '0')}</span>
 						<span class="r-name">
 							<span transition:name={`proj-name-${p.id}`}>{p.data.name}</span>
 							<span class="r-eyebrow">{p.data.eyebrow}</span>
@@ -89,19 +46,181 @@ const cover = (entry: CollectionEntry<'projects'>) =>
 								{p.data.tech.slice(0, 4).map((t) => <span class="tag">{t}</span>)}
 							</div>
 						</div>
-						<a
-							class="r-action"
-							href={link?.available ? link.href : '#contact'}
-							target={external ? '_blank' : undefined}
-							rel={external ? 'noopener' : undefined}
-							aria-label={`${p.data.name} — ${link?.label ?? 'ver más'}`}
-						>
-							<span class="tlink">{link?.available ? link.label : 'Detalles pronto'}</span>
-							<span class="r-arrow">↗</span>
-						</a>
+						<div class="r-action">
+							{availableLinks.length > 0 ? (
+								availableLinks.map((l) => {
+									const ext = l.href.startsWith('http');
+									return (
+										<a
+											class="tlink"
+											href={l.href}
+											target={ext ? '_blank' : undefined}
+											rel={ext ? 'noopener' : undefined}
+										>
+											{l.label} <span class="arrow">↗</span>
+										</a>
+									);
+								})
+							) : (
+								<span class="tlink disabled">Detalles pronto</span>
+							)}
+						</div>
 					</article>
 				);
 			})}
 		</div>
 	</div>
 </section>
+
+<div class="proj-preview" id="proj-preview" aria-hidden="true">
+	<img id="proj-preview-img" src="" alt="" />
+</div>
+
+<style>
+.proj-preview {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 360px;
+	aspect-ratio: 16 / 9;
+	pointer-events: none;
+	z-index: 200;
+	opacity: 0;
+	border: 1px solid var(--line);
+	border-radius: 4px;
+	overflow: hidden;
+	transition: opacity 0.2s var(--ease);
+	will-change: transform;
+}
+
+.proj-preview.is-visible {
+	opacity: 1;
+}
+
+.proj-preview img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: opacity 0.25s ease;
+}
+
+.proj-preview img.fading {
+	opacity: 0;
+}
+
+@media (hover: none) {
+	.proj-preview { display: none; }
+}
+</style>
+
+<script>
+function initProjectPreview() {
+	const el = document.getElementById('proj-preview');
+	const img = document.getElementById('proj-preview-img') as HTMLImageElement | null;
+	if (!el || !img) return;
+
+	const OFFSET_X = 28;
+	const OFFSET_Y = 101; // half of 360 * 9/16
+
+	let targetX = 0, targetY = 0;
+	let currentX = 0, currentY = 0;
+	let rafId = 0;
+	let active = false;
+
+	let cycleTimer = 0;
+	let cycleIndex = 0;
+	let currentImages: string[] = [];
+
+	function lerp(a: number, b: number, t: number) {
+		return a + (b - a) * t;
+	}
+
+	function tick() {
+		currentX = lerp(currentX, targetX, 0.1);
+		currentY = lerp(currentY, targetY, 0.1);
+
+		const vw = window.innerWidth;
+		const vh = window.innerHeight;
+		const W = 360, H = 202;
+
+		let x = currentX + OFFSET_X;
+		let y = currentY - OFFSET_Y;
+
+		if (x + W > vw - 16) x = currentX - W - OFFSET_X;
+		y = Math.min(Math.max(y, 16), vh - H - 16);
+
+		el!.style.transform = `translate(${x}px, ${y}px)`;
+		if (active) rafId = requestAnimationFrame(tick);
+	}
+
+	function swapImage(src: string) {
+		img!.classList.add('fading');
+		setTimeout(() => {
+			img!.src = src;
+			img!.classList.remove('fading');
+		}, 250);
+	}
+
+	function startCycle(images: string[]) {
+		currentImages = images;
+		cycleIndex = 0;
+		img!.src = images[0];
+
+		clearInterval(cycleTimer);
+		if (images.length < 2) return;
+
+		cycleTimer = window.setInterval(() => {
+			cycleIndex = (cycleIndex + 1) % currentImages.length;
+			swapImage(currentImages[cycleIndex]);
+		}, 3000);
+	}
+
+	function stopCycle() {
+		clearInterval(cycleTimer);
+		cycleTimer = 0;
+	}
+
+	const rows = document.querySelectorAll<HTMLElement>('.proj-row[data-preview-images]');
+
+	rows.forEach((row) => {
+		row.addEventListener('mouseenter', (e) => {
+			let images: string[];
+			try {
+				images = JSON.parse(row.dataset.previewImages ?? '[]');
+			} catch {
+				return;
+			}
+			if (!images.length) return;
+
+			const me = e as MouseEvent;
+			targetX = me.clientX;
+			targetY = me.clientY;
+			currentX = targetX;
+			currentY = targetY;
+
+			startCycle(images);
+
+			active = true;
+			cancelAnimationFrame(rafId);
+			rafId = requestAnimationFrame(tick);
+			el!.classList.add('is-visible');
+		});
+
+		row.addEventListener('mousemove', (e) => {
+			const me = e as MouseEvent;
+			targetX = me.clientX;
+			targetY = me.clientY;
+		});
+
+		row.addEventListener('mouseleave', () => {
+			active = false;
+			cancelAnimationFrame(rafId);
+			stopCycle();
+			el!.classList.remove('is-visible');
+		});
+	});
+}
+
+document.addEventListener('astro:page-load', initProjectPreview);
+</script>
