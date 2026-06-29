@@ -4,8 +4,6 @@
 
 @media (max-width: 920px) {
 	.ed-hero-grid { grid-template-columns: 1fr; gap: 3rem; }
-	.proj-featured { grid-template-columns: 1fr; }
-	.proj-featured .proj-visual { order: -1; }
 	.proj-row {
 		grid-template-columns: auto 1fr;
 		grid-template-areas:
@@ -20,7 +18,6 @@
 	.proj-row .r-desc { grid-area: desc; }
 	.proj-row .r-action { grid-area: action; justify-self: start; margin-top: 0.4rem; }
 	.exp-entry { grid-template-columns: 1fr; }
-	.contact-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px) {

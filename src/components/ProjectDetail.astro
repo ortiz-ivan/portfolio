@@ -19,8 +19,14 @@ interface Props {
 
 const { project, slug } = Astro.props;
 
+type ProjectData  = CollectionEntry<'projects'>['data'];
+type ProjectImage = ProjectData['images'][number];
+type ProjectLink  = ProjectData['links'][number];
+type ArchLayer    = ProjectData['caseStudy']['architecture']['layers'][number];
+type ReadyImage   = ProjectImage & { src: string };
+
 const readyImages = project.images.filter(
-	(img): img is typeof img & { src: string } => img.status === 'ready' && !!img.src
+	(img: ProjectImage): img is ReadyImage => img.status === 'ready' && !!img.src
 );
 
 const projNavItems = [
@@ -54,8 +60,12 @@ const year = new Date().getFullYear();
 								<p class="hero-narrative">{project.longDescription}</p>
 							</div>
 							<div class="cta-row">
-								{project.links.filter((l) => l.kind !== 'case-study').map((l) =>
-									l.available ? (
+								{project.links.filter((l: ProjectLink) => l.kind !== 'case-study').map((l: ProjectLink) =>
+									l.kind === 'github-private' ? (
+										<a class="btn btn-ghost" href={l.href}>
+											{l.label} <span class="arrow">↗</span>
+										</a>
+									) : l.available ? (
 										<a
 											class="btn"
 											href={l.href}
@@ -76,7 +86,7 @@ const year = new Date().getFullYear();
 						<figure class="cs-carousel reveal">
 							<div class="cs-carousel-viewport">
 								<div class="cs-carousel-track" id="cs-track">
-									{readyImages.map((img, i) => (
+									{readyImages.map((img: ReadyImage, i: number) => (
 										<div class="cs-carousel-slide" data-caption={img.caption}>
 											<div class="cs-screenshot-frame">
 												<img
@@ -120,7 +130,7 @@ const year = new Date().getFullYear();
 						<div class="meta-row">
 							<span class="meta-k">Stack</span>
 							<div class="tag-row">
-								{project.tech.map((t) => <span class="tag">{t}</span>)}
+								{project.tech.map((t: string) => <span class="tag">{t}</span>)}
 							</div>
 						</div>
 					</div>
@@ -138,8 +148,12 @@ const year = new Date().getFullYear();
 								<p class="hero-narrative">{project.longDescription}</p>
 							</div>
 							<div class="cta-row">
-								{project.links.filter((l) => l.kind !== 'case-study').map((l) =>
-									l.available ? (
+								{project.links.filter((l: ProjectLink) => l.kind !== 'case-study').map((l: ProjectLink) =>
+									l.kind === 'github-private' ? (
+										<a class="btn btn-ghost" href={l.href}>
+											{l.label} <span class="arrow">↗</span>
+										</a>
+									) : l.available ? (
 										<a
 											class="btn"
 											href={l.href}
@@ -169,7 +183,7 @@ const year = new Date().getFullYear();
 							<div class="meta-row">
 								<span class="meta-k">Stack</span>
 								<div class="tag-row">
-									{project.tech.map((t) => <span class="tag">{t}</span>)}
+									{project.tech.map((t: string) => <span class="tag">{t}</span>)}
 								</div>
 							</div>
 						</aside>
@@ -194,7 +208,7 @@ const year = new Date().getFullYear();
 				<div class="cs-split-body">
 					<p class="hero-narrative">{project.caseStudy.problem.description}</p>
 					<ol class="exp-resp">
-						{project.caseStudy.problem.points.map((p) => <li>{p}</li>)}
+						{project.caseStudy.problem.points.map((p: string) => <li>{p}</li>)}
 					</ol>
 				</div>
 			</div>
@@ -216,7 +230,7 @@ const year = new Date().getFullYear();
 				<div class="cs-split-body">
 					<p class="hero-narrative">{project.caseStudy.solution.description}</p>
 					<ol class="exp-resp">
-						{project.caseStudy.solution.points.map((p) => <li>{p}</li>)}
+						{project.caseStudy.solution.points.map((p: string) => <li>{p}</li>)}
 					</ol>
 				</div>
 			</div>
@@ -237,7 +251,7 @@ const year = new Date().getFullYear();
 				<p class="cs-arch-text">{project.caseStudy.architecture.description}</p>
 			</div>
 			<div class="cs-layers">
-				{project.caseStudy.architecture.layers.map((layer) => (
+				{project.caseStudy.architecture.layers.map((layer: ArchLayer) => (
 					<div class="cs-layer reveal">
 						<span class="cs-layer-name">{layer.name}</span>
 						<p class="cs-layer-desc">{layer.description}</p>
@@ -259,12 +273,12 @@ const year = new Date().getFullYear();
 				<div>
 					<p class="hero-narrative">{project.caseStudy.technologiesNote}</p>
 					<div class="tag-row" style="margin-top: 1.8rem;">
-						{project.tech.map((t) => <span class="tag">{t}</span>)}
+						{project.tech.map((t: string) => <span class="tag">{t}</span>)}
 					</div>
 				</div>
 				<div>
 					<ol class="exp-resp">
-						{project.technicalDecisions.map((d) => <li>{d}</li>)}
+						{project.technicalDecisions.map((d: string) => <li>{d}</li>)}
 					</ol>
 				</div>
 			</div>
@@ -280,7 +294,7 @@ const year = new Date().getFullYear();
 				<span class="rule-flex"></span>
 			</div>
 			<div class="cs-results">
-				{project.results.map((r, i) => (
+				{project.results.map((r: string, i: number) => (
 					<div class="cs-result reveal">
 						<span class="cs-result-num">{String(i + 1).padStart(2, '0')}</span>
 						<p class="cs-result-text">{r}</p>

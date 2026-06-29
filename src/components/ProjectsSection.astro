@@ -52,7 +52,7 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 									const ext = l.href.startsWith('http');
 									return (
 										<a
-											class="tlink"
+											class={`tlink${l.kind === 'github-private' ? ' tlink-private' : ''}`}
 											href={l.href}
 											target={ext ? '_blank' : undefined}
 											rel={ext ? 'noopener' : undefined}
@@ -77,6 +77,11 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 </div>
 
 <style>
+.tlink-private {
+	opacity: 0.65;
+	font-style: italic;
+}
+
 .proj-preview {
 	position: fixed;
 	top: 0;
@@ -154,12 +159,32 @@ function initProjectPreview() {
 		if (active) rafId = requestAnimationFrame(tick);
 	}
 
+	function preloadImages(srcs: string[]) {
+		srcs.forEach(src => {
+			const pre = new Image();
+			pre.src = src;
+		});
+	}
+
 	function swapImage(src: string) {
 		img!.classList.add('fading');
-		setTimeout(() => {
+
+		let fadeComplete = false;
+		let loadComplete = false;
+
+		const apply = () => {
+			if (!fadeComplete || !loadComplete) return;
 			img!.src = src;
 			img!.classList.remove('fading');
-		}, 250);
+		};
+
+		setTimeout(() => { fadeComplete = true; apply(); }, 250);
+
+		const next = new Image();
+		next.onload = () => { loadComplete = true; apply(); };
+		next.onerror = () => { loadComplete = true; apply(); };
+		next.src = src;
+		if (next.complete) { loadComplete = true; apply(); }
 	}
 
 	function startCycle(images: string[]) {
@@ -199,6 +224,7 @@ function initProjectPreview() {
 			currentX = targetX;
 			currentY = targetY;
 
+			preloadImages(images);
 			startCycle(images);
 
 			active = true;

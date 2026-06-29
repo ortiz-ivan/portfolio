@@ -17,9 +17,14 @@
     "astro": "^6.1.8"
   },
   "devDependencies": {
-    "sharp": "^0.35.2"
+    "@astrojs/check": "^0.9.9",
+    "sharp": "^0.35.2",
+    "typescript": "^6.0.3"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["sharp", "esbuild"]
+    "onlyBuiltDependencies": [
+      "sharp",
+      "esbuild"
+    ]
   }
 }

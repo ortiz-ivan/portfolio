@@ -4,7 +4,7 @@ import { glob } from 'astro/loaders';
 const projectLink = z.object({
 	label: z.string(),
 	href: z.string(),
-	kind: z.enum(['demo', 'github', 'case-study']),
+	kind: z.enum(['demo', 'github', 'github-private', 'case-study']),
 	available: z.boolean()
 });
 

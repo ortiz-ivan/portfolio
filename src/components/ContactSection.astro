@@ -129,6 +129,15 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 </section>
 
 <script>
+	function prefillFromRef() {
+		const ref = new URLSearchParams(window.location.search).get('ref');
+		if (ref !== 'kairos') return;
+		const textarea = document.getElementById('f-message') as HTMLTextAreaElement | null;
+		if (textarea && !textarea.value) {
+			textarea.value = 'Hola Iván, vi tu portfolio y me gustaría acceder al código de Kairos. ¿Podés compartirme el repositorio?';
+		}
+	}
+
 	function initContactForm() {
 		const form = document.getElementById('contactForm') as HTMLFormElement | null;
 		const submitBtn = document.getElementById('formSubmit') as HTMLButtonElement | null;
@@ -161,5 +170,8 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 		});
 	}
 
-	document.addEventListener('astro:page-load', initContactForm);
+	document.addEventListener('astro:page-load', () => {
+		prefillFromRef();
+		initContactForm();
+	});
 </script>
