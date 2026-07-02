@@ -1,4 +1,22 @@
 /* base reset — no theme, no colors, no fonts */
+.skip-nav {
+	position: absolute;
+	top: -100%;
+	left: 1rem;
+	z-index: 9999;
+	padding: 0.75rem 1.25rem;
+	background: #100f0d;
+	color: #f2f0eb;
+	font-size: 0.875rem;
+	font-weight: 600;
+	text-decoration: none;
+	border-radius: 0 0 6px 6px;
+	transition: top 0.15s ease;
+}
+.skip-nav:focus {
+	top: 0;
+}
+
 *, *::before, *::after {
 	box-sizing: border-box;
 }

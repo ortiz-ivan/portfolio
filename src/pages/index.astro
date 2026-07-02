@@ -38,14 +38,15 @@ const navItems = [
 </Layout>
 
 <script>
-	// Scrollspy — home only
+	let spyObserver: IntersectionObserver | null = null;
+
 	function initScrollspy() {
 		const ids = ['sobre-mi', 'projects', 'experience', 'contact'];
 		const sections = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
 		if (sections.length === 0) return;
 
 		const navLinkEls = Array.from(document.querySelectorAll<HTMLAnchorElement>('.nav-link'));
-		const spy = new IntersectionObserver(
+		spyObserver = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((e) => {
 					if (e.isIntersecting) {
@@ -57,7 +58,12 @@ const navItems = [
 			},
 			{ rootMargin: '-45% 0px -50% 0px', threshold: 0 }
 		);
-		sections.forEach((s) => spy.observe(s));
+		sections.forEach((s) => spyObserver!.observe(s));
 	}
+
+	document.addEventListener('astro:before-swap', () => {
+		spyObserver?.disconnect();
+		spyObserver = null;
+	});
 	document.addEventListener('astro:page-load', initScrollspy);
 </script>

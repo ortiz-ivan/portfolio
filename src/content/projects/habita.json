@@ -5,22 +5,17 @@
 	"isFeatured": false,
 	"summary": "Aplicación full-stack para administrar edificios de alquiler: habitaciones, inquilinos, contratos y pagos.",
 	"longDescription": "Sistema interno de gestión de propiedades residenciales construido con React y Django. Cubre el ciclo completo: registrar unidades, asignar inquilinos, generar contratos y hacer seguimiento de pagos con estados de mora.",
-	"highlight": "Proyecto que muestra criterio en arquitectura full-stack, modelado de dominio y UX funcional sin ornamentación.",
+	"highlight": "Backend con 7 modelos relacionados (incluida una tabla de auditoría), autenticación JWT con rotación de tokens, y un frontend en repo separado que consume la API vía Docker Compose.",
 	"tech": ["React 19", "Django 5", "PostgreSQL", "React Query", "Tailwind CSS", "JWT"],
-	"features": [
-		"Panel de control con métricas de unidades vacantes, contratos activos y pagos vencidos.",
-		"Flujo completo de gestión: habitaciones → contratos → pagos, con estados y filtros.",
-		"Autenticación JWT con refresh automático de tokens y rutas protegidas."
-	],
-	"technicalDecisions": [
-		"Separación estricta de settings por entorno (base / local / producción) en Django.",
-		"React Query como capa de estado del servidor con invalidación de caché por mutación.",
-		"Capa de servicios HTTP por dominio para mantener los componentes sin lógica de red."
+"technicalDecisions": [
+		"Refresh token rotado en cookie httpOnly con SameSite=Strict; el access token vive solo en memoria (Zustand) y nunca toca almacenamiento persistente, para reducir superficie de robo ante XSS.",
+		"Sincronización entre dominios: un servicio dedicado actualiza el estado ocupado/disponible de la habitación cuando cambia el contrato asociado, en vez de depender de queries manuales.",
+		"El estado de mora se recalcula con un management command (`marcar_morosos`, con soporte `--dry-run`) que revisa contratos activos con pagos vencidos, pensado para ejecutarse manualmente o vía scheduler externo."
 	],
 	"results": [
-		"Demuestra capacidad de diseñar y construir un producto funcional de principio a fin.",
-		"Evidencia criterio de arquitectura en un stack moderno y profesional.",
-		"Muestra que podés modelar dominio real con relaciones no triviales (habitación → contrato → pago)."
+		"83 tests de backend + 102 de frontend corriendo en CI, con cobertura mínima del 60%.",
+		"Invalidación de caché consciente del dominio en React Query: pagar una cuota también invalida el contrato asociado (por el recálculo de garantía) y actualiza la disponibilidad de la habitación en el dashboard.",
+		"Modelo de dominio con 7 entidades relacionadas —incluida una tabla de auditoría (AuditLog)— para trazabilidad completa del ciclo habitación → contrato → pago."
 	],
 	"caseStudy": {
 		"problem": {

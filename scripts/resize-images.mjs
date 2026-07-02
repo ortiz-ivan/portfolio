@@ -1,12 +1,23 @@
+// @ts-check
 import sharp from 'sharp';
 import { readdirSync, existsSync } from 'fs';
 import { join, extname, basename } from 'path';
 
+/** @type {string} */
 const IMAGES_DIR = './public/images';
+
+/** @type {number[]} */
 const WIDTHS = [640];
+
+/** @type {Set<string>} */
 const EXTS = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 
+/**
+ * @param {string} dir
+ * @returns {Promise<void>}
+ */
 async function processDir(dir) {
+	/** @type {import('fs').Dirent[]} */
 	let entries;
 	try {
 		entries = readdirSync(dir, { withFileTypes: true });
@@ -24,7 +35,7 @@ async function processDir(dir) {
 		if (!EXTS.has(ext)) continue;
 
 		const base = basename(entry.name, ext);
-		// Skip already-generated files (name ends in -NNN)
+		// Skip already-generated variants (name ends in -NNN)
 		if (/-\d+$/.test(base)) continue;
 
 		for (const w of WIDTHS) {

@@ -55,7 +55,7 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 											class={`tlink${l.kind === 'github-private' ? ' tlink-private' : ''}`}
 											href={l.href}
 											target={ext ? '_blank' : undefined}
-											rel={ext ? 'noopener' : undefined}
+											rel={ext ? 'noopener noreferrer' : undefined}
 										>
 											{l.label} <span class="arrow">↗</span>
 										</a>
@@ -120,20 +120,25 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 </style>
 
 <script>
+let cycleTimer = 0;
+let rafId = 0;
+let active = false;
+
+function stopCycle() {
+	clearInterval(cycleTimer);
+	cycleTimer = 0;
+}
+
 function initProjectPreview() {
 	const el = document.getElementById('proj-preview');
 	const img = document.getElementById('proj-preview-img') as HTMLImageElement | null;
 	if (!el || !img) return;
 
 	const OFFSET_X = 28;
-	const OFFSET_Y = 101; // half of 360 * 9/16
+	const OFFSET_Y = 101;
 
 	let targetX = 0, targetY = 0;
 	let currentX = 0, currentY = 0;
-	let rafId = 0;
-	let active = false;
-
-	let cycleTimer = 0;
 	let cycleIndex = 0;
 	let currentImages: string[] = [];
 
@@ -201,11 +206,6 @@ function initProjectPreview() {
 		}, 3000);
 	}
 
-	function stopCycle() {
-		clearInterval(cycleTimer);
-		cycleTimer = 0;
-	}
-
 	const rows = document.querySelectorAll<HTMLElement>('.proj-row[data-preview-images]');
 
 	rows.forEach((row) => {
@@ -248,5 +248,10 @@ function initProjectPreview() {
 	});
 }
 
+document.addEventListener('astro:before-swap', () => {
+	stopCycle();
+	cancelAnimationFrame(rafId);
+	active = false;
+});
 document.addEventListener('astro:page-load', initProjectPreview);
 </script>

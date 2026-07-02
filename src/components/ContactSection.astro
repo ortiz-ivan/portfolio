@@ -107,7 +107,7 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 								class="contact-v"
 								href={item.href}
 								target={external ? '_blank' : undefined}
-								rel={external ? 'noopener' : undefined}
+								rel={external ? 'noopener noreferrer' : undefined}
 							>
 								{item.value} <span class="arrow">↗</span>
 							</a>
@@ -145,10 +145,14 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 		const successEl = document.getElementById('formSuccess');
 		if (!form || !submitBtn || !errorEl || !successEl) return;
 
+		const btnTextNode = submitBtn.firstChild as Text;
+
 		form.addEventListener('submit', async (e) => {
 			e.preventDefault();
 			submitBtn.disabled = true;
-			submitBtn.innerHTML = 'Enviando… <span class="arrow" aria-hidden="true">↗</span>';
+			submitBtn.setAttribute('aria-disabled', 'true');
+			form.setAttribute('aria-busy', 'true');
+			btnTextNode.nodeValue = 'Enviando… ';
 			errorEl.textContent = '';
 
 			try {
@@ -165,7 +169,9 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 				errorEl.textContent =
 					'Algo salió mal. Intentá de nuevo o escribime directamente por email.';
 				submitBtn.disabled = false;
-				submitBtn.innerHTML = 'Enviar mensaje <span class="arrow" aria-hidden="true">↗</span>';
+				submitBtn.removeAttribute('aria-disabled');
+				form.removeAttribute('aria-busy');
+				btnTextNode.nodeValue = 'Enviar mensaje ';
 			}
 		});
 	}

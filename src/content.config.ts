@@ -20,14 +20,13 @@ const projects = defineCollection({
 	loader: glob({ pattern: '*.json', base: './src/content/projects' }),
 	schema: z.object({
 		name: z.string(),
-		priority: z.union([z.literal(1), z.literal(2), z.literal(3)]),
+		priority: z.number().int().positive(),
 		eyebrow: z.string(),
 		isFeatured: z.boolean(),
 		summary: z.string(),
 		longDescription: z.string(),
 		highlight: z.string(),
 		tech: z.array(z.string()),
-		features: z.array(z.string()),
 		technicalDecisions: z.array(z.string()),
 		results: z.array(z.string()),
 		caseStudy: z.object({

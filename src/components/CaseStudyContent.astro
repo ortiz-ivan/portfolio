@@ -1,0 +1,151 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+type ProjectData = CollectionEntry<'projects'>['data'];
+type ArchLayer   = ProjectData['caseStudy']['architecture']['layers'][number];
+
+interface Props {
+	project: ProjectData;
+}
+
+const { project } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<!-- 01 — PROBLEMA -->
+<section class="ed-section">
+	<div class="wrap">
+		<div class="sec-head reveal">
+			<span class="sec-num">(01)</span>
+			<span class="sec-label">Problema</span>
+			<span class="rule-flex"></span>
+		</div>
+		<div class="cs-split reveal">
+			<div class="cs-split-head">
+				<h2 class="cs-split-title">{project.caseStudy.problem.title}</h2>
+			</div>
+			<div class="cs-split-body">
+				<p class="hero-narrative">{project.caseStudy.problem.description}</p>
+				<ol class="exp-resp">
+					{project.caseStudy.problem.points.map((p: string) => <li>{p}</li>)}
+				</ol>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- 02 — SOLUCIÓN -->
+<section class="ed-section">
+	<div class="wrap">
+		<div class="sec-head reveal">
+			<span class="sec-num">(02)</span>
+			<span class="sec-label">Solución</span>
+			<span class="rule-flex"></span>
+		</div>
+		<div class="cs-split reveal">
+			<div class="cs-split-head">
+				<h2 class="cs-split-title">{project.caseStudy.solution.title}</h2>
+			</div>
+			<div class="cs-split-body">
+				<p class="hero-narrative">{project.caseStudy.solution.description}</p>
+				<ol class="exp-resp">
+					{project.caseStudy.solution.points.map((p: string) => <li>{p}</li>)}
+				</ol>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- 03 — ARQUITECTURA -->
+<section class="ed-section">
+	<div class="wrap">
+		<div class="sec-head reveal">
+			<span class="sec-num">(03)</span>
+			<span class="sec-label">Arquitectura</span>
+			<span class="rule-flex"></span>
+		</div>
+		<div class="cs-arch-intro reveal">
+			<h2 class="cs-arch-title">{project.caseStudy.architecture.title}</h2>
+			<p class="cs-arch-text">{project.caseStudy.architecture.description}</p>
+		</div>
+		<div class="cs-layers">
+			{project.caseStudy.architecture.layers.map((layer: ArchLayer) => (
+				<div class="cs-layer reveal">
+					<span class="cs-layer-name">{layer.name}</span>
+					<p class="cs-layer-desc">{layer.description}</p>
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<!-- 04 — STACK Y DECISIONES -->
+<section class="ed-section">
+	<div class="wrap">
+		<div class="sec-head reveal">
+			<span class="sec-num">(04)</span>
+			<span class="sec-label">Stack y decisiones</span>
+			<span class="rule-flex"></span>
+		</div>
+		<div class="cs-tech-grid reveal">
+			<div>
+				<p class="hero-narrative">{project.caseStudy.technologiesNote}</p>
+				<div class="tag-row" style="margin-top: 1.8rem;">
+					{project.tech.map((t: string) => <span class="tag">{t}</span>)}
+				</div>
+			</div>
+			<div>
+				<ol class="exp-resp">
+					{project.technicalDecisions.map((d: string) => <li>{d}</li>)}
+				</ol>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- 05 — RESULTADOS -->
+<section class="ed-section">
+	<div class="wrap">
+		<div class="sec-head reveal">
+			<span class="sec-num">(05)</span>
+			<span class="sec-label">Resultados</span>
+			<span class="rule-flex"></span>
+		</div>
+		<div class="cs-results">
+			{project.results.map((r: string, i: number) => (
+				<div class="cs-result reveal">
+					<span class="cs-result-num">{String(i + 1).padStart(2, '0')}</span>
+					<p class="cs-result-text">{r}</p>
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<!-- 06 — CTA / FOOTER -->
+<section class="contact">
+	<div class="wrap">
+		<div class="sec-head reveal">
+			<span class="sec-num">(06)</span>
+			<span class="sec-label">Siguiente paso</span>
+			<span class="rule-flex"></span>
+		</div>
+
+		<h2 class="contact-head display reveal">
+			¿Hablamos sobre una oportunidad similar?
+		</h2>
+
+		<div class="cta-row reveal">
+			<a class="btn" href="/">Inicio <span class="arrow">↗</span></a>
+			<a class="btn btn-ghost" href="/#contact">Contactar <span class="arrow">↗</span></a>
+		</div>
+
+		<footer class="footer">
+			<p class="footer-copy">Diseñado y construido con criterio técnico por Iván Ortiz.</p>
+			<div class="footer-meta">
+				<a class="footer-top" href="#top">Volver arriba <span class="arrow">↑</span></a>
+				<div class="footer-year">© {year} · Iván Ortiz</div>
+			</div>
+		</footer>
+	</div>
+</section>

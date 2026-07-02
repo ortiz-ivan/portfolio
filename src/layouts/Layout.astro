@@ -46,6 +46,7 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content={ogImageURL} />
+		<meta property="og:image:alt" content="Iván Ortiz — Fullstack Developer" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 		<meta property="og:locale" content="es_PY" />
@@ -57,22 +58,51 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 		<meta name="twitter:image" content={ogImageURL} />
 
 		<title>{title}</title>
+
+		<!-- Datos estructurados -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			'@context': 'https://schema.org',
+			'@graph': [
+				{
+					'@type': 'Person',
+					'@id': `${Astro.site}#person`,
+					name: 'Iván Ortiz',
+					jobTitle: 'Fullstack Developer',
+					url: Astro.site,
+					sameAs: [
+						'https://www.linkedin.com/in/ortiz-ivan08/',
+						'https://github.com/ortiz-ivan'
+					],
+					description: 'Desarrollador fullstack enfocado en sistemas de gestión, automatización e integraciones para operaciones reales.'
+				},
+				{
+					'@type': 'WebSite',
+					'@id': `${Astro.site}#website`,
+					url: Astro.site,
+					name: 'Iván Ortiz | Fullstack Developer',
+					author: { '@id': `${Astro.site}#person` }
+				}
+			]
+		})} />
+
 		<ClientRouter />
 	</head>
 	<body>
+		<a class="skip-nav" href="#top">Saltar al contenido</a>
 		<slot />
 		<script>
+			let revealObserver: IntersectionObserver | null = null;
+
 			function initReveal() {
 				const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 				const els = Array.from(document.querySelectorAll<HTMLElement>('.reveal:not(.in)'));
 				if (reduce) { els.forEach((el) => el.classList.add('in')); return; }
 
-				const STAGGER = 70;    // ms entre elementos del mismo batch
-				const DURATION = 750;  // debe coincidir con la transition del CSS
+				const STAGGER = 70;
+				const DURATION = 750;
 
-				const ro = new IntersectionObserver(
+				revealObserver = new IntersectionObserver(
 					(entries) => {
-						// Ordenar las entradas visibles por posición en el DOM
 						const batch = entries
 							.filter((e) => e.isIntersecting)
 							.map((e) => e.target as HTMLElement)
@@ -84,8 +114,7 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 							const delay = i * STAGGER;
 							el.style.transitionDelay = `${delay}ms`;
 							el.classList.add('in');
-							ro.unobserve(el);
-							// Limpiar el delay para no interferir con hovers futuros
+							revealObserver!.unobserve(el);
 							if (delay > 0) {
 								setTimeout(() => { el.style.transitionDelay = ''; }, delay + DURATION);
 							}
@@ -94,8 +123,13 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 					{ rootMargin: '0px 0px -8% 0px', threshold: 0.06 }
 				);
 
-				els.forEach((el) => ro.observe(el));
+				els.forEach((el) => revealObserver!.observe(el));
 			}
+
+			document.addEventListener('astro:before-swap', () => {
+				revealObserver?.disconnect();
+				revealObserver = null;
+			});
 			document.addEventListener('astro:page-load', initReveal);
 		</script>
 	</body>

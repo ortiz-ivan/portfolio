@@ -91,7 +91,7 @@ export const contactSection: ContactSection = {
 			href: 'https://www.linkedin.com/in/ortiz-ivan08/',
 			description: 'Perfil profesional y recorrido técnico.'
 		},
-{
+		{
 			label: 'GitHub',
 			value: 'ortiz-ivan',
 			href: 'https://github.com/ortiz-ivan',

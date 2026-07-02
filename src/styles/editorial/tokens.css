@@ -218,10 +218,9 @@
 	background: var(--accent-bg);
 	color: var(--accent-fg);
 	transition: transform 0.3s var(--ease), background 0.3s var(--ease), color 0.3s var(--ease);
-	will-change: transform;
 }
 .btn .arrow { transition: transform 0.35s var(--ease); }
-.btn:hover { transform: translateY(-2px); }
+.btn:hover { will-change: transform; transform: translateY(-2px); }
 .btn:hover .arrow { transform: translate(3px, -3px); }
 
 .btn-ghost {

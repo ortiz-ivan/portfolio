@@ -1,0 +1,88 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { existsSync } from 'fs';
+import { join } from 'path';
+
+type ProjectData  = CollectionEntry<'projects'>['data'];
+type ProjectImage = ProjectData['images'][number];
+type ReadyImage   = ProjectImage & { src: string };
+
+interface Props {
+	images: ReadyImage[];
+}
+
+const { images } = Astro.props;
+
+function buildSrcset(src: string): string {
+	const dot = src.lastIndexOf('.');
+	if (dot < 0) return src;
+	const base = src.slice(0, dot);
+	const ext  = src.slice(dot);
+	const variant640 = `${base}-640${ext}`;
+	const variantPath = join('public', variant640);
+	if (!existsSync(variantPath)) return `${src} 924w`;
+	return `${variant640} 640w, ${src} 924w`;
+}
+---
+
+<figure class="cs-carousel reveal">
+	<div class="cs-carousel-viewport">
+		<div class="cs-carousel-track" id="cs-track">
+			{images.map((img, i) => (
+				<div class="cs-carousel-slide" data-caption={img.caption}>
+					<div class="cs-screenshot-frame">
+						<img
+							src={img.src}
+							srcset={buildSrcset(img.src)}
+							sizes="(max-width: 920px) calc(100vw - 2.5rem), min(54vw, 680px)"
+							alt={img.alt}
+							loading={i === 0 ? 'eager' : 'lazy'}
+							width="924"
+							height="540"
+						/>
+					</div>
+				</div>
+			))}
+		</div>
+	</div>
+	<div class="cs-carousel-footer">
+		<figcaption class="cs-screenshot-caption" id="cs-caption">
+			{images[0].caption}
+		</figcaption>
+		{images.length > 1 && (
+			<div class="cs-carousel-controls">
+				<button class="cs-carousel-btn" id="cs-prev" aria-label="Anterior">←</button>
+				<span class="cs-carousel-counter" id="cs-counter">1 / {images.length}</span>
+				<button class="cs-carousel-btn" id="cs-next" aria-label="Siguiente">→</button>
+			</div>
+		)}
+	</div>
+</figure>
+
+<script>
+	function initCaseStudyCarousel() {
+		const track    = document.getElementById('cs-track') as HTMLElement | null;
+		const captionEl = document.getElementById('cs-caption');
+		const counterEl = document.getElementById('cs-counter');
+		const prevBtn  = document.getElementById('cs-prev');
+		const nextBtn  = document.getElementById('cs-next');
+
+		if (!track) return;
+
+		const slides = Array.from(track.querySelectorAll<HTMLElement>('.cs-carousel-slide'));
+		const total  = slides.length;
+		let current  = 0;
+
+		function goTo(index: number) {
+			current = ((index % total) + total) % total;
+			track!.style.transform = `translateX(-${current * 100}%)`;
+			if (captionEl) captionEl.textContent = slides[current].dataset.caption ?? '';
+			if (counterEl) counterEl.textContent = `${current + 1} / ${total}`;
+		}
+
+		prevBtn?.addEventListener('click', () => goTo(current - 1));
+		nextBtn?.addEventListener('click', () => goTo(current + 1));
+	}
+
+	document.addEventListener('astro:page-load', initCaseStudyCarousel);
+</script>

@@ -17,12 +17,7 @@
 		"Vitest",
 		"pytest"
 	],
-	"features": [
-		"Dashboard operativo con alertas de stock bajo, productos próximos a vencer y gasto mensual estimado.",
-		"Módulo financiero con ingresos, gastos fijos, gastos variables, eventos auditables y cierre mensual.",
-		"Configuración dinámica de categorías, unidades, alertas, moneda y buckets presupuestarios para adaptar reglas sin tocar código."
-	],
-	"technicalDecisions": [
+"technicalDecisions": [
 		"Separó el dominio en configuración, compras, gastos y reportes para mantener entidades y servicios acotados pero conectados.",
 		"La configuración operativa se centraliza en un singleton editable para que categorías, ratios y umbrales no dependan de hardcodes.",
 		"Los reportes combinan estimaciones de inventario, gastos reales e ingresos para dar una lectura mensual útil sin sobredimensionar el sistema."

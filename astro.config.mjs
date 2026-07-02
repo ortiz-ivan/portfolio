@@ -6,5 +6,6 @@ const SITE_URL = 'https://ortizivandev.netlify.app';
 
 export default defineConfig({
 	site: SITE_URL,
+	output: 'static',
 	integrations: [sitemap()]
 });

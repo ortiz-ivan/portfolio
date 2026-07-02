@@ -1,0 +1,140 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import CaseStudyCarousel from './CaseStudyCarousel.astro';
+
+type ProjectData  = CollectionEntry<'projects'>['data'];
+type ProjectImage = ProjectData['images'][number];
+type ProjectLink  = ProjectData['links'][number];
+type ReadyImage   = ProjectImage & { src: string };
+
+interface Props {
+	project: ProjectData;
+	slug: string;
+}
+
+const { project, slug } = Astro.props;
+
+const readyImages = project.images.filter(
+	(img: ProjectImage): img is ReadyImage => img.status === 'ready' && !!img.src
+);
+---
+
+<section class="ed-hero">
+	<div class="wrap">
+		<div class="hero-top reveal">
+			<span class="ed-eyebrow"><span class="dot"></span>{project.eyebrow}</span>
+			<a class="tlink" href="/#projects">← Todos los proyectos <span class="arrow">↗</span></a>
+		</div>
+
+		{readyImages.length > 0 ? (
+			<>
+				<div class="cs-proj-hero-grid">
+					<div class="cs-hero-left reveal">
+						<h1 class="hero-title display" transition:name={`proj-name-${slug}`}>
+							<span class="line">{project.name}</span>
+						</h1>
+						<p class="hero-intro">{project.summary}</p>
+						<div class="hero-narr-wrap">
+							<p class="hero-narrative">{project.longDescription}</p>
+						</div>
+						<div class="cta-row">
+							{project.links.filter((l: ProjectLink) => l.kind !== 'case-study').map((l: ProjectLink) =>
+								l.kind === 'github-private' ? (
+									<a class="btn btn-ghost" href={l.href}>
+										{l.label} <span class="arrow">↗</span>
+									</a>
+								) : l.available ? (
+									<a
+										class="btn"
+										href={l.href}
+										target={l.href.startsWith('http') ? '_blank' : undefined}
+										rel={l.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+									>
+										{l.label} <span class="arrow">↗</span>
+									</a>
+								) : (
+									<span class="btn btn-ghost" style="opacity:0.4;cursor:default">
+										{l.label} · pronto
+									</span>
+								)
+							)}
+						</div>
+					</div>
+
+					<CaseStudyCarousel images={readyImages} />
+				</div>
+
+				<div class="cs-proj-hero-meta reveal">
+					<div class="meta-row">
+						<span class="meta-k">Propósito</span>
+						<span class="meta-v">{project.highlight}</span>
+					</div>
+					<div class="meta-row">
+						<span class="meta-k">Resultado clave</span>
+						<span class="meta-v">{project.results[0]}</span>
+					</div>
+					<div class="meta-row">
+						<span class="meta-k">Stack</span>
+						<div class="tag-row">
+							{project.tech.map((t: string) => <span class="tag">{t}</span>)}
+						</div>
+					</div>
+				</div>
+			</>
+		) : (
+			<>
+				<h1 class="hero-title display reveal" transition:name={`proj-name-${slug}`}>
+					<span class="line">{project.name}</span>
+				</h1>
+
+				<div class="ed-hero-grid">
+					<div class="ed-hero-copy reveal">
+						<p class="hero-intro">{project.summary}</p>
+						<div class="hero-narr-wrap">
+							<p class="hero-narrative">{project.longDescription}</p>
+						</div>
+						<div class="cta-row">
+							{project.links.filter((l: ProjectLink) => l.kind !== 'case-study').map((l: ProjectLink) =>
+								l.kind === 'github-private' ? (
+									<a class="btn btn-ghost" href={l.href}>
+										{l.label} <span class="arrow">↗</span>
+									</a>
+								) : l.available ? (
+									<a
+										class="btn"
+										href={l.href}
+										target={l.href.startsWith('http') ? '_blank' : undefined}
+										rel={l.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+									>
+										{l.label} <span class="arrow">↗</span>
+									</a>
+								) : (
+									<span class="btn btn-ghost" style="opacity:0.4;cursor:default">
+										{l.label} · pronto
+									</span>
+								)
+							)}
+						</div>
+					</div>
+
+					<aside class="hero-meta reveal">
+						<div class="meta-row">
+							<span class="meta-k">Propósito</span>
+							<span class="meta-v">{project.highlight}</span>
+						</div>
+						<div class="meta-row">
+							<span class="meta-k">Resultado clave</span>
+							<span class="meta-v">{project.results[0]}</span>
+						</div>
+						<div class="meta-row">
+							<span class="meta-k">Stack</span>
+							<div class="tag-row">
+								{project.tech.map((t: string) => <span class="tag">{t}</span>)}
+							</div>
+						</div>
+					</aside>
+				</div>
+			</>
+		)}
+	</div>
+</section>

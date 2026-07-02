@@ -1,18 +1,13 @@
 {
 	"name": "Kairos",
 	"priority": 1,
-	"eyebrow": "Caso de estudio principal",
+	"eyebrow": "Sistema de gestión comercial",
 	"isFeatured": true,
 	"summary": "Sistema de gestión empresarial con control de ventas, inventario, reportes y roles.",
 	"longDescription": "Sistema completo para operaciones comerciales, pensado para centralizar ventas, stock y trazabilidad interna en una arquitectura desacoplada.",
 	"highlight": "Proyecto estrella para mostrar criterio técnico y valor real de negocio.",
 	"tech": ["Django REST", "React", "PostgreSQL", "Roles y permisos"],
-	"features": [
-		"Sistema de roles y permisos por tipo de usuario.",
-		"CRUD completo para clientes, productos y ventas.",
-		"Reportes operativos para seguimiento comercial y control interno."
-	],
-	"technicalDecisions": [
+"technicalDecisions": [
 		"Arquitectura basada en APIs REST desacopladas para separar frontend y backend.",
 		"Manejo de estado en frontend para mantener una interfaz fluida sobre flujos de negocio complejos.",
 		"Diseño modular para escalar nuevas entidades y reportes sin rehacer el sistema."
