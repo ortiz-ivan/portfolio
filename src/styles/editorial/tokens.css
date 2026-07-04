@@ -32,6 +32,7 @@
 
 	/* Warm near-black monochrome ramp */
 	--bg:          #100f0d;
+	--bg-rgb:      16, 15, 13;
 	--bg-2:        #161513;
 	--surface:     #1a1916;
 	--line:        rgba(244, 242, 238, 0.10);
@@ -42,6 +43,7 @@
 	--text-2: #c8c4bc;
 	--muted:  #8f8b82;
 	--faint:  #5f5c55;
+	--error:  #c87070;
 
 	--accent-bg: #f4f2ee;
 	--accent-fg: #100f0d;
@@ -231,6 +233,11 @@
 .btn-ghost:hover {
 	background: rgba(244, 242, 238, 0.05);
 	border-color: var(--text);
+}
+
+.btn--unavailable {
+	opacity: 0.4;
+	cursor: default;
 }
 
 /* ---------- Text link with arrow ---------- */

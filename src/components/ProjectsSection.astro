@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import '../styles/editorial-project.css';
+import { getLocalImage } from '../lib/images';
 
 interface Props {
 	featured: CollectionEntry<'projects'> | undefined;
@@ -14,11 +14,11 @@ const allProjects = [...(featured ? [featured] : []), ...rest];
 function projectImages(entry: CollectionEntry<'projects'>): string[] {
 	return entry.data.images
 		.filter((img): img is typeof img & { src: string } => img.status === 'ready' && !!img.src)
-		.map((img) => img.src);
+		.map((img) => getLocalImage(img.src)?.src ?? img.src);
 }
 ---
 
-<section class="ed-section" id="projects" data-screen-label="Proyectos">
+<section class="ed-section" id="projects">
 	<div class="wrap">
 		<div class="sec-head reveal">
 			<span class="sec-num">(02)</span>
@@ -134,8 +134,9 @@ function initProjectPreview() {
 	const img = document.getElementById('proj-preview-img') as HTMLImageElement | null;
 	if (!el || !img) return;
 
+	const W = 360, H = 202;
 	const OFFSET_X = 28;
-	const OFFSET_Y = 101;
+	const OFFSET_Y = Math.round(W * 9 / 16 / 2);
 
 	let targetX = 0, targetY = 0;
 	let currentX = 0, currentY = 0;
@@ -152,7 +153,6 @@ function initProjectPreview() {
 
 		const vw = window.innerWidth;
 		const vh = window.innerHeight;
-		const W = 360, H = 202;
 
 		let x = currentX + OFFSET_X;
 		let y = currentY - OFFSET_Y;

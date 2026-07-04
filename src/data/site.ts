@@ -36,7 +36,6 @@ export interface ExperienceSection {
 }
 
 export interface ContactSection {
-	title?: string;
 	items: ContactItem[];
 }
 
@@ -59,7 +58,7 @@ export const heroContent: HeroContent = {
 	},
 	secondaryCta: {
 		label: 'Descargar CV',
-		href: '/ivanortiz_cv_2026.pdf',
+		href: '/ivan-ortiz-cv.pdf',
 		download: true
 	}
 };

@@ -1,5 +1,7 @@
 /* ============================================================
    responsive.css — breakpoints del sistema editorial
+   Punto de control único: todo @media (max-width) del proyecto
+   vive en este archivo. Breakpoints activos: 920px, 860px, 760px, 600px.
    ============================================================ */
 
 @media (max-width: 920px) {
@@ -33,7 +35,7 @@
 		right: 0;
 		flex-direction: column;
 		gap: 0;
-		background: rgba(16, 15, 13, 0.96);
+		background: rgba(var(--bg-rgb), 0.96);
 		backdrop-filter: blur(16px);
 		border-bottom: 1px solid var(--line);
 		padding: 0.5rem var(--gutter) 1rem;
@@ -67,6 +69,57 @@
 	/* Footer mobile */
 	.footer { flex-direction: column; gap: 2rem; }
 	.footer-meta { text-align: left; }
+}
+
+@media (max-width: 860px) {
+	.cs-split,
+	.cs-tech-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.cs-split-head {
+		position: static;
+	}
+
+	.cs-layer {
+		grid-template-columns: 1fr;
+		gap: 0.5rem;
+	}
+
+	.cs-proj-hero-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.cs-proj-hero-meta {
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+
+	.cs-proj-hero-meta .meta-row {
+		border-right: 0;
+		padding-left: 0;
+		padding-right: 0;
+		padding-bottom: 1.5rem;
+		border-bottom: 1px solid var(--line);
+	}
+
+	.cs-proj-hero-meta .meta-row:last-child {
+		border-bottom: 0;
+		padding-bottom: 0;
+	}
+}
+
+@media (max-width: 760px) {
+	.contact-layout {
+		grid-template-columns: 1fr;
+	}
+	.contact-links {
+		border-top: none;
+		border-bottom: 1px solid var(--line);
+		padding-bottom: clamp(1.5rem, 3vw, 2.2rem);
+	}
+	.contact-links-label { padding-top: 0; }
+	.form-row { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {

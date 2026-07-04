@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ortizivandev.netlify.app/sitemap-index.xml
+Sitemap: https://ivanortiz.dev/sitemap-index.xml

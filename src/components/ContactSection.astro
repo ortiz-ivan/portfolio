@@ -12,7 +12,7 @@ const year = new Date().getFullYear();
 const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 ---
 
-<section class="contact" id="contact" data-screen-label="Contacto">
+<section class="contact" id="contact">
 	<div class="wrap">
 		<div class="sec-head reveal">
 			<span class="sec-num">(04)</span>
@@ -35,7 +35,7 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 					<input type="hidden" name="access_key" value={w3fKey} />
 					<input type="hidden" name="subject" value="Nuevo mensaje desde el portfolio" />
 					<input type="hidden" name="from_name" value="Portfolio Contact" />
-					<input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+					<input type="checkbox" name="botcheck" class="form-honeypot" tabindex="-1" autocomplete="off" />
 
 					<div class="form-row">
 						<div class="form-field">

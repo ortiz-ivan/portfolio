@@ -202,7 +202,7 @@ a.contact-v:hover, button.contact-v:hover { color: var(--text-2); }
 .form-error {
 	font-family: var(--font-mono);
 	font-size: 0.76rem;
-	color: #c87070;
+	color: var(--error);
 	line-height: 1.55;
 	max-width: 46ch;
 }
@@ -257,15 +257,4 @@ a.contact-v:hover, button.contact-v:hover { color: var(--text-2); }
 	max-width: 52ch;
 }
 
-@media (max-width: 760px) {
-	.contact-layout {
-		grid-template-columns: 1fr;
-	}
-	.contact-links {
-		border-top: none;
-		border-bottom: 1px solid var(--line);
-		padding-bottom: clamp(1.5rem, 3vw, 2.2rem);
-	}
-	.contact-links-label { padding-top: 0; }
-	.form-row { grid-template-columns: 1fr; }
-}
+/* Responsive: ver src/styles/editorial/responsive.css (punto de control único de breakpoints) */

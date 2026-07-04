@@ -267,41 +267,4 @@
 	text-align: center;
 }
 
-/* ---------- Responsive ---------- */
-@media (max-width: 860px) {
-	.cs-split,
-	.cs-tech-grid {
-		grid-template-columns: 1fr;
-	}
-
-	.cs-split-head {
-		position: static;
-	}
-
-	.cs-layer {
-		grid-template-columns: 1fr;
-		gap: 0.5rem;
-	}
-
-	.cs-proj-hero-grid {
-		grid-template-columns: 1fr;
-	}
-
-	.cs-proj-hero-meta {
-		grid-template-columns: 1fr;
-		gap: 1.5rem;
-	}
-
-	.cs-proj-hero-meta .meta-row {
-		border-right: 0;
-		padding-left: 0;
-		padding-right: 0;
-		padding-bottom: 1.5rem;
-		border-bottom: 1px solid var(--line);
-	}
-
-	.cs-proj-hero-meta .meta-row:last-child {
-		border-bottom: 0;
-		padding-bottom: 0;
-	}
-}
+/* Responsive: ver src/styles/editorial/responsive.css (punto de control único de breakpoints) */

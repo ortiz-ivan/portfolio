@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { existsSync } from 'fs';
-import { join } from 'path';
+import { Image } from 'astro:assets';
+import { getLocalImage } from '../lib/images';
 
 type ProjectData  = CollectionEntry<'projects'>['data'];
 type ProjectImage = ProjectData['images'][number];
@@ -13,36 +13,32 @@ interface Props {
 
 const { images } = Astro.props;
 
-function buildSrcset(src: string): string {
-	const dot = src.lastIndexOf('.');
-	if (dot < 0) return src;
-	const base = src.slice(0, dot);
-	const ext  = src.slice(dot);
-	const variant640 = `${base}-640${ext}`;
-	const variantPath = join('public', variant640);
-	if (!existsSync(variantPath)) return `${src} 924w`;
-	return `${variant640} 640w, ${src} 924w`;
-}
+const SIZES = '(max-width: 920px) calc(100vw - 2.5rem), min(54vw, 680px)';
 ---
 
 <figure class="cs-carousel reveal">
 	<div class="cs-carousel-viewport">
 		<div class="cs-carousel-track" id="cs-track">
-			{images.map((img, i) => (
-				<div class="cs-carousel-slide" data-caption={img.caption}>
-					<div class="cs-screenshot-frame">
-						<img
-							src={img.src}
-							srcset={buildSrcset(img.src)}
-							sizes="(max-width: 920px) calc(100vw - 2.5rem), min(54vw, 680px)"
-							alt={img.alt}
-							loading={i === 0 ? 'eager' : 'lazy'}
-							width="924"
-							height="540"
-						/>
+			{images.map((img, i) => {
+				const asset = getLocalImage(img.src);
+				return (
+					<div class="cs-carousel-slide" data-caption={img.caption}>
+						<div class="cs-screenshot-frame">
+							{asset ? (
+								<Image
+									src={asset}
+									alt={img.alt}
+									sizes={SIZES}
+									widths={[640, 924]}
+									loading={i === 0 ? 'eager' : 'lazy'}
+								/>
+							) : (
+								<img src={img.src} alt={img.alt} loading={i === 0 ? 'eager' : 'lazy'} />
+							)}
+						</div>
 					</div>
-				</div>
-			))}
+				);
+			})}
 		</div>
 	</div>
 	<div class="cs-carousel-footer">

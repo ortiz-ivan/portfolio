@@ -2,7 +2,7 @@
 
 Sitio personal construido con [Astro](https://astro.build), enfocado en mostrar experiencia como desarrollador fullstack a través de proyectos con case studies detallados (problema → solución → arquitectura).
 
-🔗 **Live:** [ortizivandev.netlify.app](https://ortizivandev.netlify.app)
+🔗 **Live:** [ivanortiz.dev](https://ivanortiz.dev)
 
 ## Stack
 
@@ -10,7 +10,7 @@ Sitio personal construido con [Astro](https://astro.build), enfocado en mostrar 
 - **TypeScript** — tipado estricto en componentes, datos y content collections
 - **Content Collections** (`astro:content`) — los proyectos se definen como JSON validados contra un schema Zod en `src/content.config.ts`
 - **CSS puro** por sección (`src/styles/editorial/`), sin framework de utilidades
-- **[Sharp](https://sharp.pixelplumbing.com/)** — generación de variantes de imagen (`scripts/resize-images.mjs`)
+- **`astro:assets`** — optimización automática de imágenes (WebP, srcset responsive) en build time
 - **[Web3Forms](https://web3forms.com)** — envío del formulario de contacto sin backend propio
 - Deploy en **Netlify**
 
@@ -43,7 +43,6 @@ Este proyecto usa **pnpm**.
 | `pnpm dev`               | Levanta el servidor local en `localhost:4321`   |
 | `pnpm build`             | Genera el sitio estático en `./dist/`           |
 | `pnpm preview`           | Sirve el build de producción localmente         |
-| `pnpm generate-images`   | Genera variantes redimensionadas de imágenes    |
 
 ## Variables de entorno
 

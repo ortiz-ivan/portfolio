@@ -1,6 +1,14 @@
 [build]
-  command   = "npm run build"
+  command   = "pnpm run build"
   publish   = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Normaliza a sin trailing slash para que coincida con trailingSlash: 'never'
+# de astro.config.mjs y evite contenido duplicado en canonicalURL.
+[[redirects]]
+  from = "/*/"
+  to = "/:splat"
+  status = 301
+  force = true

@@ -50,9 +50,12 @@ const navItems = [
 			(entries) => {
 				entries.forEach((e) => {
 					if (e.isIntersecting) {
-						navLinkEls.forEach((l) =>
-							l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id)
-						);
+						navLinkEls.forEach((l) => {
+							const isActive = l.getAttribute('href') === '#' + e.target.id;
+							l.classList.toggle('active', isActive);
+							if (isActive) l.setAttribute('aria-current', 'page');
+							else l.removeAttribute('aria-current');
+						});
 					}
 				});
 			},

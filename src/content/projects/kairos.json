@@ -65,28 +65,28 @@
 		{
 			"role": "cover",
 			"alt": "Módulo de ventas del sistema Kairos",
-			"src": "/images/kairos/02-ventas.jpg",
+			"src": "/src/assets/images/kairos/02-ventas.jpg",
 			"caption": "Módulo de ventas con registro de órdenes y control por cliente.",
 			"status": "ready"
 		},
 		{
 			"role": "dashboard",
 			"alt": "Módulo de productos e inventario de Kairos",
-			"src": "/images/kairos/03-productos.jpg",
+			"src": "/src/assets/images/kairos/03-productos.jpg",
 			"caption": "Gestión de productos con stock, categorías y precios.",
 			"status": "ready"
 		},
 		{
 			"role": "detail",
 			"alt": "Módulo de arqueo de caja de Kairos",
-			"src": "/images/kairos/04-arqueo.jpg",
+			"src": "/src/assets/images/kairos/04-arqueo.jpg",
 			"caption": "Control de arqueo de caja para cierre y auditoría diaria.",
 			"status": "ready"
 		},
 		{
 			"role": "detail",
 			"alt": "Módulo de reportes operativos de Kairos",
-			"src": "/images/kairos/05-reportes.jpg",
+			"src": "/src/assets/images/kairos/05-reportes.jpg",
 			"caption": "Reportes operativos para seguimiento comercial y control interno.",
 			"status": "ready"
 		}
