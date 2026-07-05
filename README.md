@@ -12,7 +12,7 @@ Sitio personal construido con [Astro](https://astro.build), enfocado en mostrar 
 - **CSS puro** por sección (`src/styles/editorial/`), sin framework de utilidades
 - **`astro:assets`** — optimización automática de imágenes (WebP, srcset responsive) en build time
 - **[Web3Forms](https://web3forms.com)** — envío del formulario de contacto sin backend propio
-- Deploy en **Netlify**
+- Deploy en **Netlify**, con cabeceras de seguridad (CSP con hashes, HSTS, X-Frame-Options, etc.) generadas en `dist/_headers` por `scripts/generate-headers.mjs` tras cada build
 
 ## Estructura
 
