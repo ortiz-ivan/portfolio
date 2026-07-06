@@ -58,7 +58,7 @@
 	},
 	"links": [
 		{ "label": "Demo", "href": "#", "kind": "demo", "available": false },
-		{ "label": "Código bajo solicitud", "href": "/?ref=kairos#contact", "kind": "github-private", "available": true },
+		{ "label": "GitHub", "href": "https://github.com/ortiz-ivan/kairos", "kind": "github", "available": true },
 		{ "label": "Caso de estudio", "href": "/projects/kairos", "kind": "case-study", "available": true }
 	],
 	"images": [

@@ -58,7 +58,8 @@
 	},
 	"links": [
 		{ "label": "Demo", "href": "#", "kind": "demo", "available": false },
-		{ "label": "GitHub", "href": "https://github.com/ortiz-ivan/Habita", "kind": "github", "available": true },
+		{ "label": "GitHub (Backend)", "href": "https://github.com/ortiz-ivan/Habita", "kind": "github", "available": true },
+		{ "label": "GitHub (Frontend)", "href": "https://github.com/ortiz-ivan/Habita-frontend", "kind": "github", "available": true },
 		{ "label": "Caso de estudio", "href": "/projects/habita", "kind": "case-study", "available": true }
 	],
 	"images": [
