@@ -2,7 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 
 type ProjectData = CollectionEntry<'projects'>['data'];
-type ArchLayer   = ProjectData['caseStudy']['architecture']['layers'][number];
+type ArchLayer = ProjectData['caseStudy']['architecture']['layers'][number];
 
 interface Props {
 	project: ProjectData;
@@ -69,12 +69,14 @@ const year = new Date().getFullYear();
 			<p class="cs-arch-text">{project.caseStudy.architecture.description}</p>
 		</div>
 		<div class="cs-layers">
-			{project.caseStudy.architecture.layers.map((layer: ArchLayer) => (
-				<div class="cs-layer reveal">
-					<span class="cs-layer-name">{layer.name}</span>
-					<p class="cs-layer-desc">{layer.description}</p>
-				</div>
-			))}
+			{
+				project.caseStudy.architecture.layers.map((layer: ArchLayer) => (
+					<div class="cs-layer reveal">
+						<span class="cs-layer-name">{layer.name}</span>
+						<p class="cs-layer-desc">{layer.description}</p>
+					</div>
+				))
+			}
 		</div>
 	</div>
 </section>
@@ -112,12 +114,14 @@ const year = new Date().getFullYear();
 			<span class="rule-flex"></span>
 		</div>
 		<div class="cs-results">
-			{project.results.map((r: string, i: number) => (
-				<div class="cs-result reveal">
-					<span class="cs-result-num">{String(i + 1).padStart(2, '0')}</span>
-					<p class="cs-result-text">{r}</p>
-				</div>
-			))}
+			{
+				project.results.map((r: string, i: number) => (
+					<div class="cs-result reveal">
+						<span class="cs-result-num">{String(i + 1).padStart(2, '0')}</span>
+						<p class="cs-result-text">{r}</p>
+					</div>
+				))
+			}
 		</div>
 	</div>
 </section>
@@ -131,9 +135,7 @@ const year = new Date().getFullYear();
 			<span class="rule-flex"></span>
 		</div>
 
-		<h2 class="contact-head display reveal">
-			¿Hablamos sobre una oportunidad similar?
-		</h2>
+		<h2 class="contact-head display reveal">¿Hablamos sobre una oportunidad similar?</h2>
 
 		<div class="cta-row reveal">
 			<a class="btn" href="/">Inicio <span class="arrow">↗</span></a>

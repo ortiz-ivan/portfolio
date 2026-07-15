@@ -18,18 +18,26 @@
 	position: relative;
 	transition: padding-left 0.45s var(--ease);
 }
-.proj-row:last-child { border-bottom: 1px solid var(--line); }
+.proj-row:last-child {
+	border-bottom: 1px solid var(--line);
+}
 .proj-row::before {
 	content: '';
 	position: absolute;
-	left: 0; top: 0; bottom: 0;
+	left: 0;
+	top: 0;
+	bottom: 0;
 	width: 0;
 	background: rgba(244, 242, 238, 0.02);
 	transition: width 0.45s var(--ease);
 	z-index: -1;
 }
-.proj-row:hover { padding-left: clamp(0.6rem, 2vw, 1.6rem); }
-.proj-row:hover::before { width: 100%; }
+.proj-row:hover {
+	padding-left: clamp(0.6rem, 2vw, 1.6rem);
+}
+.proj-row:hover::before {
+	width: 100%;
+}
 
 .proj-row .r-index {
 	font-family: var(--font-mono);

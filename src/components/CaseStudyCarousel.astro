@@ -3,9 +3,9 @@ import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import { getLocalImage } from '../lib/images';
 
-type ProjectData  = CollectionEntry<'projects'>['data'];
+type ProjectData = CollectionEntry<'projects'>['data'];
 type ProjectImage = ProjectData['images'][number];
-type ReadyImage   = ProjectImage & { src: string };
+type ReadyImage = ProjectImage & { src: string };
 
 interface Props {
 	images: ReadyImage[];
@@ -19,55 +19,65 @@ const SIZES = '(max-width: 920px) calc(100vw - 2.5rem), min(54vw, 680px)';
 <figure class="cs-carousel reveal">
 	<div class="cs-carousel-viewport">
 		<div class="cs-carousel-track" id="cs-track">
-			{images.map((img, i) => {
-				const asset = getLocalImage(img.src);
-				return (
-					<div class="cs-carousel-slide" data-caption={img.caption}>
-						<div class="cs-screenshot-frame">
-							{asset ? (
-								<Image
-									src={asset}
-									alt={img.alt}
-									sizes={SIZES}
-									widths={[640, 924]}
-									loading={i === 0 ? 'eager' : 'lazy'}
-								/>
-							) : (
-								<img src={img.src} alt={img.alt} loading={i === 0 ? 'eager' : 'lazy'} />
-							)}
+			{
+				images.map((img, i) => {
+					const asset = getLocalImage(img.src);
+					return (
+						<div class="cs-carousel-slide" data-caption={img.caption}>
+							<div class="cs-screenshot-frame">
+								{asset ? (
+									<Image
+										src={asset}
+										alt={img.alt}
+										sizes={SIZES}
+										widths={[640, 924]}
+										loading={i === 0 ? 'eager' : 'lazy'}
+									/>
+								) : (
+									<img src={img.src} alt={img.alt} loading={i === 0 ? 'eager' : 'lazy'} />
+								)}
+							</div>
 						</div>
-					</div>
-				);
-			})}
+					);
+				})
+			}
 		</div>
 	</div>
 	<div class="cs-carousel-footer">
 		<figcaption class="cs-screenshot-caption" id="cs-caption">
 			{images[0].caption}
 		</figcaption>
-		{images.length > 1 && (
-			<div class="cs-carousel-controls">
-				<button class="cs-carousel-btn" id="cs-prev" aria-label="Anterior">←</button>
-				<span class="cs-carousel-counter" id="cs-counter">1 / {images.length}</span>
-				<button class="cs-carousel-btn" id="cs-next" aria-label="Siguiente">→</button>
-			</div>
-		)}
+		{
+			images.length > 1 && (
+				<div class="cs-carousel-controls">
+					<button class="cs-carousel-btn" id="cs-prev" aria-label="Anterior">
+						←
+					</button>
+					<span class="cs-carousel-counter" id="cs-counter">
+						1 / {images.length}
+					</span>
+					<button class="cs-carousel-btn" id="cs-next" aria-label="Siguiente">
+						→
+					</button>
+				</div>
+			)
+		}
 	</div>
 </figure>
 
 <script>
 	function initCaseStudyCarousel() {
-		const track    = document.getElementById('cs-track') as HTMLElement | null;
+		const track = document.getElementById('cs-track') as HTMLElement | null;
 		const captionEl = document.getElementById('cs-caption');
 		const counterEl = document.getElementById('cs-counter');
-		const prevBtn  = document.getElementById('cs-prev');
-		const nextBtn  = document.getElementById('cs-next');
+		const prevBtn = document.getElementById('cs-prev');
+		const nextBtn = document.getElementById('cs-next');
 
 		if (!track) return;
 
 		const slides = Array.from(track.querySelectorAll<HTMLElement>('.cs-carousel-slide'));
-		const total  = slides.length;
-		let current  = 0;
+		const total = slides.length;
+		let current = 0;
 
 		function goTo(index: number) {
 			current = ((index % total) + total) % total;

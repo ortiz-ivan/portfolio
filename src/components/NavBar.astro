@@ -23,14 +23,22 @@ const { name, brandHref = '#top', items } = Astro.props;
 			<span>{name}</span>
 		</a>
 		<nav class="nav-links" id="navLinks" aria-label="Navegación principal">
-			{items.map((item) => (
-				<a class="nav-link" href={item.href}>
-					{item.index && <span class="idx">{item.index}</span>}
-					{item.label}
-				</a>
-			))}
+			{
+				items.map((item) => (
+					<a class="nav-link" href={item.href}>
+						{item.index && <span class="idx">{item.index}</span>}
+						{item.label}
+					</a>
+				))
+			}
 		</nav>
-		<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+		<button
+			class="nav-toggle"
+			id="navToggle"
+			aria-label="Abrir menú"
+			aria-expanded="false"
+			aria-controls="navLinks"
+		>
 			<span></span><span></span><span></span>
 		</button>
 	</div>

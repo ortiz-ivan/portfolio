@@ -7,7 +7,7 @@
 	"longDescription": "Sistema interno de gestión de propiedades residenciales construido con React y Django. Cubre el ciclo completo: registrar unidades, asignar inquilinos, generar contratos y hacer seguimiento de pagos con estados de mora.",
 	"highlight": "Backend con 7 modelos relacionados (incluida una tabla de auditoría), autenticación JWT con rotación de tokens, y un frontend en repo separado que consume la API vía Docker Compose.",
 	"tech": ["React 19", "Django 5", "PostgreSQL", "React Query", "Tailwind CSS", "JWT"],
-"technicalDecisions": [
+	"technicalDecisions": [
 		"Refresh token rotado en cookie httpOnly con SameSite=Strict; el access token vive solo en memoria (Zustand) y nunca toca almacenamiento persistente, para reducir superficie de robo ante XSS.",
 		"Sincronización entre dominios: un servicio dedicado actualiza el estado ocupado/disponible de la habitación cuando cambia el contrato asociado, en vez de depender de queries manuales.",
 		"El estado de mora se recalcula con un management command (`marcar_morosos`, con soporte `--dry-run`) que revisa contratos activos con pagos vencidos, pensado para ejecutarse manualmente o vía scheduler externo."
@@ -58,9 +58,24 @@
 	},
 	"links": [
 		{ "label": "Demo", "href": "#", "kind": "demo", "available": false },
-		{ "label": "GitHub (Backend)", "href": "https://github.com/ortiz-ivan/Habita", "kind": "github", "available": true },
-		{ "label": "GitHub (Frontend)", "href": "https://github.com/ortiz-ivan/Habita-frontend", "kind": "github", "available": true },
-		{ "label": "Caso de estudio", "href": "/projects/habita", "kind": "case-study", "available": true }
+		{
+			"label": "GitHub (Backend)",
+			"href": "https://github.com/ortiz-ivan/Habita",
+			"kind": "github",
+			"available": true
+		},
+		{
+			"label": "GitHub (Frontend)",
+			"href": "https://github.com/ortiz-ivan/Habita-frontend",
+			"kind": "github",
+			"available": true
+		},
+		{
+			"label": "Caso de estudio",
+			"href": "/projects/habita",
+			"kind": "case-study",
+			"available": true
+		}
 	],
 	"images": [
 		{

@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/editorial-home.css';
+import { heroContent } from '../data/site';
+---
+
+<Layout
+	title={`Página no encontrada | ${heroContent.name}`}
+	description="La página que buscás no existe o fue movida."
+>
+	<main class="ed-home not-found">
+		<div class="wrap not-found-inner">
+			<span class="ed-eyebrow"><span class="dot"></span>Error 404</span>
+			<h1 class="display not-found-title">Esta página <em>no existe</em>.</h1>
+			<p class="not-found-copy">
+				El enlace puede estar roto o la página fue movida. Volvé al inicio para ver el trabajo de
+				{heroContent.name}.
+			</p>
+			<div class="cta-row">
+				<a class="btn" href="/">
+					<span>Volver al inicio</span>
+					<span class="arrow">→</span>
+				</a>
+				<a class="tlink" href="/#contact">
+					<span>Contactar</span>
+					<span class="arrow">↗</span>
+				</a>
+			</div>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	.not-found {
+		min-height: 100dvh;
+		display: flex;
+		align-items: center;
+	}
+	.not-found-inner {
+		max-width: 640px;
+		padding-block: clamp(4rem, 12vw, 8rem);
+	}
+	.not-found-title {
+		font-size: clamp(2.5rem, 7vw, 4.5rem);
+		margin-block: 1.25rem 1rem;
+	}
+	.not-found-copy {
+		color: var(--text-2);
+		font-size: 1.05rem;
+		max-width: 46ch;
+	}
+</style>

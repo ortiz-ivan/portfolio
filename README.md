@@ -37,12 +37,15 @@ Cada proyecto (`src/content/projects/*.json`) define su propio case study: probl
 
 Este proyecto usa **pnpm**.
 
-| Comando                | Acción                                         |
-| :---------------------- | :---------------------------------------------- |
-| `pnpm install`           | Instala dependencias                            |
-| `pnpm dev`               | Levanta el servidor local en `localhost:4321`   |
-| `pnpm build`             | Genera el sitio estático en `./dist/`           |
-| `pnpm preview`           | Sirve el build de producción localmente         |
+| Comando             | Acción                                        |
+| :------------------ | :-------------------------------------------- |
+| `pnpm install`      | Instala dependencias                          |
+| `pnpm dev`          | Levanta el servidor local en `localhost:4321` |
+| `pnpm build`        | Genera el sitio estático en `./dist/`         |
+| `pnpm preview`      | Sirve el build de producción localmente       |
+| `pnpm lint`         | Corre ESLint sobre `.astro`, `.ts` y `.mjs`   |
+| `pnpm format`       | Formatea el proyecto con Prettier             |
+| `pnpm format:check` | Verifica formato sin escribir (usado en CI)   |
 
 ## Variables de entorno
 

@@ -17,7 +17,7 @@
 		"Vitest",
 		"pytest"
 	],
-"technicalDecisions": [
+	"technicalDecisions": [
 		"Separó el dominio en configuración, compras, gastos y reportes para mantener entidades y servicios acotados pero conectados.",
 		"La configuración operativa se centraliza en un singleton editable para que categorías, ratios y umbrales no dependan de hardcodes.",
 		"Los reportes combinan estimaciones de inventario, gastos reales e ingresos para dar una lectura mensual útil sin sobredimensionar el sistema."
@@ -68,8 +68,18 @@
 	},
 	"links": [
 		{ "label": "Demo", "href": "#", "kind": "demo", "available": false },
-		{ "label": "GitHub", "href": "https://github.com/ortiz-ivan/domusops", "kind": "github", "available": true },
-		{ "label": "Caso de estudio", "href": "/projects/domusops", "kind": "case-study", "available": true }
+		{
+			"label": "GitHub",
+			"href": "https://github.com/ortiz-ivan/domusops",
+			"kind": "github",
+			"available": true
+		},
+		{
+			"label": "Caso de estudio",
+			"href": "/projects/domusops",
+			"kind": "case-study",
+			"available": true
+		}
 	],
 	"images": [
 		{

@@ -7,7 +7,7 @@
 	"longDescription": "Sistema completo para operaciones comerciales, pensado para centralizar ventas, stock y trazabilidad interna en una arquitectura desacoplada.",
 	"highlight": "Proyecto estrella para mostrar criterio técnico y valor real de negocio.",
 	"tech": ["Django REST", "React", "PostgreSQL", "Roles y permisos"],
-"technicalDecisions": [
+	"technicalDecisions": [
 		"Arquitectura basada en APIs REST desacopladas para separar frontend y backend.",
 		"Manejo de estado en frontend para mantener una interfaz fluida sobre flujos de negocio complejos.",
 		"Diseño modular para escalar nuevas entidades y reportes sin rehacer el sistema."
@@ -58,8 +58,18 @@
 	},
 	"links": [
 		{ "label": "Demo", "href": "#", "kind": "demo", "available": false },
-		{ "label": "GitHub", "href": "https://github.com/ortiz-ivan/kairos", "kind": "github", "available": true },
-		{ "label": "Caso de estudio", "href": "/projects/kairos", "kind": "case-study", "available": true }
+		{
+			"label": "GitHub",
+			"href": "https://github.com/ortiz-ivan/kairos",
+			"kind": "github",
+			"available": true
+		},
+		{
+			"label": "Caso de estudio",
+			"href": "/projects/kairos",
+			"kind": "case-study",
+			"available": true
+		}
 	],
 	"images": [
 		{

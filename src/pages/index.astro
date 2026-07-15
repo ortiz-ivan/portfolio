@@ -14,7 +14,13 @@ const sorted = [...allProjects].sort((a, b) => a.data.priority - b.data.priority
 const featured = sorted.find((p) => p.data.isFeatured) ?? sorted[0];
 const rest = sorted.filter((p) => p !== featured);
 
-const heroStack = experienceSection.items[0]?.tech ?? ['Java', 'Spring', 'PostgreSQL', 'Angular', 'React'];
+const heroStack = experienceSection.items[0]?.tech ?? [
+	'Java',
+	'Spring',
+	'PostgreSQL',
+	'Angular',
+	'React'
+];
 
 const navItems = [
 	{ href: '#sobre-mi', label: 'Sobre mí', index: '01' },

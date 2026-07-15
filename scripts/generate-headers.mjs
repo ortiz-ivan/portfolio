@@ -78,4 +78,6 @@ const headers = `/*
 `;
 
 await writeFile(new URL('../dist/_headers', import.meta.url), headers);
-console.log(`_headers written with ${scriptHashes.size} script hash(es) and ${styleHashes.size} style hash(es).`);
+console.log(
+	`_headers written with ${scriptHashes.size} script hash(es) and ${styleHashes.size} style hash(es).`
+);

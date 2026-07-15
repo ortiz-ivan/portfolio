@@ -24,7 +24,8 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 			<!-- Columna izquierda: intro + form + éxito -->
 			<div class="contact-form-col">
 				<p class="contact-intro reveal">
-					¿Tenés una propuesta, pregunta o simplemente querés hablar de software? Escribime directamente.
+					¿Tenés una propuesta, pregunta o simplemente querés hablar de software? Escribime
+					directamente.
 				</p>
 				<form
 					class="contact-form reveal"
@@ -35,7 +36,13 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 					<input type="hidden" name="access_key" value={w3fKey} />
 					<input type="hidden" name="subject" value="Nuevo mensaje desde el portfolio" />
 					<input type="hidden" name="from_name" value="Portfolio Contact" />
-					<input type="checkbox" name="botcheck" class="form-honeypot" tabindex="-1" autocomplete="off" />
+					<input
+						type="checkbox"
+						name="botcheck"
+						class="form-honeypot"
+						tabindex="-1"
+						autocomplete="off"
+					/>
 
 					<div class="form-row">
 						<div class="form-field">
@@ -72,8 +79,7 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 							name="message"
 							required
 							rows="5"
-							placeholder="¿En qué puedo ayudarte?"
-						></textarea>
+							placeholder="¿En qué puedo ayudarte?"></textarea>
 					</div>
 
 					<div class="form-actions">
@@ -98,23 +104,25 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 			<!-- Columna derecha: links -->
 			<aside class="contact-links reveal">
 				<p class="contact-links-label">Encontrame en</p>
-				{data.items.map((item) => {
-					const external = item.href.startsWith('http');
-					return (
-						<div class="ed-contact-item">
-							<span class="contact-k">{item.label}</span>
-							<a
-								class="contact-v"
-								href={item.href}
-								target={external ? '_blank' : undefined}
-								rel={external ? 'noopener noreferrer' : undefined}
-							>
-								{item.value} <span class="arrow">↗</span>
-							</a>
-							<span class="contact-desc">{item.description}</span>
-						</div>
-					);
-				})}
+				{
+					data.items.map((item) => {
+						const external = item.href.startsWith('http');
+						return (
+							<div class="ed-contact-item">
+								<span class="contact-k">{item.label}</span>
+								<a
+									class="contact-v"
+									href={item.href}
+									target={external ? '_blank' : undefined}
+									rel={external ? 'noopener noreferrer' : undefined}
+								>
+									{item.value} <span class="arrow">↗</span>
+								</a>
+								<span class="contact-desc">{item.description}</span>
+							</div>
+						);
+					})
+				}
 			</aside>
 		</div>
 
@@ -134,7 +142,8 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 		if (ref !== 'kairos') return;
 		const textarea = document.getElementById('f-message') as HTMLTextAreaElement | null;
 		if (textarea && !textarea.value) {
-			textarea.value = 'Hola Iván, vi tu portfolio y me gustaría acceder al código de Kairos. ¿Podés compartirme el repositorio?';
+			textarea.value =
+				'Hola Iván, vi tu portfolio y me gustaría acceder al código de Kairos. ¿Podés compartirme el repositorio?';
 		}
 	}
 
@@ -158,7 +167,7 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 			try {
 				const res = await fetch('https://api.web3forms.com/submit', {
 					method: 'POST',
-					headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+					headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
 					body: JSON.stringify(Object.fromEntries(new FormData(form)))
 				});
 				const json = await res.json();

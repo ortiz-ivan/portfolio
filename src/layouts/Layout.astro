@@ -62,30 +62,31 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 		<title>{title}</title>
 
 		<!-- Datos estructurados -->
-		<script type="application/ld+json" set:html={JSON.stringify({
-			'@context': 'https://schema.org',
-			'@graph': [
-				{
-					'@type': 'Person',
-					'@id': `${Astro.site}#person`,
-					name: 'Iván Ortiz',
-					jobTitle: 'Fullstack Developer',
-					url: Astro.site,
-					sameAs: [
-						'https://www.linkedin.com/in/ortiz-ivan08/',
-						'https://github.com/ortiz-ivan'
-					],
-					description: 'Desarrollador fullstack enfocado en sistemas de gestión, automatización e integraciones para operaciones reales.'
-				},
-				{
-					'@type': 'WebSite',
-					'@id': `${Astro.site}#website`,
-					url: Astro.site,
-					name: 'Iván Ortiz | Fullstack Developer',
-					author: { '@id': `${Astro.site}#person` }
-				}
-			]
-		})} />
+		<script
+			type="application/ld+json"
+			set:html={JSON.stringify({
+				'@context': 'https://schema.org',
+				'@graph': [
+					{
+						'@type': 'Person',
+						'@id': `${Astro.site}#person`,
+						name: 'Iván Ortiz',
+						jobTitle: 'Fullstack Developer',
+						url: Astro.site,
+						sameAs: ['https://www.linkedin.com/in/ortiz-ivan08/', 'https://github.com/ortiz-ivan'],
+						description:
+							'Desarrollador fullstack enfocado en sistemas de gestión, automatización e integraciones para operaciones reales.'
+					},
+					{
+						'@type': 'WebSite',
+						'@id': `${Astro.site}#website`,
+						url: Astro.site,
+						name: 'Iván Ortiz | Fullstack Developer',
+						author: { '@id': `${Astro.site}#person` }
+					}
+				]
+			})}
+		/>
 
 		<ClientRouter />
 	</head>
@@ -98,7 +99,10 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 			function initReveal() {
 				const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 				const els = Array.from(document.querySelectorAll<HTMLElement>('.reveal:not(.in)'));
-				if (reduce) { els.forEach((el) => el.classList.add('in')); return; }
+				if (reduce) {
+					els.forEach((el) => el.classList.add('in'));
+					return;
+				}
 
 				const STAGGER = 70;
 				const DURATION = 750;
@@ -118,7 +122,9 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 							el.classList.add('in');
 							revealObserver!.unobserve(el);
 							if (delay > 0) {
-								setTimeout(() => { el.style.transitionDelay = ''; }, delay + DURATION);
+								setTimeout(() => {
+									el.style.transitionDelay = '';
+								}, delay + DURATION);
 							}
 						});
 					},

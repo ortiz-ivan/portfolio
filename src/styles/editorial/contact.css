@@ -32,7 +32,9 @@
 	position: relative;
 	transition: padding-left 0.4s var(--ease);
 }
-.ed-contact-item:hover { padding-left: 0.8rem; }
+.ed-contact-item:hover {
+	padding-left: 0.8rem;
+}
 .contact-k {
 	font-family: var(--font-mono);
 	font-size: 0.72rem;
@@ -54,14 +56,20 @@
 	padding: 0;
 	text-align: left;
 }
-a.contact-v:hover, button.contact-v:hover { color: var(--text-2); }
+a.contact-v:hover,
+button.contact-v:hover {
+	color: var(--text-2);
+}
 .contact-v .arrow {
 	font-family: var(--font-mono);
 	font-size: 0.95rem;
 	color: var(--muted);
 	transition: transform 0.35s var(--ease);
 }
-.ed-contact-item:hover .contact-v .arrow { transform: translate(3px, -3px); color: var(--text); }
+.ed-contact-item:hover .contact-v .arrow {
+	transform: translate(3px, -3px);
+	color: var(--text);
+}
 .contact-desc {
 	font-size: 0.88rem;
 	color: var(--muted);
@@ -103,13 +111,23 @@ a.contact-v:hover, button.contact-v:hover { color: var(--text-2); }
 	gap: 0.5rem;
 	transition: color 0.3s var(--ease);
 }
-.footer-top:hover { color: var(--text); }
-.footer-top .arrow { transition: transform 0.35s var(--ease); }
-.footer-top:hover .arrow { transform: translateY(-3px); }
+.footer-top:hover {
+	color: var(--text);
+}
+.footer-top .arrow {
+	transition: transform 0.35s var(--ease);
+}
+.footer-top:hover .arrow {
+	transform: translateY(-3px);
+}
 
 /* Helpers */
-.ed-home .footer-year { margin-top: 0.8rem; }
-.ed-home .contact-v-label { font: inherit; }
+.ed-home .footer-year {
+	margin-top: 0.8rem;
+}
+.ed-home .contact-v-label {
+	font: inherit;
+}
 
 /* ============================================================
    Contact form
@@ -136,7 +154,9 @@ a.contact-v:hover, button.contact-v:hover { color: var(--text-2); }
 	/* sin margin-bottom; el gap del grid maneja el espaciado */
 }
 
-.form-honeypot { display: none; }
+.form-honeypot {
+	display: none;
+}
 
 .form-row {
 	display: grid;
@@ -151,7 +171,9 @@ a.contact-v:hover, button.contact-v:hover { color: var(--text-2); }
 	gap: 0.55rem;
 	margin-bottom: 1.5rem;
 }
-.form-row .form-field { margin-bottom: 0; }
+.form-row .form-field {
+	margin-bottom: 0;
+}
 
 .form-label {
 	font-family: var(--font-mono);
@@ -175,8 +197,12 @@ a.contact-v:hover, button.contact-v:hover { color: var(--text-2); }
 	-webkit-appearance: none;
 	transition: border-color 0.25s var(--ease);
 }
-.form-input::placeholder { color: var(--faint); }
-.form-input:focus { border-bottom-color: var(--text-2); }
+.form-input::placeholder {
+	color: var(--faint);
+}
+.form-input:focus {
+	border-bottom-color: var(--text-2);
+}
 .form-input:-webkit-autofill,
 .form-input:-webkit-autofill:hover,
 .form-input:-webkit-autofill:focus {
@@ -231,7 +257,9 @@ a.contact-v:hover, button.contact-v:hover { color: var(--text-2); }
 	border-top: 1px solid var(--line);
 	border-bottom: 1px solid var(--line);
 }
-.form-success[hidden] { display: none; }
+.form-success[hidden] {
+	display: none;
+}
 
 .form-success-mark {
 	font-family: var(--font-display);

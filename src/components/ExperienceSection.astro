@@ -16,23 +16,29 @@ const { data } = Astro.props;
 			<span class="rule-flex"></span>
 		</div>
 
-		{data.items.map((item) => (
-			<article class="exp-entry reveal">
-				<div class="exp-left">
-					<h3 class="exp-company">{item.company}</h3>
-					<span class="exp-period">{item.period}</span>
-					<span class="exp-role">{item.role}</span>
-				</div>
-				<div class="exp-right">
-					<p class="exp-desc">{item.description}</p>
-					<ol class="exp-resp">
-						{item.responsibilities.map((r) => <li>{r}</li>)}
-					</ol>
-					<div class="exp-tech">
-						{item.tech.map((t) => <span class="tag">{t}</span>)}
+		{
+			data.items.map((item) => (
+				<article class="exp-entry reveal">
+					<div class="exp-left">
+						<h3 class="exp-company">{item.company}</h3>
+						<span class="exp-period">{item.period}</span>
+						<span class="exp-role">{item.role}</span>
 					</div>
-				</div>
-			</article>
-		))}
+					<div class="exp-right">
+						<p class="exp-desc">{item.description}</p>
+						<ol class="exp-resp">
+							{item.responsibilities.map((r) => (
+								<li>{r}</li>
+							))}
+						</ol>
+						<div class="exp-tech">
+							{item.tech.map((t) => (
+								<span class="tag">{t}</span>
+							))}
+						</div>
+					</div>
+				</article>
+			))
+		}
 	</div>
 </section>

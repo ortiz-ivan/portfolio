@@ -27,47 +27,51 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 		</div>
 
 		<div class="projects-list">
-			{allProjects.map((p, i) => {
-				const images = projectImages(p);
-				const availableLinks = p.data.links.filter((l) => l.available);
-				return (
-					<article
-						class="proj-row reveal"
-						data-preview-images={images.length ? JSON.stringify(images) : undefined}
-					>
-						<span class="r-index">{String(i + 1).padStart(2, '0')}</span>
-						<span class="r-name">
-							<span transition:name={`proj-name-${p.id}`}>{p.data.name}</span>
-							<span class="r-eyebrow">{p.data.eyebrow}</span>
-						</span>
-						<div class="r-desc">
-							{p.data.summary}
-							<div class="r-tags">
-								{p.data.tech.slice(0, 4).map((t) => <span class="tag">{t}</span>)}
+			{
+				allProjects.map((p, i) => {
+					const images = projectImages(p);
+					const availableLinks = p.data.links.filter((l) => l.available);
+					return (
+						<article
+							class="proj-row reveal"
+							data-preview-images={images.length ? JSON.stringify(images) : undefined}
+						>
+							<span class="r-index">{String(i + 1).padStart(2, '0')}</span>
+							<span class="r-name">
+								<span transition:name={`proj-name-${p.id}`}>{p.data.name}</span>
+								<span class="r-eyebrow">{p.data.eyebrow}</span>
+							</span>
+							<div class="r-desc">
+								{p.data.summary}
+								<div class="r-tags">
+									{p.data.tech.slice(0, 4).map((t) => (
+										<span class="tag">{t}</span>
+									))}
+								</div>
 							</div>
-						</div>
-						<div class="r-action">
-							{availableLinks.length > 0 ? (
-								availableLinks.map((l) => {
-									const ext = l.href.startsWith('http');
-									return (
-										<a
-											class={`tlink${l.kind === 'github-private' ? ' tlink-private' : ''}`}
-											href={l.href}
-											target={ext ? '_blank' : undefined}
-											rel={ext ? 'noopener noreferrer' : undefined}
-										>
-											{l.label} <span class="arrow">↗</span>
-										</a>
-									);
-								})
-							) : (
-								<span class="tlink disabled">Detalles pronto</span>
-							)}
-						</div>
-					</article>
-				);
-			})}
+							<div class="r-action">
+								{availableLinks.length > 0 ? (
+									availableLinks.map((l) => {
+										const ext = l.href.startsWith('http');
+										return (
+											<a
+												class={`tlink${l.kind === 'github-private' ? ' tlink-private' : ''}`}
+												href={l.href}
+												target={ext ? '_blank' : undefined}
+												rel={ext ? 'noopener noreferrer' : undefined}
+											>
+												{l.label} <span class="arrow">↗</span>
+											</a>
+										);
+									})
+								) : (
+									<span class="tlink disabled">Detalles pronto</span>
+								)}
+							</div>
+						</article>
+					);
+				})
+			}
 		</div>
 	</div>
 </section>
@@ -77,181 +81,198 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 </div>
 
 <style>
-.tlink-private {
-	opacity: 0.65;
-	font-style: italic;
-}
+	.tlink-private {
+		opacity: 0.65;
+		font-style: italic;
+	}
 
-.proj-preview {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 360px;
-	aspect-ratio: 16 / 9;
-	pointer-events: none;
-	z-index: 200;
-	opacity: 0;
-	border: 1px solid var(--line);
-	border-radius: 4px;
-	overflow: hidden;
-	transition: opacity 0.2s var(--ease);
-	will-change: transform;
-}
+	.proj-preview {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 360px;
+		aspect-ratio: 16 / 9;
+		pointer-events: none;
+		z-index: 200;
+		opacity: 0;
+		border: 1px solid var(--line);
+		border-radius: 4px;
+		overflow: hidden;
+		transition: opacity 0.2s var(--ease);
+		will-change: transform;
+	}
 
-.proj-preview.is-visible {
-	opacity: 1;
-}
+	.proj-preview.is-visible {
+		opacity: 1;
+	}
 
-.proj-preview img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	display: block;
-	transition: opacity 0.25s ease;
-}
+	.proj-preview img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		transition: opacity 0.25s ease;
+	}
 
-.proj-preview img.fading {
-	opacity: 0;
-}
+	.proj-preview img.fading {
+		opacity: 0;
+	}
 
-@media (hover: none) {
-	.proj-preview { display: none; }
-}
+	@media (hover: none) {
+		.proj-preview {
+			display: none;
+		}
+	}
 </style>
 
 <script>
-let cycleTimer = 0;
-let rafId = 0;
-let active = false;
+	let cycleTimer = 0;
+	let rafId = 0;
+	let active = false;
 
-function stopCycle() {
-	clearInterval(cycleTimer);
-	cycleTimer = 0;
-}
-
-function initProjectPreview() {
-	const el = document.getElementById('proj-preview');
-	const img = document.getElementById('proj-preview-img') as HTMLImageElement | null;
-	if (!el || !img) return;
-
-	const W = 360, H = 202;
-	const OFFSET_X = 28;
-	const OFFSET_Y = Math.round(W * 9 / 16 / 2);
-
-	let targetX = 0, targetY = 0;
-	let currentX = 0, currentY = 0;
-	let cycleIndex = 0;
-	let currentImages: string[] = [];
-
-	function lerp(a: number, b: number, t: number) {
-		return a + (b - a) * t;
-	}
-
-	function tick() {
-		currentX = lerp(currentX, targetX, 0.1);
-		currentY = lerp(currentY, targetY, 0.1);
-
-		const vw = window.innerWidth;
-		const vh = window.innerHeight;
-
-		let x = currentX + OFFSET_X;
-		let y = currentY - OFFSET_Y;
-
-		if (x + W > vw - 16) x = currentX - W - OFFSET_X;
-		y = Math.min(Math.max(y, 16), vh - H - 16);
-
-		el!.style.transform = `translate(${x}px, ${y}px)`;
-		if (active) rafId = requestAnimationFrame(tick);
-	}
-
-	function preloadImages(srcs: string[]) {
-		srcs.forEach(src => {
-			const pre = new Image();
-			pre.src = src;
-		});
-	}
-
-	function swapImage(src: string) {
-		img!.classList.add('fading');
-
-		let fadeComplete = false;
-		let loadComplete = false;
-
-		const apply = () => {
-			if (!fadeComplete || !loadComplete) return;
-			img!.src = src;
-			img!.classList.remove('fading');
-		};
-
-		setTimeout(() => { fadeComplete = true; apply(); }, 250);
-
-		const next = new Image();
-		next.onload = () => { loadComplete = true; apply(); };
-		next.onerror = () => { loadComplete = true; apply(); };
-		next.src = src;
-		if (next.complete) { loadComplete = true; apply(); }
-	}
-
-	function startCycle(images: string[]) {
-		currentImages = images;
-		cycleIndex = 0;
-		img!.src = images[0];
-
+	function stopCycle() {
 		clearInterval(cycleTimer);
-		if (images.length < 2) return;
-
-		cycleTimer = window.setInterval(() => {
-			cycleIndex = (cycleIndex + 1) % currentImages.length;
-			swapImage(currentImages[cycleIndex]);
-		}, 3000);
+		cycleTimer = 0;
 	}
 
-	const rows = document.querySelectorAll<HTMLElement>('.proj-row[data-preview-images]');
+	function initProjectPreview() {
+		const el = document.getElementById('proj-preview');
+		const img = document.getElementById('proj-preview-img') as HTMLImageElement | null;
+		if (!el || !img) return;
 
-	rows.forEach((row) => {
-		row.addEventListener('mouseenter', (e) => {
-			let images: string[];
-			try {
-				images = JSON.parse(row.dataset.previewImages ?? '[]');
-			} catch {
-				return;
+		const W = 360,
+			H = 202;
+		const OFFSET_X = 28;
+		const OFFSET_Y = Math.round((W * 9) / 16 / 2);
+
+		let targetX = 0,
+			targetY = 0;
+		let currentX = 0,
+			currentY = 0;
+		let cycleIndex = 0;
+		let currentImages: string[] = [];
+
+		function lerp(a: number, b: number, t: number) {
+			return a + (b - a) * t;
+		}
+
+		function tick() {
+			currentX = lerp(currentX, targetX, 0.1);
+			currentY = lerp(currentY, targetY, 0.1);
+
+			const vw = window.innerWidth;
+			const vh = window.innerHeight;
+
+			let x = currentX + OFFSET_X;
+			let y = currentY - OFFSET_Y;
+
+			if (x + W > vw - 16) x = currentX - W - OFFSET_X;
+			y = Math.min(Math.max(y, 16), vh - H - 16);
+
+			el!.style.transform = `translate(${x}px, ${y}px)`;
+			if (active) rafId = requestAnimationFrame(tick);
+		}
+
+		function preloadImages(srcs: string[]) {
+			srcs.forEach((src) => {
+				const pre = new Image();
+				pre.src = src;
+			});
+		}
+
+		function swapImage(src: string) {
+			img!.classList.add('fading');
+
+			let fadeComplete = false;
+			let loadComplete = false;
+
+			const apply = () => {
+				if (!fadeComplete || !loadComplete) return;
+				img!.src = src;
+				img!.classList.remove('fading');
+			};
+
+			setTimeout(() => {
+				fadeComplete = true;
+				apply();
+			}, 250);
+
+			const next = new Image();
+			next.onload = () => {
+				loadComplete = true;
+				apply();
+			};
+			next.onerror = () => {
+				loadComplete = true;
+				apply();
+			};
+			next.src = src;
+			if (next.complete) {
+				loadComplete = true;
+				apply();
 			}
-			if (!images.length) return;
+		}
 
-			const me = e as MouseEvent;
-			targetX = me.clientX;
-			targetY = me.clientY;
-			currentX = targetX;
-			currentY = targetY;
+		function startCycle(images: string[]) {
+			currentImages = images;
+			cycleIndex = 0;
+			img!.src = images[0];
 
-			preloadImages(images);
-			startCycle(images);
+			clearInterval(cycleTimer);
+			if (images.length < 2) return;
 
-			active = true;
-			cancelAnimationFrame(rafId);
-			rafId = requestAnimationFrame(tick);
-			el!.classList.add('is-visible');
+			cycleTimer = window.setInterval(() => {
+				cycleIndex = (cycleIndex + 1) % currentImages.length;
+				swapImage(currentImages[cycleIndex]);
+			}, 3000);
+		}
+
+		const rows = document.querySelectorAll<HTMLElement>('.proj-row[data-preview-images]');
+
+		rows.forEach((row) => {
+			row.addEventListener('mouseenter', (e) => {
+				let images: string[];
+				try {
+					images = JSON.parse(row.dataset.previewImages ?? '[]');
+				} catch {
+					return;
+				}
+				if (!images.length) return;
+
+				const me = e as MouseEvent;
+				targetX = me.clientX;
+				targetY = me.clientY;
+				currentX = targetX;
+				currentY = targetY;
+
+				preloadImages(images);
+				startCycle(images);
+
+				active = true;
+				cancelAnimationFrame(rafId);
+				rafId = requestAnimationFrame(tick);
+				el!.classList.add('is-visible');
+			});
+
+			row.addEventListener('mousemove', (e) => {
+				const me = e as MouseEvent;
+				targetX = me.clientX;
+				targetY = me.clientY;
+			});
+
+			row.addEventListener('mouseleave', () => {
+				active = false;
+				cancelAnimationFrame(rafId);
+				stopCycle();
+				el!.classList.remove('is-visible');
+			});
 		});
+	}
 
-		row.addEventListener('mousemove', (e) => {
-			const me = e as MouseEvent;
-			targetX = me.clientX;
-			targetY = me.clientY;
-		});
-
-		row.addEventListener('mouseleave', () => {
-			active = false;
-			cancelAnimationFrame(rafId);
-			stopCycle();
-			el!.classList.remove('is-visible');
-		});
+	document.addEventListener('astro:before-swap', () => {
+		stopCycle();
+		cancelAnimationFrame(rafId);
+		active = false;
 	});
-}
-
-document.addEventListener('astro:before-swap', () => {
-	stopCycle();
-	cancelAnimationFrame(rafId);
-	active = false;
-});
-document.addEventListener('astro:page-load', initProjectPreview);
+	document.addEventListener('astro:page-load', initProjectPreview);
 </script>
