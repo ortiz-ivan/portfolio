@@ -237,6 +237,38 @@
 	transform: translate(3px, -3px);
 }
 
+.btn.is-loading {
+	position: relative;
+	overflow: hidden;
+	cursor: default;
+	transform: none;
+}
+.btn.is-loading .arrow {
+	opacity: 0;
+}
+.btn.is-loading::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		100deg,
+		transparent 30%,
+		rgba(var(--bg-rgb), 0.16) 50%,
+		transparent 70%
+	);
+	background-size: 200% 100%;
+	animation: btn-shimmer 1.3s ease-in-out infinite;
+}
+
+@keyframes btn-shimmer {
+	0% {
+		background-position: 150% 0;
+	}
+	100% {
+		background-position: -50% 0;
+	}
+}
+
 .btn-ghost {
 	background: transparent;
 	color: var(--text);
