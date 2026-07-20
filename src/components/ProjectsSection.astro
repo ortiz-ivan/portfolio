@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { getLocalImage } from '../lib/images';
+import ArrowIcon from './icons/ArrowIcon.astro';
 
 interface Props {
 	featured: CollectionEntry<'projects'> | undefined;
@@ -60,7 +61,7 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 												target={ext ? '_blank' : undefined}
 												rel={ext ? 'noopener noreferrer' : undefined}
 											>
-												{l.label} <span class="arrow">↗︎</span>
+												{l.label} <span class="arrow"><ArrowIcon direction="ne" /></span>
 											</a>
 										);
 									})

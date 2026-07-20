@@ -1,5 +1,6 @@
 ---
 import type { HeroContent } from '../data/site';
+import ArrowIcon from './icons/ArrowIcon.astro';
 
 interface Props {
 	hero: HeroContent;
@@ -33,7 +34,7 @@ const lastName = rest.join(' ');
 				<div class="cta-row">
 					<a class="btn" href={hero.primaryCta.href}>
 						{hero.primaryCta.label}
-						<span class="arrow">↗︎</span>
+						<span class="arrow"><ArrowIcon direction="ne" /></span>
 					</a>
 					<a
 						class="btn btn-ghost"
@@ -41,7 +42,7 @@ const lastName = rest.join(' ');
 						download={hero.secondaryCta.download}
 					>
 						{hero.secondaryCta.label}
-						<span class="arrow">↓︎</span>
+						<span class="arrow"><ArrowIcon direction="down" /></span>
 					</a>
 				</div>
 			</div>

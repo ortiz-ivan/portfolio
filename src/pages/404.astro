@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import '../styles/editorial-home.css';
 import { heroContent } from '../data/site';
+import ArrowIcon from '../components/icons/ArrowIcon.astro';
 ---
 
 <Layout
@@ -19,11 +20,11 @@ import { heroContent } from '../data/site';
 			<div class="cta-row">
 				<a class="btn" href="/">
 					<span>Volver al inicio</span>
-					<span class="arrow">→︎</span>
+					<span class="arrow"><ArrowIcon direction="right" /></span>
 				</a>
 				<a class="tlink" href="/#contact">
 					<span>Contactar</span>
-					<span class="arrow">↗︎</span>
+					<span class="arrow"><ArrowIcon direction="ne" /></span>
 				</a>
 			</div>
 		</div>

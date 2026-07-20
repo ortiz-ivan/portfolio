@@ -1,5 +1,6 @@
 ---
 import type { ContactSection, FooterContent } from '../data/site';
+import ArrowIcon from './icons/ArrowIcon.astro';
 
 interface Props {
 	data: ContactSection;
@@ -84,7 +85,7 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 
 					<div class="form-actions">
 						<button class="btn" type="submit" id="formSubmit">
-							Enviar mensaje <span class="arrow" aria-hidden="true">↗︎</span>
+							Enviar mensaje <span class="arrow"><ArrowIcon direction="ne" /></span>
 						</button>
 						<p class="form-error" id="formError" role="alert" aria-live="polite"></p>
 					</div>
@@ -116,7 +117,7 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 									target={external ? '_blank' : undefined}
 									rel={external ? 'noopener noreferrer' : undefined}
 								>
-									{item.value} <span class="arrow">↗︎</span>
+									{item.value} <span class="arrow"><ArrowIcon direction="ne" /></span>
 								</a>
 								<span class="contact-desc">{item.description}</span>
 							</div>
@@ -129,7 +130,7 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 		<footer class="footer">
 			<p class="footer-copy">{footer.copy}</p>
 			<div class="footer-meta">
-				<a class="footer-top" href="#top">Volver arriba <span class="arrow">↑︎</span></a>
+				<a class="footer-top" href="#top">Volver arriba <span class="arrow"><ArrowIcon direction="up" /></span></a>
 				<div class="footer-year">© {year} · Diseñado y construido por {authorName}</div>
 			</div>
 		</footer>
