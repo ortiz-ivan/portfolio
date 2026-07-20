@@ -1,0 +1,26 @@
+/* ============================================================
+   skills.css — grilla de habilidades agrupadas por categoría
+   ============================================================ */
+
+.skills-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.skills-group {
+	display: grid;
+	gap: 0.9rem;
+	align-content: start;
+	padding-top: clamp(1.5rem, 3vw, 2rem);
+	border-top: 1px solid var(--line);
+}
+
+.skills-title {
+	font-family: var(--font-mono);
+	font-size: 0.76rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--muted);
+	margin: 0;
+}

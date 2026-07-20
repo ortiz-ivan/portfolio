@@ -1,0 +1,34 @@
+---
+import type { SkillsSection } from '../data/site';
+
+interface Props {
+	data: SkillsSection;
+}
+
+const { data } = Astro.props;
+---
+
+<section class="ed-section" id="skills">
+	<div class="wrap">
+		<div class="sec-head reveal">
+			<span class="sec-num">(04)</span>
+			<span class="sec-label">Skills</span>
+			<span class="rule-flex"></span>
+		</div>
+
+		<div class="skills-grid">
+			{
+				data.items.map((group) => (
+					<div class="skills-group reveal">
+						<h3 class="skills-title">{group.title}</h3>
+						<div class="tag-row">
+							{group.items.map((item) => (
+								<span class="tag">{item}</span>
+							))}
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>

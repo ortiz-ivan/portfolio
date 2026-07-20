@@ -359,6 +359,9 @@
 .proj-row.reveal {
 	--reveal-y: 14px;
 }
+.skills-group.reveal {
+	--reveal-y: 14px;
+}
 .exp-entry.reveal {
 	--reveal-y: 20px;
 }

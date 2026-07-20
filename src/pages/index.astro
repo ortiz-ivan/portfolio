@@ -2,10 +2,17 @@
 import Layout from '../layouts/Layout.astro';
 import '../styles/editorial-home.css';
 import { getCollection } from 'astro:content';
-import { contactSection, experienceSection, footerContent, heroContent } from '../data/site';
+import {
+	contactSection,
+	experienceSection,
+	footerContent,
+	heroContent,
+	skillsSection
+} from '../data/site';
 import NavBar from '../components/NavBar.astro';
 import HeroSection from '../components/HeroSection.astro';
 import ProjectsSection from '../components/ProjectsSection.astro';
+import SkillsSection from '../components/SkillsSection.astro';
 import ExperienceSection from '../components/ExperienceSection.astro';
 import ContactSection from '../components/ContactSection.astro';
 
@@ -26,7 +33,8 @@ const navItems = [
 	{ href: '#sobre-mi', label: 'Sobre mí', index: '01' },
 	{ href: '#projects', label: 'Proyectos', index: '02' },
 	{ href: '#experience', label: 'Experiencia', index: '03' },
-	{ href: '#contact', label: 'Contacto', index: '04' }
+	{ href: '#skills', label: 'Skills', index: '04' },
+	{ href: '#contact', label: 'Contacto', index: '05' }
 ];
 ---
 
@@ -39,6 +47,7 @@ const navItems = [
 		<HeroSection hero={heroContent} heroStack={heroStack} />
 		<ProjectsSection featured={featured} rest={rest} />
 		<ExperienceSection data={experienceSection} />
+		<SkillsSection data={skillsSection} />
 		<ContactSection data={contactSection} footer={footerContent} authorName={heroContent.name} />
 	</main>
 </Layout>
@@ -47,7 +56,7 @@ const navItems = [
 	let spyObserver: IntersectionObserver | null = null;
 
 	function initScrollspy() {
-		const ids = ['sobre-mi', 'projects', 'experience', 'contact'];
+		const ids = ['sobre-mi', 'projects', 'experience', 'skills', 'contact'];
 		const sections = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
 		if (sections.length === 0) return;
 

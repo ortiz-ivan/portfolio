@@ -22,6 +22,15 @@ export interface ContactItem {
 	description: string;
 }
 
+export interface SkillCategory {
+	title: string;
+	items: string[];
+}
+
+export interface SkillsSection {
+	items: SkillCategory[];
+}
+
 export interface ExperienceItem {
 	company: string;
 	role: string;
@@ -61,6 +70,39 @@ export const heroContent: HeroContent = {
 		href: '/ivan-ortiz-cv.pdf',
 		download: true
 	}
+};
+
+export const skillsSection: SkillsSection = {
+	items: [
+		{
+			title: 'Lenguajes',
+			items: ['Java', 'Python', 'TypeScript / JavaScript', 'SQL']
+		},
+		{
+			title: 'Backend',
+			items: ['Node.js', 'Spring (Boot)', 'Django', 'Django REST Framework']
+		},
+		{
+			title: 'Frontend',
+			items: ['React', 'Angular', 'React Query / TanStack Query', 'Tailwind CSS', 'Zustand']
+		},
+		{
+			title: 'Bases de datos',
+			items: ['PostgreSQL', 'MongoDB']
+		},
+		{
+			title: 'ORM / Data',
+			items: ['Prisma', 'SQLAlchemy']
+		},
+		{
+			title: 'Testing',
+			items: ['Vitest', 'pytest']
+		},
+		{
+			title: 'DevOps & Herramientas',
+			items: ['Docker (Compose)', 'Git', 'GitHub Actions (CI)', 'Netlify']
+		}
+	]
 };
 
 export const experienceSection: ExperienceSection = {
