@@ -91,7 +91,7 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 		position: fixed;
 		top: 0;
 		left: 0;
-		width: 360px;
+		width: 260px;
 		aspect-ratio: 16 / 9;
 		pointer-events: none;
 		z-index: 200;
@@ -141,8 +141,8 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 		const img = document.getElementById('proj-preview-img') as HTMLImageElement | null;
 		if (!el || !img) return;
 
-		const W = 360,
-			H = 202;
+		const W = 260,
+			H = 146;
 		const OFFSET_X = 28;
 		const OFFSET_Y = Math.round((W * 9) / 16 / 2);
 
