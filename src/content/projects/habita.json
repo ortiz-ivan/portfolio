@@ -57,7 +57,6 @@
 		"technologiesNote": "El stack combina Django REST Framework y React para un sistema de gestión robusto, con separación clara entre API y frontend que facilita escalar cada capa de forma independiente."
 	},
 	"links": [
-		{ "label": "Demo", "href": "#", "kind": "demo", "available": false },
 		{
 			"label": "GitHub (Backend)",
 			"href": "https://github.com/ortiz-ivan/Habita",

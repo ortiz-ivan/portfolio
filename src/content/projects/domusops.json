@@ -67,7 +67,6 @@
 		"technologiesNote": "El stack se usa aquí para sostener reglas de negocio claras y una experiencia de uso fluida; la tecnología acompaña al modelo operativo, no lo define."
 	},
 	"links": [
-		{ "label": "Demo", "href": "#", "kind": "demo", "available": false },
 		{
 			"label": "GitHub",
 			"href": "https://github.com/ortiz-ivan/domusops",
