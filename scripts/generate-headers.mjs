@@ -48,8 +48,10 @@ async function collectHashes(files) {
 function buildCsp(scriptHashes, styleHashes) {
 	const directives = {
 		'default-src': ["'self'"],
-		'script-src': ["'self'", ...scriptHashes],
-		'style-src': ["'self'", 'https://fonts.googleapis.com', ...styleHashes],
+		// 'unsafe-inline' es ignorado por navegadores que soportan hash-source (CSP2+);
+		// solo actúa como fallback para navegadores antiguos que no lo soportan.
+		'script-src': ["'self'", "'unsafe-inline'", ...scriptHashes],
+		'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', ...styleHashes],
 		'font-src': ["'self'", 'https://fonts.gstatic.com'],
 		'img-src': ["'self'", 'data:'],
 		'connect-src': ["'self'", 'https://api.web3forms.com'],
