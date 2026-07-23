@@ -23,7 +23,7 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 	<div class="wrap">
 		<div class="sec-head reveal">
 			<span class="sec-num">(02)</span>
-			<span class="sec-label">Proyectos seleccionados</span>
+			<h2 class="sec-label">Proyectos seleccionados</h2>
 			<span class="rule-flex"></span>
 		</div>
 
@@ -61,7 +61,10 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 												target={ext ? '_blank' : undefined}
 												rel={ext ? 'noopener noreferrer' : undefined}
 											>
-												{l.label} <span class="arrow"><ArrowIcon direction="ne" /></span>
+												{l.label}{' '}
+												<span class="arrow">
+													<ArrowIcon direction="ne" />
+												</span>
 											</a>
 										);
 									})

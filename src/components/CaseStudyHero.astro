@@ -24,7 +24,9 @@ const readyImages = project.images.filter(
 	<div class="wrap">
 		<div class="hero-top reveal">
 			<span class="ed-eyebrow"><span class="dot"></span>{project.eyebrow}</span>
-			<a class="tlink" href="/#projects">← Todos los proyectos <span class="arrow"><ArrowIcon direction="ne" /></span></a>
+			<a class="tlink" href="/#projects"
+				>← Todos los proyectos <span class="arrow"><ArrowIcon direction="ne" /></span></a
+			>
 		</div>
 
 		{
@@ -45,7 +47,10 @@ const readyImages = project.images.filter(
 									.map((l: ProjectLink) =>
 										l.kind === 'github-private' ? (
 											<a class="btn btn-ghost" href={l.href}>
-												{l.label} <span class="arrow"><ArrowIcon direction="ne" /></span>
+												{l.label}{' '}
+												<span class="arrow">
+													<ArrowIcon direction="ne" />
+												</span>
 											</a>
 										) : l.available ? (
 											<a
@@ -54,7 +59,10 @@ const readyImages = project.images.filter(
 												target={l.href.startsWith('http') ? '_blank' : undefined}
 												rel={l.href.startsWith('http') ? 'noopener noreferrer' : undefined}
 											>
-												{l.label} <span class="arrow"><ArrowIcon direction="ne" /></span>
+												{l.label}{' '}
+												<span class="arrow">
+													<ArrowIcon direction="ne" />
+												</span>
 											</a>
 										) : (
 											<span class="btn btn-ghost btn--unavailable">{l.label} · pronto</span>
@@ -103,7 +111,10 @@ const readyImages = project.images.filter(
 									.map((l: ProjectLink) =>
 										l.kind === 'github-private' ? (
 											<a class="btn btn-ghost" href={l.href}>
-												{l.label} <span class="arrow"><ArrowIcon direction="ne" /></span>
+												{l.label}{' '}
+												<span class="arrow">
+													<ArrowIcon direction="ne" />
+												</span>
 											</a>
 										) : l.available ? (
 											<a
@@ -112,7 +123,10 @@ const readyImages = project.images.filter(
 												target={l.href.startsWith('http') ? '_blank' : undefined}
 												rel={l.href.startsWith('http') ? 'noopener noreferrer' : undefined}
 											>
-												{l.label} <span class="arrow"><ArrowIcon direction="ne" /></span>
+												{l.label}{' '}
+												<span class="arrow">
+													<ArrowIcon direction="ne" />
+												</span>
 											</a>
 										) : (
 											<span class="btn btn-ghost btn--unavailable">{l.label} · pronto</span>

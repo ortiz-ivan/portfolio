@@ -17,7 +17,7 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 	<div class="wrap">
 		<div class="sec-head reveal">
 			<span class="sec-num">(05)</span>
-			<span class="sec-label">Contacto</span>
+			<h2 class="sec-label">Contacto</h2>
 			<span class="rule-flex"></span>
 		</div>
 
@@ -117,7 +117,10 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 									target={external ? '_blank' : undefined}
 									rel={external ? 'noopener noreferrer' : undefined}
 								>
-									{item.value} <span class="arrow"><ArrowIcon direction="ne" /></span>
+									{item.value}{' '}
+									<span class="arrow">
+										<ArrowIcon direction="ne" />
+									</span>
 								</a>
 								<span class="contact-desc">{item.description}</span>
 							</div>
@@ -130,7 +133,9 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 		<footer class="footer">
 			<p class="footer-copy">{footer.copy}</p>
 			<div class="footer-meta">
-				<a class="footer-top" href="#top">Volver arriba <span class="arrow"><ArrowIcon direction="up" /></span></a>
+				<a class="footer-top" href="#top"
+					>Volver arriba <span class="arrow"><ArrowIcon direction="up" /></span></a
+				>
 				<div class="footer-year">© {year} · Diseñado y construido por {authorName}</div>
 			</div>
 		</footer>
@@ -167,8 +172,7 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 				form.hidden = true;
 				successEl.hidden = false;
 			} catch {
-				errorEl.textContent =
-					'Algo salió mal. Intentá de nuevo o escribime por LinkedIn o GitHub.';
+				errorEl.textContent = 'Algo salió mal. Intentá de nuevo o escribime por LinkedIn o GitHub.';
 				submitBtn.disabled = false;
 				submitBtn.removeAttribute('aria-disabled');
 				submitBtn.classList.remove('is-loading');

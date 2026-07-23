@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/logo.png';
+
 interface NavItem {
 	href: string;
 	label: string;
@@ -18,7 +21,7 @@ const { name, brandHref = '#top', items } = Astro.props;
 	<div class="wrap nav-inner">
 		<a class="brand" href={brandHref} aria-label="Inicio">
 			<span class="mark">
-				<img src="/logo_final.png" alt={name} width="26" height="26" />
+				<Image src={logo} alt={name} width={52} height={52} loading="eager" />
 			</span>
 			<span>{name}</span>
 		</a>

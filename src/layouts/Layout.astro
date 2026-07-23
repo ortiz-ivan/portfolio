@@ -6,12 +6,14 @@ interface Props {
 	title?: string;
 	description?: string;
 	ogImage?: string;
+	structuredData?: Record<string, unknown>[];
 }
 
 const {
 	title = 'Iván Ortiz | Fullstack Developer',
 	description = 'Portfolio de Iván Ortiz, enfocado en sistemas de gestión y automatización de procesos para negocios reales.',
-	ogImage = '/og-image.png'
+	ogImage = '/og-image.png',
+	structuredData = []
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -28,17 +30,29 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="canonical" href={canonicalURL} />
 
-		<!-- Fuentes editoriales -->
+		<!-- Fuentes editoriales: carga no bloqueante (media=print + swap a all) para no retrasar el primer render -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
+			id="gfonts-css"
 			rel="stylesheet"
-			href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Hanken+Grotesk:wght@400;600&family=JetBrains+Mono:wght@400&display=swap"
+			media="print"
 		/>
+		<noscript>
+			<link
+				rel="stylesheet"
+				href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Hanken+Grotesk:wght@400;600&family=JetBrains+Mono:wght@400&display=swap"
+			/>
+		</noscript>
+		<script>
+			document.getElementById('gfonts-css')?.removeAttribute('media');
+		</script>
 
 		<!-- Meta base -->
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		<meta name="author" content="Iván Ortiz" />
 		<meta name="theme-color" content="#100f0d" />
 		<meta name="robots" content="index, follow" />
 
@@ -83,7 +97,8 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 						url: Astro.site,
 						name: 'Iván Ortiz | Fullstack Developer',
 						author: { '@id': `${Astro.site}#person` }
-					}
+					},
+					...structuredData
 				]
 			})}
 		/>

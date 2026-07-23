@@ -42,7 +42,7 @@
 	--text: #f4f2ee;
 	--text-2: #c8c4bc;
 	--muted: #8f8b82;
-	--faint: #5f5c55;
+	--faint: #878278;
 	--error: #c87070;
 
 	--accent-bg: #f4f2ee;
@@ -136,8 +136,10 @@
 	color: var(--faint);
 }
 .sec-label {
+	margin: 0;
 	font-family: var(--font-mono);
 	font-size: 0.78rem;
+	font-weight: 400;
 	letter-spacing: 0.18em;
 	text-transform: uppercase;
 	color: var(--text-2);

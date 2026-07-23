@@ -1,8 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import { getImage } from 'astro:assets';
 import ProjectDetail from '../../components/ProjectDetail.astro';
 import Layout from '../../layouts/Layout.astro';
+import { getLocalImage } from '../../lib/images';
 
 export async function getStaticPaths() {
 	const projects = await getCollection('projects');
@@ -18,8 +20,38 @@ interface Props {
 
 const { project } = Astro.props;
 const { slug } = Astro.params;
+
+const canonicalURL = new URL(`/projects/${slug}`, Astro.site).href;
+const githubLink = project.links.find((l) => l.kind === 'github' || l.kind === 'github-private');
+const coverImage = project.images.find((img) => img.role === 'cover' && img.src);
+
+let imageURL: string | undefined;
+if (coverImage?.src) {
+	const asset = getLocalImage(coverImage.src);
+	imageURL = asset
+		? new URL((await getImage({ src: asset })).src, Astro.site).href
+		: new URL(coverImage.src, Astro.site).href;
+}
+
+const structuredData = [
+	{
+		'@type': 'SoftwareSourceCode',
+		'@id': `${canonicalURL}#software`,
+		name: project.name,
+		description: project.summary,
+		url: canonicalURL,
+		...(githubLink ? { codeRepository: githubLink.href } : {}),
+		programmingLanguage: project.tech,
+		author: { '@id': `${Astro.site}#person` },
+		...(imageURL ? { image: imageURL } : {})
+	}
+];
 ---
 
-<Layout title={`${project.name} | Iván Ortiz`} description={project.summary}>
+<Layout
+	title={`${project.name} | Iván Ortiz`}
+	description={project.summary}
+	structuredData={structuredData}
+>
 	<ProjectDetail project={project} slug={slug} />
 </Layout>
