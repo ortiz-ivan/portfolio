@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/fonts.css';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
@@ -30,24 +31,15 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="canonical" href={canonicalURL} />
 
-		<!-- Fuentes editoriales: carga no bloqueante (media=print + swap a all) para no retrasar el primer render -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<!-- Fuentes editoriales: auto-hospedadas (ver src/styles/fonts.css). Se precarga la fuente del
+		     texto de mayor peso visual (Hanken Grotesk), que es el elemento LCP en el hero. -->
 		<link
-			id="gfonts-css"
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Hanken+Grotesk:wght@400;600&family=JetBrains+Mono:wght@400&display=swap"
-			media="print"
+			rel="preload"
+			as="font"
+			type="font/woff2"
+			href="/fonts/hanken-grotesk.woff2"
+			crossorigin
 		/>
-		<noscript>
-			<link
-				rel="stylesheet"
-				href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Hanken+Grotesk:wght@400;600&family=JetBrains+Mono:wght@400&display=swap"
-			/>
-		</noscript>
-		<script>
-			document.getElementById('gfonts-css')?.removeAttribute('media');
-		</script>
 
 		<!-- Meta base -->
 		<meta name="generator" content={Astro.generator} />
