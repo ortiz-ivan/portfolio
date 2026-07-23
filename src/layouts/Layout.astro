@@ -31,18 +31,30 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="canonical" href={canonicalURL} />
 
-		<!-- Fuentes editoriales: auto-hospedadas (ver src/styles/fonts.css). Se precargan las dos
-		     fuentes con mayor peso visual en el viewport inicial: Hanken Grotesk (párrafo LCP) y
-		     Newsreader (el <h1>, texto más grande de la página) para evitar un swap tardío que
-		     empeore el Speed Index aunque el LCP ya haya ocurrido. -->
+		<!-- Fuentes editoriales: auto-hospedadas, instancias estáticas por peso (ver src/styles/fonts.css).
+		     Se precargan las tres que pintan contenido visible en el viewport inicial: Hanken Grotesk 400
+		     (párrafo LCP), Newsreader 400 (el <h1>) y Newsreader 300 (el subtítulo). -->
 		<link
 			rel="preload"
 			as="font"
 			type="font/woff2"
-			href="/fonts/hanken-grotesk.woff2"
+			href="/fonts/hanken-grotesk-400.woff2"
 			crossorigin
 		/>
-		<link rel="preload" as="font" type="font/woff2" href="/fonts/newsreader.woff2" crossorigin />
+		<link
+			rel="preload"
+			as="font"
+			type="font/woff2"
+			href="/fonts/newsreader-400.woff2"
+			crossorigin
+		/>
+		<link
+			rel="preload"
+			as="font"
+			type="font/woff2"
+			href="/fonts/newsreader-300.woff2"
+			crossorigin
+		/>
 
 		<!-- Meta base -->
 		<meta name="generator" content={Astro.generator} />
