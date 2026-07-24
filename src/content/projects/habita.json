@@ -78,10 +78,38 @@
 	],
 	"images": [
 		{
+			"role": "detail",
+			"alt": "Pantalla de inicio de sesión de Habita",
+			"src": "/src/assets/images/habita/habita-01-login.png",
+			"caption": "Inicio de sesión con autenticación JWT y rotación de tokens.",
+			"status": "ready"
+		},
+		{
 			"role": "cover",
 			"alt": "Dashboard de Habita con ocupación de habitaciones, pagos y estado de contratos",
-			"src": "/mockups/habita-cover.svg",
+			"src": "/src/assets/images/habita/habita-02-dashboard.png",
 			"caption": "Panel de gestión con ocupación, estado de pagos por habitación y resumen mensual.",
+			"status": "ready"
+		},
+		{
+			"role": "dashboard",
+			"alt": "Gestión de habitaciones de Habita",
+			"src": "/src/assets/images/habita/habita-03-habitaciones.png",
+			"caption": "Gestión de habitaciones con estado de ocupación y disponibilidad.",
+			"status": "ready"
+		},
+		{
+			"role": "detail",
+			"alt": "Gestión de contratos de Habita",
+			"src": "/src/assets/images/habita/habita-04-contratos.png",
+			"caption": "Registro y seguimiento de contratos de alquiler por inquilino.",
+			"status": "ready"
+		},
+		{
+			"role": "detail",
+			"alt": "Gestión de pagos de Habita",
+			"src": "/src/assets/images/habita/habita-05-pagos.png",
+			"caption": "Seguimiento de pagos con estados de mora y vencimiento.",
 			"status": "ready"
 		}
 	]
