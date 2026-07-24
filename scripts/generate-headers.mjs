@@ -3,10 +3,11 @@
 import { createHash } from 'node:crypto';
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const DIST = new URL('../dist/', import.meta.url).pathname.replace(/^\/([a-zA-Z]:)/, '$1');
 
-async function findHtmlFiles(dir) {
+export async function findHtmlFiles(dir) {
 	const entries = await readdir(dir, { withFileTypes: true });
 	const files = await Promise.all(
 		entries.map((entry) => {
@@ -17,11 +18,11 @@ async function findHtmlFiles(dir) {
 	return files.flat();
 }
 
-function sha256(content) {
+export function sha256(content) {
 	return `'sha256-${createHash('sha256').update(content, 'utf8').digest('base64')}'`;
 }
 
-async function collectHashes(files) {
+export async function collectHashes(files) {
 	const scriptHashes = new Set();
 	const styleHashes = new Set();
 
@@ -45,7 +46,7 @@ async function collectHashes(files) {
 	return { scriptHashes, styleHashes };
 }
 
-function buildCsp(scriptHashes, styleHashes) {
+export function buildCsp(scriptHashes, styleHashes) {
 	const directives = {
 		'default-src': ["'self'"],
 		// 'unsafe-inline' es ignorado por navegadores que soportan hash-source (CSP2+);
@@ -66,11 +67,12 @@ function buildCsp(scriptHashes, styleHashes) {
 		.join('; ');
 }
 
-const files = await findHtmlFiles(DIST);
-const { scriptHashes, styleHashes } = await collectHashes(files);
-const csp = buildCsp(scriptHashes, styleHashes);
+async function main() {
+	const files = await findHtmlFiles(DIST);
+	const { scriptHashes, styleHashes } = await collectHashes(files);
+	const csp = buildCsp(scriptHashes, styleHashes);
 
-const headers = `/*
+	const headers = `/*
   Content-Security-Policy: ${csp}
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
@@ -79,7 +81,14 @@ const headers = `/*
   Strict-Transport-Security: max-age=63072000; includeSubDomains
 `;
 
-await writeFile(new URL('../dist/_headers', import.meta.url), headers);
-console.log(
-	`_headers written with ${scriptHashes.size} script hash(es) and ${styleHashes.size} style hash(es).`
-);
+	await writeFile(new URL('../dist/_headers', import.meta.url), headers);
+	console.log(
+		`_headers written with ${scriptHashes.size} script hash(es) and ${styleHashes.size} style hash(es).`
+	);
+}
+
+// Solo corre al ejecutarse directamente (pnpm build); al importarse desde
+// los tests, el módulo no debe escribir en disco.
+if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
+	await main();
+}
