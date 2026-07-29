@@ -72,6 +72,9 @@ async function main() {
 	const { scriptHashes, styleHashes } = await collectHashes(files);
 	const csp = buildCsp(scriptHashes, styleHashes);
 
+	// /_astro/* lleva hash de contenido en el nombre y /fonts/* no cambia:
+	// ambos pueden cachearse un año como inmutables (Netlify por defecto
+	// sirve todo con max-age=0, must-revalidate).
 	const headers = `/*
   Content-Security-Policy: ${csp}
   X-Content-Type-Options: nosniff
@@ -79,6 +82,12 @@ async function main() {
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=()
   Strict-Transport-Security: max-age=63072000; includeSubDomains
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
 `;
 
 	await writeFile(new URL('../dist/_headers', import.meta.url), headers);
