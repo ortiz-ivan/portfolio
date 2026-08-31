@@ -1,6 +1,7 @@
 ---
 import type { ContactSection, FooterContent } from '../data/site';
 import ArrowIcon from './icons/ArrowIcon.astro';
+import BrandIcon from './icons/BrandIcon.astro';
 
 interface Props {
 	data: ContactSection;
@@ -105,28 +106,25 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 			<!-- Columna derecha: links -->
 			<aside class="contact-links reveal">
 				<p class="contact-links-label">Encontrame en</p>
-				{
-					data.items.map((item) => {
-						const external = item.href.startsWith('http');
-						return (
-							<div class="ed-contact-item">
-								<span class="contact-k">{item.label}</span>
+				<div class="contact-icons">
+					{
+						data.items.map((item) => {
+							const external = item.href.startsWith('http');
+							return (
 								<a
-									class="contact-v"
+									class="contact-icon-link"
 									href={item.href}
 									target={external ? '_blank' : undefined}
 									rel={external ? 'noopener noreferrer' : undefined}
+									aria-label={`${item.label} — ${item.value}`}
+									title={item.label}
 								>
-									{item.value}{' '}
-									<span class="arrow">
-										<ArrowIcon direction="ne" />
-									</span>
+									<BrandIcon name={item.icon} />
 								</a>
-								<span class="contact-desc">{item.description}</span>
-							</div>
-						);
-					})
-				}
+							);
+						})
+					}
+				</div>
 			</aside>
 		</div>
 

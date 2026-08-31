@@ -3,7 +3,7 @@
 	"priority": 1,
 	"eyebrow": "Sistema de gestión comercial",
 	"isFeatured": true,
-	"summary": "Sistema de gestión empresarial con control de ventas, inventario, reportes y roles.",
+	"summary": "Las ventas, el inventario y los reportes vivían en procesos manuales y planillas aisladas, sin control por rol ni trazabilidad. Construí una plataforma modular y desacoplada que centraliza la operación comercial y escala hacia nuevos módulos sin rehacer la base.",
 	"longDescription": "Sistema completo para operaciones comerciales, pensado para centralizar ventas, stock y trazabilidad interna en una arquitectura desacoplada.",
 	"highlight": "Proyecto estrella para mostrar criterio técnico y valor real de negocio.",
 	"tech": ["Django REST", "React", "PostgreSQL", "Roles y permisos"],

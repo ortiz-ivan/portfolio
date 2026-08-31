@@ -20,6 +20,7 @@ export interface ContactItem {
 	value: string;
 	href: string;
 	description: string;
+	icon: 'linkedin' | 'github';
 }
 
 export interface SkillCategory {
@@ -130,13 +131,15 @@ export const contactSection: ContactSection = {
 			label: 'LinkedIn',
 			value: 'Ivan Ortiz',
 			href: 'https://www.linkedin.com/in/ortiz-ivan08/',
-			description: 'Perfil profesional y recorrido técnico.'
+			description: 'Perfil profesional y recorrido técnico.',
+			icon: 'linkedin'
 		},
 		{
 			label: 'GitHub',
 			value: 'ortiz-ivan',
 			href: 'https://github.com/ortiz-ivan',
-			description: 'Proyectos y evolución técnica.'
+			description: 'Proyectos y evolución técnica.',
+			icon: 'github'
 		}
 	]
 };

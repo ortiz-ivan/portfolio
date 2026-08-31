@@ -10,13 +10,17 @@
 /* ---------- Filas de proyectos ---------- */
 .proj-row {
 	display: grid;
-	grid-template-columns: auto minmax(0, 1.1fr) minmax(0, 1.4fr) auto;
+	/* Tracks fijos en la 1ª y última columna: cada fila es su propio grid,
+	   así que un ancho intrínseco (auto) hacía que la columna de descripción
+	   arrancara en una x distinta por fila. Con anchos deterministas, todas
+	   las filas comparten la misma geometría y las descripciones se alinean. */
+	grid-template-columns: 2rem minmax(0, 1.1fr) minmax(0, 1.5fr) clamp(150px, 18vw, 240px);
 	gap: clamp(1rem, 3vw, 2.5rem);
 	align-items: center;
 	padding-block: clamp(1.8rem, 3.5vw, 2.6rem);
 	border-top: 1px solid var(--line);
 	position: relative;
-	transition: padding-left 0.45s var(--ease);
+	transition: box-shadow 0.35s var(--ease);
 }
 .proj-row:last-child {
 	border-bottom: 1px solid var(--line);
@@ -28,15 +32,26 @@
 	top: 0;
 	bottom: 0;
 	width: 0;
-	background: rgba(244, 242, 238, 0.02);
+	background: var(--bg-2);
 	transition: width 0.45s var(--ease);
 	z-index: -1;
 }
+/* Feedback de hover sin mover el contenido: fondo + barra lateral.
+   La descripción y las acciones quedan fijas para no perder el hilo
+   de lectura; solo el índice y el título hacen un desplazamiento leve. */
 .proj-row:hover {
-	padding-left: clamp(0.6rem, 2vw, 1.6rem);
+	box-shadow: inset 3px 0 0 var(--text-2);
 }
 .proj-row:hover::before {
 	width: 100%;
+}
+.proj-row .r-index,
+.proj-row .r-name {
+	transition: transform 0.4s var(--ease);
+}
+.proj-row:hover .r-index,
+.proj-row:hover .r-name {
+	transform: translateX(clamp(0.35rem, 1vw, 0.7rem));
 }
 
 .proj-row .r-index {
