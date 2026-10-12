@@ -1,0 +1,340 @@
+<!doctype html>
+<!--
+	Fuente del CV. Para regenerar public/ivan-ortiz-cv.pdf: `pnpm cv`
+	Una sola columna y texto real (sin imágenes ni tablas de maquetación) para que los ATS lo lean bien.
+-->
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Iván Ortiz — CV</title>
+		<style>
+			@font-face {
+				font-family: 'Hanken Grotesk';
+				font-weight: 400;
+				src: url('../public/fonts/hanken-grotesk-400.woff2') format('woff2');
+			}
+			@font-face {
+				font-family: 'Hanken Grotesk';
+				font-weight: 600;
+				src: url('../public/fonts/hanken-grotesk-600.woff2') format('woff2');
+			}
+			@font-face {
+				font-family: 'JetBrains Mono';
+				font-weight: 400;
+				src: url('../public/fonts/jetbrains-mono-400.woff2') format('woff2');
+			}
+
+			@page {
+				size: A4;
+				margin: 12mm 15mm 11mm;
+			}
+
+			:root {
+				--ink: #16150f;
+				--ink-2: #3d3a33;
+				--muted: #6b665c;
+				--line: #d9d5cc;
+				/* Cobre del portfolio, oscurecido para que tenga contraste sobre papel */
+				--accent: #8c5a26;
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				margin: 0;
+				font-family: 'Hanken Grotesk', Arial, sans-serif;
+				font-size: 9.2pt;
+				line-height: 1.42;
+				color: var(--ink-2);
+				-webkit-print-color-adjust: exact;
+				print-color-adjust: exact;
+			}
+
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
+
+			/* ---------- Cabecera ---------- */
+			header {
+				padding-bottom: 9pt;
+				border-bottom: 1.2pt solid var(--ink);
+			}
+			h1 {
+				margin: 0;
+				font-size: 25pt;
+				font-weight: 600;
+				letter-spacing: -0.03em;
+				line-height: 1;
+				color: var(--ink);
+			}
+			.role {
+				margin: 5pt 0 0;
+				font-size: 11pt;
+				font-weight: 600;
+				color: var(--ink);
+			}
+			.role span {
+				color: var(--muted);
+				font-weight: 400;
+			}
+			.contact {
+				margin: 6pt 0 0;
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 7.6pt;
+				color: var(--ink-2);
+				display: flex;
+				flex-wrap: wrap;
+				gap: 2pt 11pt;
+			}
+			.contact .loc {
+				color: var(--muted);
+			}
+
+			/* ---------- Secciones ---------- */
+			section {
+				margin-top: 11pt;
+			}
+			h2 {
+				margin: 0 0 5pt;
+				padding-bottom: 2.5pt;
+				border-bottom: 0.6pt solid var(--line);
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 7.8pt;
+				font-weight: 400;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				color: var(--accent);
+			}
+			p {
+				margin: 0;
+			}
+
+			.entry + .entry {
+				margin-top: 7pt;
+			}
+			.entry-head {
+				display: flex;
+				justify-content: space-between;
+				align-items: baseline;
+				gap: 12pt;
+			}
+			h3 {
+				margin: 0;
+				font-size: 10.4pt;
+				font-weight: 600;
+				color: var(--ink);
+			}
+			h3 .sub {
+				font-weight: 400;
+				color: var(--muted);
+			}
+			.when {
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 7.6pt;
+				color: var(--muted);
+				white-space: nowrap;
+			}
+			.position {
+				margin-top: 1pt;
+				font-weight: 600;
+				color: var(--ink-2);
+			}
+
+			ul {
+				margin: 3pt 0 0;
+				padding: 0;
+				list-style: none;
+			}
+			li {
+				position: relative;
+				padding-left: 10pt;
+			}
+			li + li {
+				margin-top: 1.2pt;
+			}
+			li::before {
+				content: '';
+				position: absolute;
+				left: 1pt;
+				top: 0.62em;
+				width: 4pt;
+				height: 1pt;
+				background: var(--accent);
+			}
+
+			.desc {
+				margin-top: 2pt;
+			}
+			.meta {
+				margin-top: 2.5pt;
+				font-size: 8.4pt;
+				color: var(--muted);
+			}
+			.meta b {
+				font-weight: 600;
+				color: var(--ink-2);
+			}
+			.meta a {
+				text-decoration: underline;
+				text-decoration-color: var(--line);
+				text-underline-offset: 1.5pt;
+			}
+
+			/* Habilidades: etiqueta + lista en una línea */
+			.skills {
+				display: grid;
+				gap: 2pt;
+			}
+			.skills p b {
+				display: inline-block;
+				min-width: 92pt;
+				font-weight: 600;
+				color: var(--ink);
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>Iván Ortiz</h1>
+			<p class="role">
+				Backend / Fullstack Developer <span>· Java · Spring Boot · PostgreSQL · Docker</span>
+			</p>
+			<p class="contact">
+				<a href="tel:+595986805831">+595 986 805 831</a>
+				<a href="mailto:ortiz.ivan.dev@gmail.com">ortiz.ivan.dev@gmail.com</a>
+				<a href="https://ivanortiz.dev">ivanortiz.dev</a>
+				<a href="https://github.com/ortiz-ivan">github.com/ortiz-ivan</a>
+				<a href="https://www.linkedin.com/in/ortiz-ivan08/">linkedin.com/in/ortiz-ivan08</a>
+				<span class="loc">San Lorenzo, Paraguay · Remoto, híbrido o presencial</span>
+			</p>
+		</header>
+
+		<section>
+			<h2>Perfil</h2>
+			<p>
+				Desarrollador Backend/Fullstack con experiencia profesional en Java, Spring Boot y
+				PostgreSQL sobre un sistema en producción. Trabajo el ciclo completo: desarrollo de APIs,
+				optimización de consultas, integración con SIFEN y despliegue a test y producción con Docker
+				Compose y GitLab CI en servidores Linux. Complemento este perfil con proyectos propios en
+				uso real, con testing automatizado y arquitectura en capas como estándar de trabajo.
+			</p>
+		</section>
+
+		<section>
+			<h2>Experiencia profesional</h2>
+			<div class="entry">
+				<div class="entry-head">
+					<h3>Airam S.A.</h3>
+					<span class="when">Feb 2026 – Actualidad</span>
+				</div>
+				<p class="position">Desarrollador Fullstack</p>
+				<ul>
+					<li>
+						APIs REST en Java/Spring Boot, separadas por capas (controller / service / repository) y
+						DTOs.
+					</li>
+					<li>
+						Optimización de consultas SQL en vistas críticas: reduje los tiempos de respuesta un
+						~66% (~3s → ~1s).
+					</li>
+					<li>Integración y mantenimiento de endpoints SIFEN para facturación electrónica.</li>
+					<li>Despliegues a entornos de test y producción mediante pipelines de GitLab CI.</li>
+					<li>
+						Servicios contenerizados con Docker Compose en servidores Linux, administrados por SSH.
+					</li>
+					<li>
+						Evolución de modelos en PostgreSQL en producción y soporte en frontend (React, Angular).
+					</li>
+				</ul>
+				<p class="meta">
+					<b>Stack:</b> Java, Spring Boot, PostgreSQL, Docker Compose, GitLab CI, Linux, React,
+					Angular
+				</p>
+			</div>
+		</section>
+
+		<section>
+			<h2>Proyectos</h2>
+			<div class="entry">
+				<h3>Kairos <span class="sub">— Punto de venta e inventario de escritorio</span></h3>
+				<p class="desc">
+					Sistema POS en producción para un comercio real: ventas, inventario con kardex, arqueo de
+					caja, créditos a clientes y reportes, funcionando sin internet. Arquitectura en capas
+					(routes / services / repositories), migraciones versionadas con Alembic, instalador para
+					Windows y casi 200 tests con pytest en CI.
+				</p>
+				<p class="meta">
+					<b>Stack:</b> Python, Flask, SQLAlchemy, Alembic, SQLite, PyInstaller, pytest ·
+					<b>Repo:</b>
+					<a href="https://github.com/ortiz-ivan/kairos">github.com/ortiz-ivan/kairos</a>
+				</p>
+			</div>
+			<div class="entry">
+				<h3>Habita <span class="sub">— Gestión de alquileres</span></h3>
+				<p class="desc">
+					Aplicación fullstack para administrar alquileres (habitaciones, inquilinos, contratos y
+					pagos con estados de mora), con 7 modelos relacionados y auditoría. Autenticación JWT con
+					rotación de refresh tokens en cookie httpOnly y 185 tests automatizados entre backend y
+					frontend.
+				</p>
+				<p class="meta">
+					<b>Stack:</b> Django 5, PostgreSQL, React 19, React Query, Tailwind CSS, JWT, Docker
+					Compose ·
+					<b>Repos:</b>
+					<a href="https://github.com/ortiz-ivan/Habita">backend</a>,
+					<a href="https://github.com/ortiz-ivan/Habita-frontend">frontend</a>
+				</p>
+			</div>
+			<div class="entry">
+				<h3>MatLog <span class="sub">— Historial técnico para una academia de BJJ</span></h3>
+				<p class="desc">
+					Plataforma web mobile-first en uso real para registrar clases y técnicas. Seguridad en
+					profundidad: rol de base de datos con permisos mínimos, auditoría de solo inserción, JWT
+					con invalidación de sesiones y límite de intentos; respaldada por 98 tests de API.
+				</p>
+				<p class="meta">
+					<b>Stack:</b> FastAPI, SQLAlchemy 2, PostgreSQL, React 19, TypeScript, TanStack Query,
+					Docker · <b>Repos:</b> <a href="https://github.com/ortiz-ivan/matlog-api">backend</a>,
+					<a href="https://github.com/ortiz-ivan/matlog">frontend</a>
+				</p>
+			</div>
+		</section>
+
+		<section>
+			<h2>Habilidades técnicas</h2>
+			<div class="skills">
+				<p>
+					<b>Backend</b>Java · Spring Boot · REST APIs · Python · Django / DRF · FastAPI · Flask ·
+					Node.js · Express.js
+				</p>
+				<p><b>Bases de datos</b>PostgreSQL · SQLite · SQLAlchemy · Alembic</p>
+				<p><b>Frontend</b>React · Angular · TypeScript · TanStack Query · Tailwind CSS</p>
+				<p><b>DevOps</b>Docker · Docker Compose · GitLab CI · GitHub Actions · Linux · SSH · Git</p>
+				<p><b>Testing y seguridad</b>pytest · Vitest · JWT · bcrypt · OWASP</p>
+				<p><b>Arquitectura</b>Arquitectura en capas · Clean Architecture · SOLID</p>
+			</div>
+		</section>
+
+		<section>
+			<h2>Educación</h2>
+			<div class="entry">
+				<div class="entry-head">
+					<h3>
+						Universidad de la Integración de las Américas (UNIDA)
+						<span class="sub">— Ingeniería en Informática, 7.º semestre</span>
+					</h3>
+					<span class="when">En curso</span>
+				</div>
+			</div>
+			<div class="entry">
+				<h3>
+					Penguin Academy
+					<span class="sub">— CodePRO 2.0, bootcamp en desarrollo tecnológico</span>
+				</h3>
+			</div>
+		</section>
+	</body>
+</html>

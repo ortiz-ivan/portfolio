@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import { getLocalImage } from '../lib/images';
 import ArrowIcon from './icons/ArrowIcon.astro';
 
@@ -17,6 +18,15 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 		.filter((img): img is typeof img & { src: string } => img.status === 'ready' && !!img.src)
 		.map((img) => getLocalImage(img.src)?.src ?? img.src);
 }
+
+// Captura fija para pantallas táctiles: prioriza el dashboard, si no la primera lista.
+function projectThumb(entry: CollectionEntry<'projects'>) {
+	const ready = entry.data.images.filter((img) => img.status === 'ready' && !!img.src);
+	const pick = ready.find((img) => img.role === 'dashboard') ?? ready[0];
+	if (!pick?.src) return undefined;
+	const local = getLocalImage(pick.src);
+	return local ? { image: local, alt: pick.alt } : undefined;
+}
 ---
 
 <section class="ed-section" id="projects">
@@ -32,6 +42,7 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 				allProjects.map((p, i) => {
 					const images = projectImages(p);
 					const availableLinks = p.data.links.filter((l) => l.available);
+					const thumb = projectThumb(p);
 					return (
 						<article
 							class="proj-row reveal"
@@ -43,13 +54,25 @@ function projectImages(entry: CollectionEntry<'projects'>): string[] {
 								<span class="r-eyebrow">{p.data.eyebrow}</span>
 							</span>
 							<div class="r-desc">
-								{p.data.summary}
+								{p.data.tagline}
 								<div class="r-tags">
 									{p.data.tech.slice(0, 4).map((t) => (
 										<span class="tag">{t}</span>
 									))}
 								</div>
 							</div>
+							{thumb && (
+								<figure class="r-thumb">
+									<Image
+										src={thumb.image}
+										alt={thumb.alt}
+										widths={[400, 720]}
+										sizes="(max-width: 600px) calc(100vw - 4rem), 560px"
+										loading="lazy"
+									/>
+									<figcaption>{p.data.name}</figcaption>
+								</figure>
+							)}
 							<div class="r-action">
 								{availableLinks.length > 0 ? (
 									availableLinks.map((l) => {

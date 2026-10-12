@@ -24,6 +24,8 @@ const projects = defineCollection({
 		priority: z.number().int().positive(),
 		eyebrow: z.string(),
 		isFeatured: z.boolean(),
+		// Una frase para la lista de la home; el detalle vive en summary (caso de estudio)
+		tagline: z.string().max(140),
 		summary: z.string(),
 		longDescription: z.string(),
 		highlight: z.string(),

@@ -15,10 +15,11 @@
 	align-content: start;
 }
 .exp-company {
-	font-family: var(--font-display);
-	font-size: clamp(2rem, 4vw, 3rem);
+	font-family: var(--font-heading);
+	font-weight: var(--heading-weight);
+	font-size: clamp(1.8rem, 3.6vw, 2.7rem);
 	line-height: 1;
-	letter-spacing: -0.02em;
+	letter-spacing: -0.03em;
 	margin: 0;
 }
 .exp-period {
@@ -72,7 +73,7 @@
 	counter-increment: resp;
 	font-family: var(--font-mono);
 	font-size: 0.72rem;
-	color: var(--faint);
+	color: var(--accent);
 	letter-spacing: 0.06em;
 	padding-top: 0.15rem;
 }

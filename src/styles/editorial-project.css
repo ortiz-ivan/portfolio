@@ -141,6 +141,13 @@
 	margin-top: clamp(1.5rem, 3vw, 2rem);
 }
 
+/* Mismo tratamiento que el nombre en la lista de proyectos (transition:name) */
+.cs-proj-title {
+	font-family: var(--font-heading);
+	font-weight: var(--heading-weight);
+	letter-spacing: -0.04em;
+}
+
 .cs-proj-hero-grid .hero-title {
 	font-size: clamp(2.6rem, 5.5vw, 5rem);
 	margin-bottom: clamp(1rem, 2vw, 1.6rem);

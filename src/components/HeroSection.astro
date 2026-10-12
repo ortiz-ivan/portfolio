@@ -8,8 +8,6 @@ interface Props {
 }
 
 const { hero, heroStack } = Astro.props;
-const [firstName, ...rest] = hero.name.split(' ');
-const lastName = rest.join(' ');
 ---
 
 <section class="ed-hero" id="sobre-mi">
@@ -19,10 +17,13 @@ const lastName = rest.join(' ');
 			<span class="hero-availability">Disponible para oportunidades</span>
 		</div>
 
-		<h1 class="hero-title display">
-			<span class="line">{firstName}</span>
-			<span class="line"><em>{lastName}</em></span>
-		</h1>
+		<div class="hero-frame">
+			<span class="reg reg-tl" aria-hidden="true"></span>
+			<span class="reg reg-tr" aria-hidden="true"></span>
+			<span class="reg reg-bl" aria-hidden="true"></span>
+			<span class="reg reg-br" aria-hidden="true"></span>
+			<h1 class="hero-title hero-name">{hero.name}</h1>
+		</div>
 
 		<div class="ed-hero-grid">
 			<div class="ed-hero-copy">
@@ -48,17 +49,17 @@ const lastName = rest.join(' ');
 			</div>
 
 			<aside class="hero-meta">
+				<div class="meta-row meta-row--focus">
+					<span class="meta-k">Enfoque</span>
+					<span class="meta-v"
+						>Entender la operación antes que el sistema. Decisiones técnicas sostenibles.</span
+					>
+				</div>
 				<div class="meta-row">
 					<span class="meta-k">Stack principal</span>
 					<div class="tag-row">
 						{heroStack.map((t) => <span class="tag">{t}</span>)}
 					</div>
-				</div>
-				<div class="meta-row">
-					<span class="meta-k">Enfoque</span>
-					<span class="meta-v"
-						>Entender la operación antes que el sistema. Decisiones técnicas sostenibles.</span
-					>
 				</div>
 			</aside>
 		</div>

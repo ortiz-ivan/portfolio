@@ -1,0 +1,109 @@
+{
+	"name": "MatLog",
+	"priority": 3,
+	"eyebrow": "Historial técnico para una academia de BJJ",
+	"isFeatured": false,
+	"tagline": "Historial de clases y técnicas de una academia de BJJ, gestionado por los propios alumnos.",
+	"summary": "En la academia de Brazilian Jiu-Jitsu lo que se enseñaba en cada clase se perdía al terminar el entrenamiento: nadie sabía qué técnicas se vieron, en qué turno ni cuándo. Construí una plataforma que gestionan los propios alumnos para registrar clases y técnicas, consultarlas después y llevar los torneos y medallas de cada compañero.",
+	"longDescription": "Plataforma web mobile-first que funciona como historial técnico de las clases de una academia de BJJ: biblioteca de técnicas reutilizables, registro de clases por turno y modalidad, filtros combinables, calendario, perfiles de compañeros con cinturón y grado, y participaciones en torneos con un flujo de aprobación por administradores.",
+	"highlight": "Caso para mostrar un producto pequeño y de uso real llevado a producción con criterio de seguridad: permisos mínimos en la base de datos, auditoría de solo inserción y endurecimiento del frontend y la API.",
+	"tech": [
+		"Python 3.12",
+		"FastAPI",
+		"SQLAlchemy 2",
+		"Alembic",
+		"PostgreSQL",
+		"JWT",
+		"pytest",
+		"React 19",
+		"TypeScript",
+		"TanStack Query v5",
+		"React Router",
+		"Tailwind CSS v4",
+		"Vite",
+		"Docker",
+		"Railway",
+		"Cloudflare Workers"
+	],
+	"technicalDecisions": [
+		"La API se conecta a PostgreSQL con un rol de permisos mínimos: puede leer y escribir filas, pero no alterar el esquema ni modificar o borrar la tabla de auditoría. Solo las migraciones usan el rol propietario.",
+		"Cada alta, cambio o borrado queda en una auditoría de solo inserción con quién, cuándo y el valor anterior y nuevo, junto a un log de eventos de seguridad (logins fallidos, bloqueos, accesos denegados) que nunca incluye contraseñas ni tokens.",
+		"Los datos que otros ven (cinturón, grado y medallas) no los edita el propio alumno: el cinturón lo asigna un admin y las participaciones en torneos quedan pendientes hasta que un admin las aprueba o rechaza con un motivo.",
+		"El MVP se acotó a propósito a una sola pregunta, «¿qué vimos en las clases y en qué turno?», y se dejaron fuera asistencia, estadísticas y multi-academia hasta comprobar que se usaba de verdad.",
+		"Sesión con JWT de corta duración, renovación mientras se usa y versión de token por usuario para invalidar todas sus sesiones; límite de intentos contra fuerza bruta, límite de tamaño de las peticiones y una CSP estricta generada en el build."
+	],
+	"results": [
+		"Expone capacidad para llevar un producto de punta a punta: modelado, API, frontend, migraciones, despliegue continuo y documentación funcional.",
+		"Muestra criterio de seguridad aplicado a un proyecto pequeño, con defensa en profundidad desde la base de datos hasta las cabeceras del navegador.",
+		"Refuerza la disciplina de alcance: un MVP que responde una pregunta concreta y crece según el uso real, respaldado por 98 tests de la API."
+	],
+	"caseStudy": {
+		"problem": {
+			"title": "Que lo enseñado en cada clase no se perdiera al terminar el entrenamiento.",
+			"description": "La academia no tenía registro de lo que se enseñaba: el conocimiento técnico dependía de la memoria de cada alumno, y la información sobre compañeros y torneos estaba dispersa.",
+			"points": [
+				"No había forma de saber qué técnicas se vieron hoy, la semana pasada o en un turno concreto.",
+				"Una misma técnica aparecía en varias clases sin que nada las relacionara.",
+				"Cinturones, grados y medallas de los compañeros no estaban registrados en ningún sitio fiable."
+			]
+		},
+		"solution": {
+			"title": "Un historial técnico que gestionan los propios alumnos y que se carga en menos de dos minutos.",
+			"description": "La solución prioriza registrar rápido después de entrenar y consultar con filtros, con permisos que reparten el trabajo entre todos sin perder control sobre lo sensible.",
+			"points": [
+				"Registro de clases por turno, modalidad (Gi / No-Gi), tema, instructor, notas, video y técnicas elegidas de la biblioteca.",
+				"Biblioteca de técnicas con búsqueda por categoría y posición, y en cada técnica las clases en las que apareció.",
+				"Listado con filtros combinables, calendario y horario semanal de turnos.",
+				"Sección Compañeros con cinturón, grado, antigüedad y medallero, alimentado por participaciones en torneos aprobadas por un admin."
+			]
+		},
+		"architecture": {
+			"title": "Dos repos independientes: API y SPA, desplegadas por separado.",
+			"description": "Separar backend y frontend permitió desplegar cada uno en el servicio que mejor le sienta y mantener un contrato claro entre ambos, documentado con OpenAPI.",
+			"layers": [
+				{
+					"name": "Frontend",
+					"description": "SPA en React 19 y TypeScript con TanStack Query, mobile-first y en modo oscuro con la paleta de la academia. Se sirve como sitio estático en Cloudflare Workers, con CSP y cabeceras de seguridad."
+				},
+				{
+					"name": "API",
+					"description": "FastAPI con routers por dominio (auth, usuarios, turnos, técnicas, clases, compañeros, torneos, participaciones y auditoría), validación con Pydantic, permisos usuario / admin y límites contra abuso. Desplegada en Railway con Docker y migraciones en el pre-deploy."
+				},
+				{
+					"name": "Base de datos",
+					"description": "PostgreSQL con SQLAlchemy 2 y migraciones con Alembic. Restricciones en el propio esquema (unicidad de participaciones, grados válidos, torneos que no se borran si tienen participaciones) y roles separados para la aplicación y las migraciones."
+				}
+			]
+		},
+		"technologiesNote": "El stack es deliberadamente sobrio: la complejidad está en los permisos, la auditoría y la seguridad operativa, no en la cantidad de herramientas."
+	},
+	"links": [
+		{
+			"label": "GitHub (Backend)",
+			"href": "https://github.com/ortiz-ivan/matlog-api",
+			"kind": "github",
+			"available": true
+		},
+		{
+			"label": "GitHub (Frontend)",
+			"href": "https://github.com/ortiz-ivan/matlog",
+			"kind": "github",
+			"available": true
+		},
+		{
+			"label": "Caso de estudio",
+			"href": "/projects/matlog",
+			"kind": "case-study",
+			"available": true
+		}
+	],
+	"images": [
+		{
+			"role": "cover",
+			"alt": "Historial de clases de MatLog en el móvil, con filtros por turno y modalidad y las técnicas de cada clase",
+			"src": "/mockups/matlog-cover.svg",
+			"caption": "Historial de clases con filtros por turno, modalidad y técnica.",
+			"status": "planned"
+		}
+	]
+}

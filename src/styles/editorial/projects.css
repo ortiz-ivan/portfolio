@@ -40,14 +40,19 @@
    La descripción y las acciones quedan fijas para no perder el hilo
    de lectura; solo el índice y el título hacen un desplazamiento leve. */
 .proj-row:hover {
-	box-shadow: inset 3px 0 0 var(--text-2);
+	box-shadow: inset 3px 0 0 var(--accent);
 }
 .proj-row:hover::before {
 	width: 100%;
 }
 .proj-row .r-index,
 .proj-row .r-name {
-	transition: transform 0.4s var(--ease);
+	transition:
+		transform 0.4s var(--ease),
+		color 0.3s var(--ease);
+}
+.proj-row:hover .r-index {
+	color: var(--accent);
 }
 .proj-row:hover .r-index,
 .proj-row:hover .r-name {
@@ -60,10 +65,11 @@
 	color: var(--faint);
 }
 .proj-row .r-name {
-	font-family: var(--font-display);
-	font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+	font-family: var(--font-heading);
+	font-weight: var(--heading-weight);
+	font-size: clamp(1.5rem, 3vw, 2.2rem);
 	line-height: 1.05;
-	letter-spacing: -0.02em;
+	letter-spacing: -0.03em;
 	display: inline-flex;
 	align-items: baseline;
 	gap: 0.7rem;
@@ -94,4 +100,44 @@
 	gap: 1.2rem;
 	flex-wrap: wrap;
 	justify-content: flex-end;
+}
+
+/* ---------- Miniatura inline ----------
+   En escritorio la captura sigue al cursor (ver ProjectsSection);
+   en pantallas táctiles no hay hover, así que se muestra fija en la fila. */
+.proj-row .r-thumb {
+	display: none;
+	margin: 0;
+	position: relative;
+	border: 1px solid var(--line);
+	border-radius: 4px;
+	overflow: hidden;
+	aspect-ratio: 16 / 9;
+	background: var(--surface);
+	grid-column: 2 / -1;
+	max-width: 560px;
+}
+.proj-row .r-thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: top;
+}
+.proj-row .r-thumb figcaption {
+	position: absolute;
+	left: 0.6rem;
+	bottom: 0.5rem;
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--text-2);
+	background: rgba(var(--bg-rgb), 0.78);
+	padding: 0.2rem 0.45rem;
+	border-radius: 2px;
+}
+@media (hover: none) {
+	.proj-row .r-thumb {
+		display: block;
+	}
 }

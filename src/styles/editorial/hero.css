@@ -5,6 +5,77 @@
 .ed-hero {
 	padding-top: clamp(7rem, 16vh, 11rem);
 	padding-bottom: clamp(3rem, 7vw, 6rem);
+	position: relative;
+}
+
+/* Cuadrícula de plano técnico, desvanecida hacia los bordes */
+.ed-hero::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background-image:
+		linear-gradient(var(--grid-line) 1px, transparent 1px),
+		linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+	background-size: 64px 64px;
+	background-position: center top;
+	-webkit-mask-image: radial-gradient(90% 70% at 50% 35%, #000 30%, transparent 85%);
+	mask-image: radial-gradient(90% 70% at 50% 35%, #000 30%, transparent 85%);
+}
+
+/* Marco con marcas de registro alrededor del título */
+.hero-frame {
+	position: relative;
+	padding-block: clamp(0.8rem, 2vw, 1.4rem);
+	margin-bottom: clamp(1.6rem, 4vw, 2.5rem);
+}
+.reg {
+	position: absolute;
+	width: 14px;
+	height: 14px;
+	pointer-events: none;
+}
+.reg::before,
+.reg::after {
+	content: '';
+	position: absolute;
+	background: var(--reg-mark);
+}
+.reg::before {
+	width: 100%;
+	height: 1px;
+}
+.reg::after {
+	width: 1px;
+	height: 100%;
+}
+.reg-tl,
+.reg-tr {
+	top: 0;
+}
+.reg-bl,
+.reg-br {
+	bottom: 0;
+}
+.reg-tl,
+.reg-bl {
+	left: calc(var(--gutter) * -0.5);
+}
+.reg-tr,
+.reg-br {
+	right: calc(var(--gutter) * -0.5);
+}
+.reg-tr::before,
+.reg-tr::after,
+.reg-br::before,
+.reg-br::after {
+	right: 0;
+}
+.reg-bl::before,
+.reg-bl::after,
+.reg-br::before,
+.reg-br::after {
+	bottom: 0;
 }
 
 .hero-top {
@@ -29,6 +100,18 @@
 }
 .hero-title .line {
 	display: block;
+}
+
+/* Nombre en la home: grotesk pesada, una sola línea, blanco */
+.hero-name {
+	margin: 0;
+	font-family: var(--font-heading);
+	font-weight: var(--heading-weight);
+	font-size: clamp(3rem, 10.5vw, 9.5rem);
+	line-height: 0.95;
+	letter-spacing: -0.045em;
+	color: var(--text);
+	white-space: nowrap;
 }
 
 .ed-hero-grid {
@@ -81,6 +164,17 @@
 	letter-spacing: 0.14em;
 	text-transform: uppercase;
 	color: var(--muted);
+}
+/* Enfoque: la idea central del perfil, con más presencia */
+.meta-row--focus {
+	border-left: 2px solid var(--accent);
+	padding-left: 1.1rem;
+}
+.meta-row--focus .meta-v {
+	font-family: var(--font-display);
+	font-size: 1.3rem;
+	line-height: 1.35;
+	letter-spacing: -0.01em;
 }
 .meta-v {
 	font-size: 1rem;

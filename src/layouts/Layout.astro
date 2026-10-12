@@ -33,7 +33,7 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 
 		<!-- Fuentes editoriales: auto-hospedadas, instancias estáticas por peso (ver src/styles/fonts.css).
 		     Se precargan las tres que pintan contenido visible en el viewport inicial: Hanken Grotesk 400
-		     (párrafo LCP), Newsreader 400 (el <h1>) y Newsreader 300 (el subtítulo). -->
+		     (párrafo LCP), Hanken Grotesk 600 (el <h1> de la home) y Newsreader 300 (el subtítulo). -->
 		<link
 			rel="preload"
 			as="font"
@@ -45,7 +45,7 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 			rel="preload"
 			as="font"
 			type="font/woff2"
-			href="/fonts/newsreader-400.woff2"
+			href="/fonts/hanken-grotesk-600.woff2"
 			crossorigin
 		/>
 		<link

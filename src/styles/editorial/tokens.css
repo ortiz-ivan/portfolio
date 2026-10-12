@@ -48,7 +48,19 @@
 	--accent-bg: #f4f2ee;
 	--accent-fg: #100f0d;
 
+	/* Acento de firma: cobre. Uso escaso — números, itálicas, estados activos */
+	--accent: #d4a26a;
+	--accent-rgb: 212, 162, 106;
+
+	/* Trazo de plano técnico (cuadrícula, marcas de registro) */
+	--grid-line: rgba(244, 242, 238, 0.035);
+	--reg-mark: rgba(244, 242, 238, 0.28);
+
 	--font-display: 'Newsreader', Georgia, 'Times New Roman', serif;
+	/* Títulos de nombres propios (persona, proyectos, empresa): grotesk 600.
+	   La serif queda para frases editoriales (intro, citas, descripciones). */
+	--font-heading: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+	--heading-weight: 600;
 	--font-body: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
 	--font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
@@ -85,17 +97,28 @@
 		radial-gradient(100% 60% at 50% 120%, rgba(0, 0, 0, 0.4), transparent 60%);
 }
 
+/* Grano sutil sobre todo el lienzo para dar profundidad al negro */
+.ed-home::after {
+	content: '';
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 100;
+	opacity: 0.05;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 .ed-home a {
 	text-decoration: none;
 }
 
 .ed-home ::selection {
-	background: var(--text);
+	background: var(--accent);
 	color: var(--bg);
 }
 
 .ed-home :focus-visible {
-	outline: 1.5px solid var(--text);
+	outline: 1.5px solid var(--accent);
 	outline-offset: 3px;
 	border-radius: 2px;
 }
@@ -133,7 +156,7 @@
 	font-family: var(--font-mono);
 	font-size: 0.78rem;
 	letter-spacing: 0.1em;
-	color: var(--faint);
+	color: var(--accent);
 }
 .sec-label {
 	margin: 0;
@@ -144,11 +167,28 @@
 	text-transform: uppercase;
 	color: var(--text-2);
 }
+/* Línea de cota: trazo con marcas en ambos extremos, como en un plano */
 .sec-head .rule-flex {
 	flex: 1;
 	height: 1px;
 	background: var(--line);
 	min-width: 40px;
+	position: relative;
+}
+.sec-head .rule-flex::before,
+.sec-head .rule-flex::after {
+	content: '';
+	position: absolute;
+	top: -4px;
+	width: 1px;
+	height: 9px;
+	background: var(--reg-mark);
+}
+.sec-head .rule-flex::before {
+	left: 0;
+}
+.sec-head .rule-flex::after {
+	right: 0;
 }
 
 /* ---------- Eyebrow chip ---------- */
@@ -320,7 +360,7 @@
 	transition: transform 0.4s var(--ease);
 }
 .tlink:hover {
-	color: var(--text);
+	color: var(--accent);
 }
 .tlink:hover::after {
 	transform: scaleX(1);

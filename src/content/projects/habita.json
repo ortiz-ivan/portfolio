@@ -3,6 +3,7 @@
 	"priority": 2,
 	"eyebrow": "Gestión de alquileres",
 	"isFeatured": false,
+	"tagline": "Plataforma que centraliza habitaciones, contratos y pagos de alquileres, con seguimiento de mora.",
 	"summary": "La gestión de alquileres concentraba habitaciones, contratos y pagos en procesos separados. Construí una plataforma para centralizar la operación y reducir la dependencia de registros manuales.",
 	"longDescription": "Sistema interno de gestión de propiedades residenciales construido con React y Django. Cubre el ciclo completo: registrar unidades, asignar inquilinos, generar contratos y hacer seguimiento de pagos con estados de mora.",
 	"highlight": "Backend con 7 modelos relacionados (incluida una tabla de auditoría), autenticación JWT con rotación de tokens, y un frontend en repo separado que consume la API vía Docker Compose.",

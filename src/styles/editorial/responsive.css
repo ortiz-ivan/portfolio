@@ -41,6 +41,27 @@
 	}
 }
 
+/* Táctil y estrecho: la miniatura va entre la descripción y las acciones */
+@media (max-width: 920px) and (hover: none) {
+	.proj-row {
+		grid-template-areas:
+			'idx name'
+			'idx desc'
+			'idx thumb'
+			'idx action';
+	}
+	.proj-row .r-thumb {
+		grid-area: thumb;
+		margin-top: 0.4rem;
+	}
+}
+
+@media (max-width: 600px) {
+	.hero-frame .reg {
+		display: none;
+	}
+}
+
 @media (max-width: 600px) {
 	.ed-home {
 		font-size: 16px;
@@ -97,6 +118,9 @@
 	/* Hero mobile */
 	.hero-title {
 		font-size: clamp(3rem, 17vw, 5rem);
+	}
+	.hero-name {
+		font-size: clamp(2.4rem, 13vw, 4rem);
 	}
 
 	/* Buttons mobile */

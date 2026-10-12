@@ -101,7 +101,14 @@ export const skillsSection: SkillsSection = {
 		},
 		{
 			title: 'DevOps & Herramientas',
-			items: ['Docker (Compose)', 'Git', 'GitHub Actions (CI)', 'Netlify']
+			items: [
+				'Docker (Compose)',
+				'Linux / SSH',
+				'Git',
+				'GitLab CI',
+				'GitHub Actions (CI)',
+				'Netlify'
+			]
 		}
 	]
 };
@@ -113,14 +120,14 @@ export const experienceSection: ExperienceSection = {
 			role: 'Desarrollador Fullstack',
 			period: 'Febrero 2026 – Actualidad',
 			description:
-				'Desarrollo y mantengo sistemas empresariales con foco en backend, integraciones y rendimiento.',
+				'Desarrollo y mantengo sistemas empresariales de punta a punta: backend, integraciones, frontend y despliegue.',
 			responsibilities: [
-				'Desarrollo de APIs REST con Java y Spring, separadas por capas y DTOs.',
+				'APIs REST con Java y Spring e integraciones clave, como SIFEN para facturación electrónica.',
 				'Optimización de consultas SQL en vistas críticas, bajando respuestas de ~3s a ~1s.',
-				'Integración y mantenimiento de endpoints clave, incluyendo SIFEN para facturación electrónica.',
-				'Evolución de modelos en PostgreSQL y apoyo en frontend sobre React y Angular.'
+				'Despliegues a test y producción con pipelines de GitLab CI.',
+				'Servicios con Docker Compose en servidores Linux, administrados por SSH.'
 			],
-			tech: ['Java', 'Spring', 'PostgreSQL', 'React', 'Angular', 'Django', 'Docker']
+			tech: ['Java', 'Spring', 'PostgreSQL', 'Docker', 'GitLab CI', 'Linux', 'React', 'Angular']
 		}
 	]
 };

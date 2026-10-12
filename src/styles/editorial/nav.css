@@ -74,7 +74,7 @@
 	bottom: 0;
 	width: 100%;
 	height: 1px;
-	background: var(--text);
+	background: var(--accent);
 	transform: scaleX(0);
 	transform-origin: right;
 	transition: transform 0.4s var(--ease);
@@ -91,6 +91,10 @@
 .nav-link .idx {
 	color: var(--faint);
 	margin-right: 0.35rem;
+	transition: color 0.3s var(--ease);
+}
+.nav-link.active .idx {
+	color: var(--accent);
 }
 
 .nav-toggle {

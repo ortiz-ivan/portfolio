@@ -1,60 +1,74 @@
 {
 	"name": "Kairos",
 	"priority": 1,
-	"eyebrow": "Sistema de gestión comercial",
+	"eyebrow": "Punto de venta e inventario de escritorio",
 	"isFeatured": true,
-	"summary": "Las ventas, el inventario y los reportes vivían en procesos manuales y planillas aisladas, sin control por rol ni trazabilidad. Construí una plataforma modular y desacoplada que centraliza la operación comercial y escala hacia nuevos módulos sin rehacer la base.",
-	"longDescription": "Sistema completo para operaciones comerciales, pensado para centralizar ventas, stock y trazabilidad interna en una arquitectura desacoplada.",
-	"highlight": "Proyecto estrella para mostrar criterio técnico y valor real de negocio.",
-	"tech": ["Django REST", "React", "PostgreSQL", "Roles y permisos"],
+	"tagline": "Sistema POS de escritorio que unifica ventas, stock, caja y fiado de un comercio real, sin depender de internet.",
+	"summary": "Un comercio llevaba ventas, stock, caja y fiado en procesos manuales y planillas sueltas, sin control por rol ni trazabilidad. Construí un sistema POS que corre en la PC del local, sin depender de internet, y reúne ventas, inventario con kardex, arqueo de caja, créditos a clientes y reportes en una sola herramienta que se instala como app de Windows.",
+	"longDescription": "Sistema de punto de venta e inventario para un local físico. Funciona en local y sin conexión, con backend Flask organizado en capas (routes, services, repositories), base SQLite con migraciones versionadas y distribución como ejecutable de escritorio con instalador, backups automáticos y clave de seguridad propia en cada instalación.",
+	"highlight": "Proyecto estrella: software en producción para un negocio real, desde el modelado del dominio hasta el instalador.",
+	"tech": ["Python", "Flask", "SQLAlchemy", "Alembic", "SQLite", "Chart.js", "PyInstaller", "pytest"],
 	"technicalDecisions": [
-		"Arquitectura basada en APIs REST desacopladas para separar frontend y backend.",
-		"Manejo de estado en frontend para mantener una interfaz fluida sobre flujos de negocio complejos.",
-		"Diseño modular para escalar nuevas entidades y reportes sin rehacer el sistema."
+		"Arquitectura en capas (routes → services → repositories) para que las reglas de negocio no dependan de las vistas y puedan testearse aisladas.",
+		"Enfoque local y sin conexión: Flask + SQLite empaquetados con PyInstaller, con icono en la bandeja del sistema, una sola instancia por PC y datos persistentes en %APPDATA% entre actualizaciones.",
+		"Frontend sin framework ni build step: módulos JS desacoplados que se comunican por eventos (búsqueda → tabla → resumen) para mantener ágil el flujo de venta con lector de código de barras.",
+		"Integridad de datos con kardex de movimientos por producto y migraciones Alembic versionadas para cambiar el esquema sin perder datos.",
+		"Seguridad adaptada a la app local: roles y autenticación, protección CSRF, rate limiting en el login y una SECRET_KEY única que se genera en cada instalación."
 	],
 	"results": [
-		"Muestra capacidad para modelar un sistema con varias entidades, permisos y flujos operativos.",
-		"Demuestra criterio para separar frontend y backend sin perder consistencia en la experiencia.",
-		"Presenta una base clara para crecer hacia reportes, auditoría y nuevas áreas del negocio."
+		"Unifica en un solo sistema ventas, inventario, arqueo de caja, cuentas por cobrar y reportes, que antes vivían en procesos separados.",
+		"Casi 200 tests automatizados con pytest que cubren flujos completos (ventas, créditos, arqueo, kardex, migraciones), ejecutados en CI con GitHub Actions sobre Python 3.9, 3.10 y 3.11.",
+		"Distribución lista para el usuario final: un instalador NSIS con versionado, backups automáticos al iniciar y actualización sin tocar los datos."
 	],
 	"caseStudy": {
 		"problem": {
-			"title": "Centralizar operación comercial dispersa en un solo sistema.",
-			"description": "El reto era organizar ventas, inventario y reportes en una única herramienta que permitiera operar con menos fricción y mayor control.",
+			"title": "Llevar la operación diaria a un sistema confiable que funcione sin internet.",
+			"description": "El negocio necesitaba registrar ventas rápido, controlar stock y caja, y dar seguimiento al fiado de clientes, todo en una PC común del mostrador y sin servidores externos.",
 			"points": [
-				"La información crítica quedaba repartida entre procesos manuales y vistas aisladas.",
-				"Los permisos por rol necesitaban restringir acciones sin romper el flujo diario.",
-				"El negocio exigía trazabilidad sobre productos, clientes y movimientos de venta."
+				"Ventas, stock y caja se llevaban por separado, sin una fuente única de verdad ni historial de movimientos.",
+				"El cierre de caja por turno era manual y propenso a errores (efectivo, transferencias por banco, diferencias).",
+				"Las ventas a crédito y los pagos parciales de clientes no tenían seguimiento formal.",
+				"Hacía falta restringir acciones sensibles por rol sin frenar la operación en el mostrador."
 			]
 		},
 		"solution": {
-			"title": "Construir una plataforma desacoplada, modular y orientada a operación real.",
-			"description": "La solución se planteó como un sistema con backend API y frontend dedicado, donde cada módulo responde a una necesidad concreta del negocio.",
+			"title": "Un POS modular, instalable y pensado para el uso real del mostrador.",
+			"description": "Una aplicación Flask que corre en local y se abre en el navegador, con módulos independientes para cada área del negocio y un empaquetado que la hace instalable y actualizable como cualquier programa de Windows.",
 			"points": [
-				"Frontend en React para gestionar interfaces dinámicas y flujos con varios estados.",
-				"Backend con Django REST para encapsular reglas de negocio y exponer endpoints consistentes.",
-				"Módulos preparados para extender ventas, inventario, usuarios y reportes sin rehacer la base."
+				"Ventas por código de barras o búsqueda, pago en efectivo o transferencia por banco, descuentos por ítem y total en letras (guaraníes).",
+				"Inventario con niveles de stock, kardex por producto y carga masiva de stock.",
+				"Arqueo de caja con apertura y cierre por turno, movimientos de entrada y salida, conteo por denominación, cálculo automático de diferencias y reporte PDF.",
+				"Créditos a clientes con cuentas por cobrar y registro de pagos parciales.",
+				"Dashboard con estadísticas diarias y generales, comparación con el período anterior, gráficos de tendencia, productos más vendidos y exportación a CSV y Excel."
 			]
 		},
 		"architecture": {
-			"title": "Una arquitectura que separa responsabilidades y facilita evolución.",
-			"description": "La estructura del proyecto se pensó para aislar la lógica sensible del negocio y sostener crecimiento sin acoplamientos innecesarios.",
+			"title": "Capas bien separadas dentro de un monolito liviano y portable.",
+			"description": "La lógica sensible del negocio está aislada de las vistas y del acceso a datos, así el sistema crece por módulos y se testea sin levantar la interfaz.",
 			"layers": [
 				{
-					"name": "Frontend",
-					"description": "Interfaz en React para operaciones, formularios, tablas y navegación por contexto de usuario."
+					"name": "Presentación",
+					"description": "Plantillas Jinja2 con macros reutilizables, Bootstrap 5, un design system propio en CSS y módulos JS vanilla por pantalla (tablas paginadas por AJAX, gráficos con Chart.js)."
 				},
 				{
-					"name": "API",
-					"description": "Capa REST con Django para exponer entidades, permisos y reglas de validación."
+					"name": "Rutas y seguridad",
+					"description": "Blueprints por área (ventas, productos, inventario, arqueo, créditos, registros y admin), con autorización por rol, CSRF y rate limiting."
 				},
 				{
-					"name": "Persistencia",
-					"description": "Modelo relacional preparado para ventas, productos, clientes y reportes operativos."
+					"name": "Servicios",
+					"description": "Reglas de negocio y validaciones: cálculo de ventas y descuentos, cierre de caja, pagos de crédito, reportes y generación de PDF."
+				},
+				{
+					"name": "Repositorios y persistencia",
+					"description": "Acceso a datos con SQLAlchemy sobre SQLite, índices de rendimiento, migraciones Alembic y backups automáticos de la base."
+				},
+				{
+					"name": "Distribución",
+					"description": "Ejecutable PyInstaller con icono en la bandeja del sistema, instancia única, puerto libre automático e instalador NSIS versionado."
 				}
 			]
 		},
-		"technologiesNote": "El stack se eligió por su equilibrio entre velocidad de desarrollo, control del dominio y capacidad de escalar un sistema de gestión con múltiples módulos."
+		"technologiesNote": "Elegí el stack para una operación local y offline: Flask y SQLite no necesitan infraestructura, se empaquetan en un solo ejecutable y permiten avanzar rápido sobre el dominio. La suite de tests y la CI mantienen el sistema estable mientras se agregan módulos."
 	},
 	"links": [
 		{
@@ -73,30 +87,30 @@
 	"images": [
 		{
 			"role": "cover",
-			"alt": "Módulo de ventas del sistema Kairos",
+			"alt": "Pantalla de registro de ventas de Kairos",
 			"src": "/src/assets/images/kairos/02-ventas.jpg",
-			"caption": "Módulo de ventas con registro de órdenes y control por cliente.",
+			"caption": "Registro de ventas por código de barras, con panel de resumen y total en letras.",
 			"status": "ready"
 		},
 		{
 			"role": "dashboard",
 			"alt": "Módulo de productos e inventario de Kairos",
 			"src": "/src/assets/images/kairos/03-productos.jpg",
-			"caption": "Gestión de productos con stock, categorías y precios.",
+			"caption": "Gestión de productos con niveles de stock, categorías, costos y precios.",
 			"status": "ready"
 		},
 		{
 			"role": "detail",
 			"alt": "Módulo de arqueo de caja de Kairos",
 			"src": "/src/assets/images/kairos/04-arqueo.jpg",
-			"caption": "Control de arqueo de caja para cierre y auditoría diaria.",
+			"caption": "Arqueo de caja por turno con conteo de denominaciones y cálculo de diferencias.",
 			"status": "ready"
 		},
 		{
 			"role": "detail",
-			"alt": "Módulo de reportes operativos de Kairos",
+			"alt": "Dashboard de reportes de Kairos",
 			"src": "/src/assets/images/kairos/05-reportes.jpg",
-			"caption": "Reportes operativos para seguimiento comercial y control interno.",
+			"caption": "Reportes con comparación entre períodos, tendencias y productos más vendidos.",
 			"status": "ready"
 		}
 	]

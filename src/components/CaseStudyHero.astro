@@ -34,7 +34,7 @@ const readyImages = project.images.filter(
 				<>
 					<div class="cs-proj-hero-grid">
 						<div class="cs-hero-left">
-							<h1 class="hero-title display" transition:name={`proj-name-${slug}`}>
+							<h1 class="hero-title display cs-proj-title" transition:name={`proj-name-${slug}`}>
 								<span class="line">{project.name}</span>
 							</h1>
 							<p class="hero-intro">{project.summary}</p>
@@ -95,7 +95,7 @@ const readyImages = project.images.filter(
 				</>
 			) : (
 				<>
-					<h1 class="hero-title display" transition:name={`proj-name-${slug}`}>
+					<h1 class="hero-title display cs-proj-title" transition:name={`proj-name-${slug}`}>
 						<span class="line">{project.name}</span>
 					</h1>
 
