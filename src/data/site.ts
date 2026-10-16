@@ -57,11 +57,11 @@ export const heroContent: HeroContent = {
 	name: 'Iván Ortiz',
 	role: 'Fullstack Developer',
 	subtitle:
-		'Soy desarrollador fullstack y disfruto construir software útil, claro y mantenible para problemas reales.',
+		'Construyo sistemas de gestión que usan negocios reales: punto de venta, inventario, alquileres y facturación electrónica.',
 	narrative:
-		'Actualmente trabajo en sistemas empresariales donde backend, integraciones, datos y producto se cruzan todos los días. Me interesa entender primero cómo funciona la operación antes de decidir la forma del sistema.',
+		'Hoy desarrollo sistemas empresariales en Airam con Java, Spring y PostgreSQL: APIs, integraciones como SIFEN, optimización de consultas y despliegues con GitLab CI y Docker.',
 	panelSummary:
-		'Trabajo con foco en productos internos, automatización e integraciones que impactan el día a día de una operación.',
+		'Por fuera del trabajo llevé a producción un POS offline que un comercio usa a diario, con instalador, backups automáticos y casi 200 tests.',
 	primaryCta: {
 		label: 'Ver proyectos',
 		href: '#projects'

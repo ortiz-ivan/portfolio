@@ -1,0 +1,129 @@
+{
+	"name": "Domus",
+	"priority": 4,
+	"eyebrow": "Demo de producto para una presentación universitaria",
+	"isFeatured": false,
+	"tagline": "Demo interactiva de un marketplace de servicios para el hogar, con apps de cliente, profesional y administrador.",
+	"summary": "Un equipo universitario tenía la idea de Domus, una plataforma que conecta a personas con profesionales del hogar, y necesitaba mostrarla funcionando en su presentación. Construí una demo 100% frontend que recorre el flujo completo de contratación entre los tres roles, con datos simulados y una vista para proyectar en TV.",
+	"longDescription": "Aplicación web en React y TypeScript que simula un marketplace de servicios para el hogar: landing, app del cliente, app del profesional y panel de administración. Toda la información vive en el navegador, sin backend, para que la presentación no dependa de servicios externos.",
+	"highlight": "Proyecto freelance con alcance y entregables acordados por escrito: el flujo principal se puede recorrer de punta a punta, en vivo y entre dos celulares a la vez.",
+	"tech": [
+		"React 19",
+		"TypeScript",
+		"React Router",
+		"Zustand",
+		"Tailwind CSS v4",
+		"Leaflet",
+		"Vite",
+		"Vitest",
+		"Playwright",
+		"Netlify"
+	],
+	"technicalDecisions": [
+		"Demo sin backend: el estado vive en un store de Zustand persistido en localStorage, así la presentación no depende de una API ni de la conexión, y se puede reiniciar con un botón.",
+		"Los estados de una solicitud forman una máquina de estados con permisos por rol (quién puede pasar de «pendiente» a «aceptada», de «terminada» a «confirmada», etc.), definida en un solo lugar y cubierta por tests.",
+		"Avisos «en tiempo real» entre roles sin servidor: cada pestaña escucha los cambios del store que llegan por el evento storage y muestra la notificación cuando la otra parte actúa.",
+		"Vista de presentación para TV con dos celulares lado a lado (cliente y profesional) en iframes con sesiones independientes, para mostrar las dos caras del flujo al mismo tiempo.",
+		"El alcance publicado se controla con una variable de entorno (solo landing, cliente, profesional o completo), y el build deja afuera el código de los roles que no se publican."
+	],
+	"results": [
+		"Flujo completo demostrable: búsqueda, solicitud, aceptación, viaje en mapa, trabajo, confirmación, calificación con fotos y pago simulado.",
+		"Tres apps con diseño responsive (cliente, profesional y administrador), con dashboard de métricas y finanzas para el administrador.",
+		"85 tests unitarios y 12 de punta a punta con Playwright; el deploy en Netlify no se publica si fallan el lint o los tests."
+	],
+	"caseStudy": {
+		"problem": {
+			"title": "Presentar una idea de negocio que todavía no existe, sin que la demo falle frente al jurado.",
+			"description": "El equipo tenía la propuesta y una referencia visual, pero no un producto que mostrar. Necesitaban algo que se viera y se usara como una app real, y que fuera estable durante la exposición.",
+			"points": [
+				"La propuesta involucra tres tipos de usuario (cliente, profesional y administrador) que tienen que interactuar entre sí.",
+				"Una demo con backend real agregaba costo, tiempo y puntos de falla que no aportaban a la presentación.",
+				"El jurado tenía que entender el flujo completo en pocos minutos, idealmente viendo las dos partes a la vez."
+			]
+		},
+		"solution": {
+			"title": "Una demo que se comporta como el producto, con datos simulados y controles para quien presenta.",
+			"description": "Se acordó un documento de alcance con las pantallas, el flujo principal y lo que quedaba afuera (backend, pagos reales, autenticación). Sobre eso se construyó una app navegable de punta a punta.",
+			"points": [
+				"Landing con buscador por problema y ciudad, recorrido animado de «cómo funciona» y sección para profesionales.",
+				"App del cliente: categorías, perfiles de profesionales con reseñas, presupuesto estimado, solicitud, seguimiento con mapa, confirmación, calificación con fotos y pago simulado.",
+				"App del profesional: solicitudes nuevas, trabajos en curso, código de inicio que entrega el cliente, ganancias, perfil y membresía.",
+				"Panel de administración con métricas, usuarios, profesionales, solicitudes, finanzas y configuración.",
+				"Vista de presentación con los dos celulares lado a lado y botón para reiniciar la demo."
+			]
+		},
+		"architecture": {
+			"title": "Una SPA organizada por rol, con el dominio separado de las pantallas.",
+			"description": "Las reglas del negocio (estados, estimados, búsqueda, notificaciones) viven en módulos puros y testeados; las pantallas solo las consumen.",
+			"layers": [
+				{
+					"name": "Pantallas",
+					"description": "React 19 con React Router y rutas lazy por rol (landing, cliente, profesional, admin y presentación), protegidas por rol de sesión."
+				},
+				{
+					"name": "Estado",
+					"description": "Zustand con persistencia: un store de la demo con acciones de dominio (crear solicitud, aceptar, iniciar viaje, calificar, pagar) y una sesión por pestaña."
+				},
+				{
+					"name": "Dominio",
+					"description": "Módulos puros para la máquina de estados, presupuestos estimados, búsqueda, tiempos de respuesta y diferencias entre estados para generar avisos."
+				},
+				{
+					"name": "Calidad y deploy",
+					"description": "Vitest para el dominio, Playwright para el flujo principal y Netlify con lint y tests como condición para publicar."
+				}
+			]
+		},
+		"technologiesNote": "El objetivo era una demo estable y rápida de iterar, así que el stack es solo frontend: React y Zustand para simular el producto completo, Tailwind para mantener el diseño consistente y tests para que los cambios de último momento no rompan la presentación."
+	},
+	"links": [
+		{
+			"label": "Ver demo",
+			"href": "https://domus.ivanortiz.dev/",
+			"kind": "demo",
+			"available": true
+		},
+		{
+			"label": "GitHub",
+			"href": "https://github.com/ortiz-ivan/domus",
+			"kind": "github",
+			"available": true
+		},
+		{
+			"label": "Caso de estudio",
+			"href": "/projects/domus",
+			"kind": "case-study",
+			"available": true
+		}
+	],
+	"images": [
+		{
+			"role": "cover",
+			"alt": "Vista de presentación de Domus con las apps del cliente y del profesional lado a lado en dos celulares",
+			"src": "/src/assets/images/domus/01-presentacion.jpg",
+			"caption": "Vista para proyectar: cliente y profesional en simultáneo, con avisos entre ambos.",
+			"status": "ready"
+		},
+		{
+			"role": "detail",
+			"alt": "Landing de Domus con buscador de profesionales por problema y ciudad",
+			"src": "/src/assets/images/domus/02-landing.jpg",
+			"caption": "Landing con buscador por problema y ciudad.",
+			"status": "ready"
+		},
+		{
+			"role": "detail",
+			"alt": "Inicio de la app del cliente de Domus con solicitudes activas y sus estados",
+			"src": "/src/assets/images/domus/03-cliente.jpg",
+			"caption": "App del cliente con solicitudes activas y la próxima acción pendiente.",
+			"status": "ready"
+		},
+		{
+			"role": "dashboard",
+			"alt": "Dashboard de administración de Domus con métricas, ingresos por comisión y solicitudes por categoría",
+			"src": "/src/assets/images/domus/04-admin.jpg",
+			"caption": "Panel de administración con métricas, comisiones y solicitudes por categoría.",
+			"status": "ready"
+		}
+	]
+}
