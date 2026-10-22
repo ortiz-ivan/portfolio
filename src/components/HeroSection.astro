@@ -1,6 +1,7 @@
 ---
 import type { HeroContent } from '../data/site';
 import ArrowIcon from './icons/ArrowIcon.astro';
+import HeroExploded from './HeroExploded.astro';
 
 interface Props {
 	hero: HeroContent;
@@ -17,16 +18,15 @@ const { hero, heroStack } = Astro.props;
 			<span class="hero-availability">Disponible para oportunidades</span>
 		</div>
 
-		<div class="hero-frame">
-			<span class="reg reg-tl" aria-hidden="true"></span>
-			<span class="reg reg-tr" aria-hidden="true"></span>
-			<span class="reg reg-bl" aria-hidden="true"></span>
-			<span class="reg reg-br" aria-hidden="true"></span>
-			<h1 class="hero-title hero-name">{hero.name}</h1>
-		</div>
-
-		<div class="ed-hero-grid">
+		<div class="ed-hero-grid ed-hero-grid--home">
 			<div class="ed-hero-copy">
+				<div class="hero-frame">
+					<span class="reg reg-tl" aria-hidden="true"></span>
+					<span class="reg reg-tr" aria-hidden="true"></span>
+					<span class="reg reg-bl" aria-hidden="true"></span>
+					<span class="reg reg-br" aria-hidden="true"></span>
+					<h1 class="hero-title hero-name">{hero.name}</h1>
+				</div>
 				<p class="hero-intro">{hero.subtitle}</p>
 				<div class="hero-narr-wrap">
 					<p class="hero-narrative">{hero.narrative}</p>
@@ -49,6 +49,7 @@ const { hero, heroStack } = Astro.props;
 			</div>
 
 			<aside class="hero-meta">
+				<HeroExploded />
 				<div class="meta-row meta-row--focus">
 					<span class="meta-k">Enfoque</span>
 					<span class="meta-v"

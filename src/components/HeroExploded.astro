@@ -1,0 +1,122 @@
+---
+// Vista explotada isométrica de un sistema, en estilo plano técnico.
+// Cada capa es una placa: la cara superior se dibuja en coordenadas planas
+// (-70..70) y la matriz isométrica la proyecta; los laterales van en pantalla.
+
+const ISO = 'matrix(0.866 0.5 -0.866 0.5 0 0)';
+const W = 121.24; // semiancho de la placa proyectada (70 · √3)
+const H = 70; // semialto de la placa proyectada
+const T = 14; // espesor
+const GAP = 66; // separación vertical entre capas en la vista explotada
+const CX = 140;
+const TOP = 80;
+
+const layers = [
+	{ id: 'ui', name: 'Interfaz', sub: 'Angular · React' },
+	{ id: 'api', name: 'API', sub: 'REST · Spring' },
+	{ id: 'domain', name: 'Dominio', sub: 'Reglas de negocio' },
+	{ id: 'data', name: 'Datos', sub: 'PostgreSQL' },
+	{ id: 'ops', name: 'Operación', sub: 'El negocio real' }
+];
+
+// Se pintan de abajo hacia arriba para que las capas superiores tapen a las inferiores
+const painted = layers.map((layer, i) => ({ ...layer, i })).reverse();
+const sideLeft = `${-W},0 0,${H} 0,${H + T} ${-W},${T}`;
+const sideRight = `0,${H} ${W},0 ${W},${T} 0,${H + T}`;
+---
+
+<figure class="xp">
+	<svg
+		class="xp-svg"
+		viewBox="0 0 400 440"
+		role="img"
+		aria-label="Vista explotada de un sistema en cinco capas: interfaz, API, dominio, datos y, como base, la operación del negocio."
+	>
+		<line class="xp-axis" x1={CX} y1="0" x2={CX} y2="440"></line>
+
+		{
+			painted.map(({ id, name, sub, i }) => (
+				<g
+					class:list={['xp-layer', `xp-layer--${id}`]}
+					transform={`translate(${CX} ${TOP + i * GAP})`}
+				>
+					<g class={`xp-shift xp-k${layers.length - 1 - i}`}>
+						<g class="xp-body">
+							<polygon class="xp-side xp-side--l" points={sideLeft} />
+							<polygon class="xp-side xp-side--r" points={sideRight} />
+							<g transform={ISO}>
+								<rect class="xp-top" x="-70" y="-70" width="140" height="140" />
+								{id === 'ui' && (
+									<g class="xp-glyph">
+										<rect x="-50" y="-50" width="100" height="100" />
+										<line x1="-50" y1="-34" x2="50" y2="-34" />
+										<rect x="-40" y="-24" width="36" height="64" />
+										<rect x="4" y="-24" width="36" height="28" />
+										<rect x="4" y="12" width="36" height="28" />
+									</g>
+								)}
+								{id === 'api' && (
+									<g class="xp-glyph">
+										{[-36, -12, 12, 36].map((y) => (
+											<>
+												<circle cx="-44" cy={y} r="4" />
+												<line x1="-34" y1={y} x2="44" y2={y} />
+											</>
+										))}
+									</g>
+								)}
+								{id === 'domain' && (
+									<g class="xp-glyph">
+										<line x1="-34" y1="-30" x2="30" y2="-36" />
+										<line x1="-34" y1="-30" x2="0" y2="8" />
+										<line x1="30" y1="-36" x2="0" y2="8" />
+										<line x1="0" y1="8" x2="-30" y2="38" />
+										<line x1="0" y1="8" x2="36" y2="34" />
+										<circle cx="-34" cy="-30" r="7" />
+										<circle cx="30" cy="-36" r="7" />
+										<circle cx="0" cy="8" r="9" />
+										<circle cx="-30" cy="38" r="7" />
+										<circle cx="36" cy="34" r="7" />
+									</g>
+								)}
+								{id === 'data' && (
+									<g class="xp-glyph">
+										<rect x="-48" y="-44" width="96" height="88" />
+										{[-26, -8, 10, 28].map((y) => (
+											<line x1="-48" y1={y} x2="48" y2={y} />
+										))}
+										<line x1="-16" y1="-44" x2="-16" y2="44" />
+									</g>
+								)}
+								{id === 'ops' && (
+									<g class="xp-glyph">
+										{[-42, -14, 14, 42].map((p) => (
+											<>
+												<line x1={p} y1="-56" x2={p} y2="56" />
+												<line x1="-56" y1={p} x2="56" y2={p} />
+											</>
+										))}
+									</g>
+								)}
+							</g>
+							<g class="xp-label">
+								<circle class="xp-label-dot" cx={W} cy="0" r="2" />
+								<line class="xp-leader" x1={W + 4} y1="0" x2={W + 30} y2="0" />
+								<text class="xp-name" x={W + 36} y="-2">
+									{String(i + 1).padStart(2, '0')} {name}
+								</text>
+								<text class="xp-sub" x={W + 36} y="13">
+									{sub}
+								</text>
+							</g>
+						</g>
+					</g>
+				</g>
+			))
+		}
+	</svg>
+	<figcaption class="xp-caption">
+		<span>Fig. 01</span>
+		<span>Sistema — vista explotada</span>
+	</figcaption>
+</figure>

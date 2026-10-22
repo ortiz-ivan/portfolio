@@ -60,6 +60,10 @@
 	.hero-frame .reg {
 		display: none;
 	}
+	/* La vista explotada queda solo para pantallas anchas */
+	.xp {
+		display: none;
+	}
 }
 
 @media (max-width: 600px) {
