@@ -199,6 +199,40 @@
 	margin-top: 1.6rem;
 }
 
+/* Redes: discretas, al lado de los CTAs. El margen negativo compensa el área táctil
+   para que el ícono quede alineado (junto al botón o, en mobile, con el borde del texto) */
+.hero-socials {
+	display: flex;
+	gap: 0.35rem;
+	margin: 0 0 0 -0.6rem;
+	padding: 0;
+	list-style: none;
+}
+.hero-social-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	color: var(--muted);
+	transition:
+		color 0.2s ease,
+		transform 0.2s ease;
+}
+.hero-social-link:hover {
+	color: var(--text);
+	transform: translateY(-2px);
+}
+.hero-social-link:focus-visible {
+	outline: 2px solid var(--text-2);
+	outline-offset: 2px;
+}
+.hero-social-link .brand-icon {
+	width: 1.15rem;
+	height: 1.15rem;
+	display: block;
+}
+
 /* Vista explotada isométrica (HeroExploded) */
 .xp {
 	margin: 0;

@@ -1,14 +1,16 @@
 ---
-import type { HeroContent } from '../data/site';
+import type { ContactItem, HeroContent } from '../data/site';
 import ArrowIcon from './icons/ArrowIcon.astro';
+import BrandIcon from './icons/BrandIcon.astro';
 import HeroExploded from './HeroExploded.astro';
 
 interface Props {
 	hero: HeroContent;
 	heroStack: string[];
+	socials: ContactItem[];
 }
 
-const { hero, heroStack } = Astro.props;
+const { hero, heroStack, socials } = Astro.props;
 ---
 
 <section class="ed-hero" id="sobre-mi">
@@ -45,6 +47,24 @@ const { hero, heroStack } = Astro.props;
 						{hero.secondaryCta.label}
 						<span class="arrow"><ArrowIcon direction="down" /></span>
 					</a>
+					<ul class="hero-socials" aria-label="Redes sociales">
+						{
+							socials.map((item) => (
+								<li>
+									<a
+										class="hero-social-link"
+										href={item.href}
+										target="_blank"
+										rel="noopener noreferrer"
+										aria-label={`${item.label} — ${item.value}`}
+										title={item.label}
+									>
+										<BrandIcon name={item.icon} />
+									</a>
+								</li>
+							))
+						}
+					</ul>
 				</div>
 			</div>
 
