@@ -1,0 +1,437 @@
+/* ============================================================
+   diagrams.css — figuras técnicas de los casos de estudio
+   Mismo vocabulario que la vista explotada del inicio: trazo fino,
+   superficies del ramp cálido y el cobre solo donde está la idea clave.
+   ============================================================ */
+
+.dg {
+	margin: clamp(3rem, 6vw, 4.5rem) 0 0;
+}
+.dg.reveal {
+	--reveal-y: 24px;
+}
+
+/* ---------- Encabezado: Fig. NN — título ---------- */
+.dg-head {
+	display: flex;
+	align-items: baseline;
+	gap: 1rem;
+	margin-bottom: 1.25rem;
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+.dg-num {
+	color: var(--accent);
+	white-space: nowrap;
+}
+.dg-title {
+	color: var(--text-2);
+}
+.dg-rule {
+	flex: 1;
+	height: 1px;
+	min-width: 32px;
+	background: var(--line);
+}
+
+/* ---------- Lienzo ---------- */
+.dg-frame {
+	position: relative;
+	padding: clamp(1rem, 2.5vw, 2rem);
+	background:
+		linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 24px 24px,
+		linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 24px 24px,
+		rgba(var(--bg-rgb), 0.6);
+	border: 1px solid var(--line-soft);
+}
+.dg-frame .reg-tl,
+.dg-frame .reg-bl {
+	left: -1px;
+}
+.dg-frame .reg-tr,
+.dg-frame .reg-br {
+	right: -1px;
+}
+.dg-frame .reg-tl,
+.dg-frame .reg-tr {
+	top: -1px;
+}
+.dg-frame .reg-bl,
+.dg-frame .reg-br {
+	bottom: -1px;
+}
+
+.dg-canvas {
+	overflow-x: auto;
+	scrollbar-width: thin;
+}
+.dg-canvas:focus-visible {
+	outline-offset: 6px;
+}
+.dg-svg {
+	display: block;
+	width: 100%;
+	min-width: var(--dg-min, 760px);
+	height: auto;
+	overflow: visible;
+}
+.dg-svg * {
+	vector-effect: non-scaling-stroke;
+}
+
+.dg-hint {
+	display: none;
+	margin: 0.6rem 0 0;
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--faint);
+}
+
+/* ---------- Pie ---------- */
+.dg-caption {
+	display: grid;
+	grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+	gap: clamp(1.5rem, 4vw, 3.5rem);
+	align-items: start;
+	margin-top: 1.25rem;
+}
+.dg-caption-text {
+	margin: 0;
+	max-width: 62ch;
+	font-family: var(--font-display);
+	font-size: 1.02rem;
+	line-height: 1.6;
+	color: var(--text-2);
+}
+.dg-caption-text code {
+	font-family: var(--font-mono);
+	font-size: 0.82em;
+	color: var(--text);
+}
+.dg-legend {
+	display: grid;
+	gap: 0.55rem;
+	justify-self: end;
+	font-family: var(--font-mono);
+	font-size: 0.7rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+.dg-key {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.7rem;
+	cursor: default;
+	transition: color 0.25s ease;
+}
+.dg-key--strong {
+	color: var(--text-2);
+}
+.dg-key--accent {
+	color: var(--accent);
+}
+.dg-key:hover {
+	color: var(--text);
+}
+.dg-swatch {
+	flex: none;
+	width: 22px;
+	height: 0;
+	border-top: 1.5px solid currentColor;
+}
+.dg-swatch--dashed {
+	border-top-style: dashed;
+}
+.dg-swatch--box {
+	width: 16px;
+	height: 10px;
+	border: 1px solid currentColor;
+}
+.dg-swatch--box.dg-swatch--dashed {
+	border-style: dashed;
+}
+.dg-swatch--double {
+	width: 16px;
+	height: 10px;
+	border: 3px double var(--accent);
+}
+
+/* ---------- Primitivas SVG ---------- */
+.dg-node {
+	fill: var(--surface);
+	stroke: var(--line-strong);
+	stroke-width: 1;
+}
+.dg-node--ghost {
+	fill: transparent;
+	stroke: var(--line-strong);
+	stroke-dasharray: 4 3;
+}
+.dg-node--accent {
+	stroke: var(--accent);
+}
+.dg-inner {
+	fill: none;
+	stroke: var(--accent);
+	stroke-width: 1;
+}
+.dg-band {
+	fill: var(--bg-2);
+	stroke: var(--line);
+}
+.dg-band--accent {
+	fill: rgba(var(--accent-rgb), 0.06);
+	stroke: rgba(var(--accent-rgb), 0.45);
+}
+.dg-zone {
+	fill: rgba(var(--accent-rgb), 0.03);
+	stroke: rgba(var(--accent-rgb), 0.55);
+	stroke-dasharray: 5 4;
+}
+.dg-sep {
+	stroke: var(--line);
+	stroke-width: 1;
+}
+.dg-sep--dashed {
+	stroke-dasharray: 2 4;
+}
+
+.dg-label,
+.dg-sub,
+.dg-meta,
+.dg-code {
+	font-family: var(--font-mono);
+}
+.dg-label {
+	font-size: 10.5px;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	fill: var(--text);
+}
+.dg-label--muted {
+	fill: var(--muted);
+}
+.dg-sub {
+	font-size: 9.5px;
+	letter-spacing: 0.02em;
+	fill: var(--muted);
+}
+.dg-meta {
+	font-size: 9.5px;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	fill: var(--faint);
+}
+.dg-meta--accent {
+	fill: var(--accent);
+}
+.dg-note {
+	font-family: var(--font-display);
+	font-style: italic;
+	font-size: 13px;
+	fill: var(--text-2);
+}
+.dg-text {
+	font-family: var(--font-body);
+	font-size: 12px;
+	fill: var(--text-2);
+}
+.dg-code {
+	font-size: 10.5px;
+	fill: var(--text-2);
+}
+.dg-code .c-muted {
+	fill: var(--faint);
+}
+.dg-code .c-accent {
+	fill: var(--accent);
+}
+.dg-code .c-text {
+	fill: var(--text);
+}
+
+/* Trazos: el color lo da el grupo (currentColor) para que flecha, punta y
+   etiqueta de un mismo rol cambien juntas */
+.dg-flow {
+	color: var(--muted);
+	transition: opacity 0.3s ease;
+}
+.dg-flow--strong {
+	color: var(--text-2);
+}
+.dg-flow--accent {
+	color: var(--accent);
+}
+.dg-edge {
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.25;
+	stroke-linejoin: round;
+}
+.dg-edge--dashed {
+	stroke-dasharray: 4 4;
+}
+.dg-arrow {
+	fill: currentColor;
+}
+.dg-dot {
+	fill: var(--bg);
+	stroke: currentColor;
+	stroke-width: 1.25;
+}
+.dg-badge {
+	fill: var(--bg);
+	stroke: currentColor;
+	stroke-width: 1;
+}
+.dg-badge-text {
+	font-family: var(--font-mono);
+	font-size: 9px;
+	fill: currentColor;
+}
+.dg-chip {
+	fill: var(--bg);
+	stroke: var(--line-strong);
+}
+.dg-chip--accent {
+	stroke: var(--accent);
+}
+.dg-chip-text {
+	font-family: var(--font-mono);
+	font-size: 10px;
+	letter-spacing: 0.04em;
+	fill: var(--text-2);
+}
+.dg-chip-text--accent {
+	fill: var(--accent);
+}
+
+/* ---------- Entrada: el trazo se dibuja al aparecer la figura ---------- */
+.dg-draw {
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+	transition: stroke-dashoffset 0.9s var(--ease);
+	transition-delay: calc(var(--d, 0) * 55ms + 250ms);
+}
+.dg-fade {
+	opacity: 0;
+	transition: opacity 0.5s ease;
+	transition-delay: calc(var(--d, 0) * 55ms + 550ms);
+}
+/* Retardos escalonados: clases en vez de style="--d", que la CSP bloquea */
+.dg-d0 {
+	--d: 0;
+}
+.dg-d1 {
+	--d: 1;
+}
+.dg-d2 {
+	--d: 2;
+}
+.dg-d3 {
+	--d: 3;
+}
+.dg-d4 {
+	--d: 4;
+}
+.dg-d5 {
+	--d: 5;
+}
+.dg-d6 {
+	--d: 6;
+}
+.dg-d7 {
+	--d: 7;
+}
+.dg-d8 {
+	--d: 8;
+}
+.dg-d9 {
+	--d: 9;
+}
+.dg-d10 {
+	--d: 10;
+}
+.dg-d11 {
+	--d: 11;
+}
+.dg-d12 {
+	--d: 12;
+}
+.dg-d13 {
+	--d: 13;
+}
+.dg-d14 {
+	--d: 14;
+}
+.dg-d15 {
+	--d: 15;
+}
+.dg-d16 {
+	--d: 16;
+}
+.dg-d17 {
+	--d: 17;
+}
+.dg-d18 {
+	--d: 18;
+}
+.dg-d19 {
+	--d: 19;
+}
+.dg-d20 {
+	--d: 20;
+}
+.dg-d21 {
+	--d: 21;
+}
+.dg-d22 {
+	--d: 22;
+}
+.dg-d23 {
+	--d: 23;
+}
+.dg-d24 {
+	--d: 24;
+}
+
+.dg.in .dg-draw {
+	stroke-dashoffset: 0;
+}
+.dg.in .dg-fade {
+	opacity: 1;
+}
+
+/* Leyenda interactiva: al pasar por un rol se atenúa el resto */
+.dg:has(.dg-key[data-role='prof']:hover) .dg-flow[data-role='cliente'],
+.dg:has(.dg-key[data-role='cliente']:hover) .dg-flow[data-role='prof'] {
+	opacity: 0.18;
+}
+
+@media (max-width: 860px) {
+	.dg-hint {
+		display: block;
+	}
+	.dg-caption {
+		grid-template-columns: 1fr;
+	}
+	.dg-legend {
+		justify-self: start;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.dg-draw {
+		stroke-dashoffset: 0;
+		transition: none;
+	}
+	.dg-fade {
+		opacity: 1;
+		transition: none;
+	}
+}

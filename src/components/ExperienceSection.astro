@@ -1,5 +1,6 @@
 ---
 import type { ExperienceSection } from '../data/site';
+import CompareCota from './cota/CompareCota.astro';
 
 interface Props {
 	data: ExperienceSection;
@@ -31,6 +32,7 @@ const { data } = Astro.props;
 								<li>{r}</li>
 							))}
 						</ol>
+						{item.metric && <CompareCota metric={item.metric} />}
 						<div class="exp-tech">
 							{item.tech.map((t) => (
 								<span class="tag">{t}</span>

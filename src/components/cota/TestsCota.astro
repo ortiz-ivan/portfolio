@@ -1,0 +1,73 @@
+---
+// Suite de tests como cota de plano: cada segmento es una parte de la suite,
+// proporcional a su cantidad, y la cota inferior da el total.
+import { layoutSegments, type Segment } from '../../lib/cota';
+
+interface Props {
+	segments: Segment[];
+}
+
+const { segments } = Astro.props;
+const parts = layoutSegments(segments);
+const total = segments.reduce((sum, s) => sum + s.count, 0);
+const split = parts.length > 1;
+const boundaries = [0, ...parts.map((p) => p.end)];
+
+const LINE_Y = 50;
+const TOTAL_Y = 84;
+const height = split ? 96 : 62;
+const totalLabel = `${total} en total`;
+// Fondo del rótulo del total: ancho aproximado del texto en mono 10.5px
+const labelWidth = Math.round(totalLabel.length * 6.9 + 20);
+
+const description = split
+	? `${total} tests: ${parts.map((p) => `${p.count} de ${p.label}`).join(', ')}.`
+	: `${total} tests de ${parts[0]?.label}.`;
+---
+
+<figure class="cota reveal">
+	<figcaption class="cota-title">Suite de tests</figcaption>
+	<svg class="cota-svg" width="100%" height={height} role="img" aria-label={description}>
+		{
+			parts.map((p) => (
+				<g>
+					<text class="cota-value" x={`${p.mid}%`} y="18" text-anchor="middle">
+						{p.count}
+					</text>
+					<text class="cota-label" x={`${p.mid}%`} y="34" text-anchor="middle">
+						{p.label}
+					</text>
+				</g>
+			))
+		}
+
+		<line class="cota-line cota-draw" x1="0%" y1={LINE_Y} x2="100%" y2={LINE_Y} pathLength="1"
+		></line>
+		{
+			boundaries.map((x) => (
+				<g class="cota-fade">
+					<line class="cota-ext" x1={`${x}%`} y1={LINE_Y - 8} x2={`${x}%`} y2={LINE_Y + 8} />
+					<svg x={`${x}%`} y={LINE_Y} overflow="visible">
+						<line class="cota-tick" x1="-4" y1="4" x2="4" y2="-4" />
+					</svg>
+				</g>
+			))
+		}
+
+		{
+			split && (
+				<g class="cota-fade">
+					<line class="cota-line cota-line--muted" x1="0%" y1={TOTAL_Y} x2="100%" y2={TOTAL_Y} />
+					<line class="cota-ext" x1="0%" y1={TOTAL_Y - 6} x2="0%" y2={TOTAL_Y + 6} />
+					<line class="cota-ext" x1="100%" y1={TOTAL_Y - 6} x2="100%" y2={TOTAL_Y + 6} />
+					<svg x="50%" y={TOTAL_Y} overflow="visible">
+						<rect class="cota-mask" x={-labelWidth / 2} y="-9" width={labelWidth} height="18" />
+						<text class="cota-label cota-label--total" x="0" y="4" text-anchor="middle">
+							{totalLabel}
+						</text>
+					</svg>
+				</g>
+			)
+		}
+	</svg>
+</figure>

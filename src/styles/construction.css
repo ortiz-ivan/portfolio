@@ -1,0 +1,185 @@
+/* ============================================================
+   construction.css — "modo construcción" (tecla G)
+   Superpone el plano del layout: contenedor, márgenes, eje, secciones
+   rotuladas e inspector con cotas. Los colores van en literal porque
+   la capa vive fuera de .ed-home, donde están los tokens.
+   ============================================================ */
+
+html.is-construction section,
+html.is-construction nav,
+html.is-construction footer {
+	outline: 1px dashed rgba(212, 162, 106, 0.35);
+	outline-offset: -1px;
+}
+
+.cm-root {
+	--cm-accent: #d4a26a;
+	--cm-line: rgba(244, 242, 238, 0.22);
+	--cm-bg: #100f0d;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	pointer-events: none;
+	z-index: 9990;
+	font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+	font-size: 10px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--cm-accent);
+}
+
+/* ---------- Contenedor, márgenes y eje (fijos al viewport) ---------- */
+.cm-frame {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+}
+.cm-gutter {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	background: repeating-linear-gradient(
+		-45deg,
+		rgba(212, 162, 106, 0.09) 0 1px,
+		transparent 1px 7px
+	);
+	border-inline: 1px solid rgba(212, 162, 106, 0.3);
+}
+.cm-edge {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 0;
+	border-left: 1px solid rgba(212, 162, 106, 0.45);
+}
+.cm-axis {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 0;
+	border-left: 1px dashed var(--cm-line);
+}
+.cm-dim {
+	position: absolute;
+	height: 0;
+	border-top: 1px solid var(--cm-accent);
+}
+.cm-dim::before,
+.cm-dim::after {
+	content: '';
+	position: absolute;
+	top: -4px;
+	width: 0;
+	height: 7px;
+	border-left: 1px solid var(--cm-accent);
+}
+.cm-dim::before {
+	left: 0;
+}
+.cm-dim::after {
+	right: 0;
+}
+.cm-dim > span {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 1px 5px;
+	background: var(--cm-bg);
+	white-space: nowrap;
+}
+
+/* ---------- Rótulos de sección (en coordenadas del documento) ---------- */
+.cm-tag {
+	position: absolute;
+	padding: 3px 7px;
+	background: var(--cm-accent);
+	color: var(--cm-bg);
+	white-space: nowrap;
+}
+.cm-tag b {
+	font-weight: 400;
+	opacity: 0.65;
+	margin-left: 0.6em;
+}
+
+/* ---------- Inspector bajo el cursor ---------- */
+.cm-box {
+	position: fixed;
+	display: none;
+	outline: 1px solid var(--cm-accent);
+	background: rgba(212, 162, 106, 0.06);
+}
+.cm-box.is-on {
+	display: block;
+}
+.cm-box .cm-dim--w {
+	left: 0;
+	right: 0;
+	top: -10px;
+}
+.cm-box .cm-dim--h {
+	top: 0;
+	bottom: 0;
+	left: -10px;
+	width: 0;
+	height: auto;
+	border-top: 0;
+	border-left: 1px solid var(--cm-accent);
+}
+.cm-box .cm-dim--h::before,
+.cm-box .cm-dim--h::after {
+	top: auto;
+	left: -4px;
+	width: 7px;
+	height: 0;
+	border-left: 0;
+	border-top: 1px solid var(--cm-accent);
+}
+.cm-box .cm-dim--h::before {
+	top: 0;
+}
+.cm-box .cm-dim--h::after {
+	bottom: 0;
+	right: auto;
+}
+.cm-box .cm-dim--h > span {
+	top: 50%;
+	left: 0;
+}
+.cm-box .cm-name {
+	position: absolute;
+	left: -1px;
+	top: 100%;
+	margin-top: 4px;
+	padding: 2px 6px;
+	background: var(--cm-bg);
+	border: 1px solid var(--cm-accent);
+	white-space: nowrap;
+	text-transform: none;
+	letter-spacing: 0.02em;
+}
+
+/* ---------- HUD ---------- */
+.cm-hud {
+	position: fixed;
+	left: 16px;
+	bottom: 16px;
+	display: flex;
+	gap: 1.2em;
+	align-items: center;
+	padding: 8px 12px;
+	background: var(--cm-bg);
+	border: 1px solid rgba(212, 162, 106, 0.5);
+	color: rgba(244, 242, 238, 0.75);
+}
+.cm-hud strong {
+	font-weight: 400;
+	color: var(--cm-accent);
+}
+.cm-hud kbd {
+	font: inherit;
+	padding: 0 5px;
+	border: 1px solid var(--cm-line);
+	border-radius: 3px;
+}

@@ -24,3 +24,8 @@
 	color: var(--muted);
 	margin: 0;
 }
+
+/* Distancia de entrada (reveal.css) */
+.skills-group.reveal {
+	--reveal-y: 14px;
+}

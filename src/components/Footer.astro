@@ -1,0 +1,24 @@
+---
+// Pie de página compartido por la home y los casos de estudio.
+import ArrowIcon from './icons/ArrowIcon.astro';
+
+interface Props {
+	/** Frase de cierre a la izquierda */
+	copy: string;
+	/** Texto que sigue a «© año ·» */
+	credit: string;
+}
+
+const { copy, credit } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+	<p class="footer-copy">{copy}</p>
+	<div class="footer-meta">
+		<a class="footer-top" href="#top"
+			>Volver arriba <span class="arrow"><ArrowIcon direction="up" /></span></a
+		>
+		<div class="footer-year">© {year} · {credit}</div>
+	</div>
+</footer>

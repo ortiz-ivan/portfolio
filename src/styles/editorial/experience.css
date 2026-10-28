@@ -84,3 +84,8 @@
 	gap: 0.5rem;
 	margin-top: 0.3rem;
 }
+
+/* Distancia de entrada (reveal.css) */
+.exp-entry.reveal {
+	--reveal-y: 20px;
+}

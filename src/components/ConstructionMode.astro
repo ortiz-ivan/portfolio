@@ -1,0 +1,213 @@
+---
+// "Modo construcción": con la tecla G se superpone el plano del layout
+// (contenedor, márgenes, eje, secciones con sus medidas e inspector con
+// cotas bajo el cursor). La capa se arma recién al activarlo.
+import '../styles/construction.css';
+---
+
+<script>
+	const ACTIVE = 'is-construction';
+
+	let active = false;
+	let root: HTMLElement | null = null;
+	let box: HTMLElement | null = null;
+	let hudSize: HTMLElement | null = null;
+	let mouse: { x: number; y: number } | null = null;
+	let frame = 0;
+	let rebuildFrame = 0;
+	let resizeObserver: ResizeObserver | null = null;
+
+	const px = (n: number) => `${Math.round(n)}`;
+
+	function make(tag: string, className: string, parent: HTMLElement, text?: string) {
+		const node = document.createElement(tag);
+		node.className = className;
+		if (text !== undefined) node.textContent = text;
+		parent.appendChild(node);
+		return node;
+	}
+
+	function dimension(parent: HTMLElement, modifier: string, label: string) {
+		const dim = make('div', `cm-dim ${modifier}`, parent);
+		make('span', '', dim, label);
+		return dim;
+	}
+
+	function isTyping(target: EventTarget | null) {
+		const el = target as HTMLElement | null;
+		return !!el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
+	}
+
+	// Contenedor real (.wrap): márgenes laterales, bordes del contenido y eje central
+	function drawFrame(parent: HTMLElement) {
+		const wrap = document.querySelector<HTMLElement>('.wrap');
+		if (!wrap) return;
+		const rect = wrap.getBoundingClientRect();
+		const pad = parseFloat(getComputedStyle(wrap).paddingLeft) || 0;
+		const content = rect.width - pad * 2;
+
+		const frameEl = make('div', 'cm-frame', parent);
+		frameEl.style.left = `${rect.left}px`;
+		frameEl.style.width = `${rect.width}px`;
+
+		for (const left of [0, rect.width - pad]) {
+			const gutter = make('div', 'cm-gutter', frameEl);
+			gutter.style.left = `${left}px`;
+			gutter.style.width = `${pad}px`;
+		}
+		for (const left of [pad, rect.width - pad]) {
+			make('div', 'cm-edge', frameEl).style.left = `${left}px`;
+		}
+		make('div', 'cm-axis', frameEl).style.left = `${rect.width / 2}px`;
+
+		const contentDim = dimension(frameEl, '', `${px(content)} px`);
+		contentDim.style.left = `${pad}px`;
+		contentDim.style.width = `${content}px`;
+		contentDim.style.bottom = '72px';
+
+		const gutterDim = dimension(frameEl, '', px(pad));
+		gutterDim.style.left = '0px';
+		gutterDim.style.width = `${pad}px`;
+		gutterDim.style.bottom = '72px';
+	}
+
+	// Rótulo con nombre y medidas de cada sección, en coordenadas del documento
+	function drawTags(parent: HTMLElement) {
+		document.querySelectorAll<HTMLElement>('section, footer').forEach((section) => {
+			const rect = section.getBoundingClientRect();
+			if (rect.height < 1) return;
+			const name = section.id
+				? `#${section.id}`
+				: `${section.tagName.toLowerCase()}.${section.classList[0] ?? ''}`;
+			const tag = make('div', 'cm-tag', parent, name);
+			make('b', '', tag, `${px(rect.width)} × ${px(rect.height)}`);
+			tag.style.top = `${rect.top + window.scrollY}px`;
+			tag.style.left = `${Math.max(rect.left + window.scrollX, 8)}px`;
+		});
+	}
+
+	function drawBox(parent: HTMLElement) {
+		box = make('div', 'cm-box', parent);
+		dimension(box, 'cm-dim--w', '');
+		dimension(box, 'cm-dim--h', '');
+		make('div', 'cm-name', box);
+	}
+
+	function drawHud(parent: HTMLElement) {
+		const hud = make('div', 'cm-hud', parent);
+		make('strong', '', hud, '◇ Modo construcción');
+		hudSize = make('span', '', hud);
+		const exit = make('span', '', hud);
+		make('kbd', '', exit, 'G');
+		exit.append(' salir');
+		updateHud();
+	}
+
+	function updateHud() {
+		if (hudSize) hudSize.textContent = `${window.innerWidth} × ${window.innerHeight}`;
+	}
+
+	function build() {
+		root?.remove();
+		root = make('div', 'cm-root', document.body);
+		root.setAttribute('aria-hidden', 'true');
+		root.style.height = `${document.documentElement.scrollHeight}px`;
+		drawFrame(root);
+		drawTags(root);
+		drawBox(root);
+		drawHud(root);
+		inspect();
+	}
+
+	function scheduleRebuild() {
+		if (!active) return;
+		cancelAnimationFrame(rebuildFrame);
+		rebuildFrame = requestAnimationFrame(() => {
+			build();
+			updateHud();
+		});
+	}
+
+	// Inspector: caja con cotas de ancho y alto del elemento bajo el cursor
+	function inspect() {
+		if (!box) return;
+		const target = mouse && document.elementFromPoint(mouse.x, mouse.y);
+		if (!target || target.closest('.cm-root') || target.matches('html, body, main, section')) {
+			box.classList.remove('is-on');
+			return;
+		}
+		const rect = target.getBoundingClientRect();
+		box.style.left = `${rect.left}px`;
+		box.style.top = `${rect.top}px`;
+		box.style.width = `${rect.width}px`;
+		box.style.height = `${rect.height}px`;
+
+		const [w, h, name] = Array.from(box.children) as HTMLElement[];
+		w.firstElementChild!.textContent = px(rect.width);
+		h.firstElementChild!.textContent = px(rect.height);
+		const classes = Array.from(target.classList).slice(0, 2);
+		name.textContent =
+			target.tagName.toLowerCase() +
+			(target.id ? `#${target.id}` : '') +
+			classes.map((c) => `.${c}`).join('');
+		box.classList.add('is-on');
+	}
+
+	function scheduleInspect() {
+		if (!active) return;
+		cancelAnimationFrame(frame);
+		frame = requestAnimationFrame(inspect);
+	}
+
+	function activate() {
+		active = true;
+		document.documentElement.classList.add(ACTIVE);
+		build();
+		resizeObserver = new ResizeObserver(scheduleRebuild);
+		resizeObserver.observe(document.body);
+	}
+
+	function deactivate() {
+		active = false;
+		document.documentElement.classList.remove(ACTIVE);
+		resizeObserver?.disconnect();
+		resizeObserver = null;
+		root?.remove();
+		root = box = hudSize = null;
+	}
+
+	document.addEventListener('keydown', (e) => {
+		if (e.ctrlKey || e.metaKey || e.altKey || e.repeat || isTyping(e.target)) return;
+		if (e.key === 'g' || e.key === 'G') {
+			if (active) deactivate();
+			else activate();
+		} else if (e.key === 'Escape' && active) {
+			deactivate();
+		}
+	});
+
+	document.addEventListener('mousemove', (e) => {
+		mouse = { x: e.clientX, y: e.clientY };
+		scheduleInspect();
+	});
+	document.addEventListener('mouseleave', () => {
+		mouse = null;
+		scheduleInspect();
+	});
+	window.addEventListener('scroll', scheduleInspect, { passive: true });
+	window.addEventListener('resize', scheduleRebuild);
+
+	// Con las transiciones de Astro el <body> y las clases de <html> se reemplazan:
+	// si estaba activo, se vuelve a dibujar sobre la página nueva.
+	document.addEventListener('astro:page-load', () => {
+		if (!active) return;
+		resizeObserver?.disconnect();
+		activate();
+	});
+
+	console.info(
+		'%c◇ Modo construcción%c  Tecla G: ver el plano de este sitio.',
+		'color:#d4a26a;font-family:monospace',
+		'color:inherit'
+	);
+</script>

@@ -29,7 +29,17 @@
 	"results": [
 		"Flujo completo demostrable: búsqueda, solicitud, aceptación, viaje en mapa, trabajo, confirmación, calificación con fotos y pago simulado.",
 		"Tres apps con diseño responsive (cliente, profesional y administrador), con dashboard de métricas y finanzas para el administrador.",
-		"85 tests unitarios y 12 de punta a punta con Playwright; el deploy en Netlify no se publica si fallan el lint o los tests."
+		"88 tests unitarios y 12 de punta a punta con Playwright; el deploy en Netlify no se publica si fallan el lint o los tests."
+	],
+	"tests": [
+		{
+			"label": "Unitarios · Vitest",
+			"count": 88
+		},
+		{
+			"label": "E2E",
+			"count": 12
+		}
 	],
 	"caseStudy": {
 		"problem": {

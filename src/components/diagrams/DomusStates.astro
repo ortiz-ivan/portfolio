@@ -1,0 +1,219 @@
+---
+// Máquina de estados de una solicitud en Domus, tal como está definida en
+// frontend/src/lib/status.ts (TRANSITIONS): quién puede mover cada paso.
+import Figure from './Figure.astro';
+import { arrowHead, d } from './geometry';
+
+type Role = 'prof' | 'cliente';
+
+const W = 96; // ancho de un estado
+const H = 44;
+const STEP = 140; // distancia entre estados del camino feliz
+const X0 = 24;
+const ROW = 170; // borde superior de la fila principal
+
+const states = [
+	'Pendiente',
+	'Aceptada',
+	'En camino',
+	'En proceso',
+	'Terminada',
+	'Confirmada',
+	'Pagada'
+];
+// Rol que dispara cada paso i → i + 1 del camino feliz
+const flowRoles: Role[] = ['prof', 'prof', 'prof', 'prof', 'cliente', 'cliente'];
+
+const x = (i: number) => X0 + i * STEP;
+const cx = (i: number) => x(i) + W / 2;
+const cy = ROW + H / 2;
+const LETTER: Record<Role, string> = { prof: 'P', cliente: 'C' };
+const flowClass = (role: Role) => (role === 'cliente' ? 'dg-flow--accent' : 'dg-flow--strong');
+
+// Atajo aceptada → en proceso (sin pasar por «en camino»)
+const arcTop = ROW - 68;
+const arcPath = `M${cx(1)} ${ROW - 3} C${cx(1)} ${arcTop} ${cx(3)} ${arcTop} ${cx(3)} ${ROW - 3}`;
+const arcPeak = ROW - 3 - 0.75 * (ROW - 3 - arcTop);
+const arcMid = (cx(1) + cx(3)) / 2;
+
+// Cota bajo los estados en los que todavía se puede abandonar
+const bracketY = ROW + H + 18;
+const bracketL = x(0);
+const bracketR = x(2) + W;
+const bracketMid = (bracketL + bracketR) / 2;
+
+// Salidas a estados finales sin éxito
+const TERM_Y = 300;
+const exits = [
+	{ role: 'prof' as Role, label: 'Rechazada', from: bracketMid - 6, to: 120 },
+	{ role: 'cliente' as Role, label: 'Cancelada', from: bracketMid + 6, to: 304 }
+];
+const busY = 272;
+
+const code = [
+	{ indent: 0, parts: [{ t: '// frontend/src/lib/status.ts', c: 'c-muted' }] },
+	{ indent: 0, parts: [{ t: 'TRANSITIONS.pendiente = {', c: 'c-text' }] },
+	{ indent: 1, parts: [{ t: 'aceptada: ' }, { t: "'profesional'" }, { t: ',' }] },
+	{ indent: 1, parts: [{ t: 'rechazada: ' }, { t: "'profesional'" }, { t: ',' }] },
+	{ indent: 1, parts: [{ t: 'cancelada: ' }, { t: "'cliente'", c: 'c-accent' }, { t: ',' }] },
+	{ indent: 0, parts: [{ t: '}', c: 'c-text' }] }
+];
+const CODE_X = 640;
+const CODE_Y = 236;
+---
+
+<Figure num="01" title="Ciclo de vida de una solicitud">
+	<svg
+		class="dg-svg"
+		viewBox="0 84 1000 276"
+		role="img"
+		aria-labelledby="dg-domus-title dg-domus-desc"
+	>
+		<title id="dg-domus-title">Máquina de estados de una solicitud en Domus</title>
+		<desc id="dg-domus-desc">
+			Camino principal: pendiente, aceptada, en camino, en proceso, terminada, confirmada y pagada.
+			El profesional mueve la solicitud hasta terminarla; el cliente la confirma y la paga. Desde
+			aceptada se puede pasar directo a en proceso. Mientras está pendiente, aceptada o en camino,
+			el profesional puede rechazarla y el cliente cancelarla.
+		</desc>
+
+		{/* Atajo: si el profesional ya está en el domicilio, inicia directo */}
+		<g class:list={['dg-flow dg-flow--strong dg-fade', 'dg-d14']} data-role="prof">
+			<path class="dg-edge dg-edge--dashed" d={arcPath}></path>
+			<polygon class="dg-arrow" points={arrowHead(cx(3), ROW - 3, 'down')}></polygon>
+			<circle class="dg-badge" cx={arcMid} cy={arcPeak} r="8"></circle>
+			<text class="dg-badge-text" x={arcMid} y={arcPeak + 3} text-anchor="middle">P</text>
+		</g>
+		<text class:list={['dg-note dg-fade', 'dg-d14']} x={arcMid} y={arcTop - 4} text-anchor="middle">
+			si ya está en el domicilio, empieza directo
+		</text>
+
+		{/* Camino feliz */}
+		{
+			flowRoles.map((role, i) => {
+				const x1 = x(i) + W + 2;
+				const x2 = x(i + 1) - 2;
+				const mid = (x1 + x2) / 2;
+				return (
+					<g class:list={['dg-flow', flowClass(role)]} data-role={role}>
+						<line
+							class:list={['dg-edge dg-draw', d(i)]}
+							x1={x1}
+							y1={cy}
+							x2={x2 - 5}
+							y2={cy}
+							pathLength="1"
+						/>
+						<polygon class:list={['dg-arrow dg-fade', d(i)]} points={arrowHead(x2, cy, 'right')} />
+						<g class:list={['dg-fade', d(i)]}>
+							<circle class="dg-badge" cx={mid} cy={cy - 17} r="8" />
+							<text class="dg-badge-text" x={mid} y={cy - 14} text-anchor="middle">
+								{LETTER[role]}
+							</text>
+						</g>
+					</g>
+				);
+			})
+		}
+
+		{
+			states.map((label, i) => {
+				const last = i === states.length - 1;
+				return (
+					<g>
+						<text class="dg-meta" x={x(i)} y={ROW - 10}>
+							{String(i + 1).padStart(2, '0')}
+						</text>
+						<rect
+							class:list={['dg-node', { 'dg-node--accent': last }]}
+							x={x(i)}
+							y={ROW}
+							width={W}
+							height={H}
+						/>
+						{last && (
+							<rect class="dg-inner" x={x(i) + 3} y={ROW + 3} width={W - 6} height={H - 6} />
+						)}
+						<text class="dg-label" x={cx(i)} y={cy + 4} text-anchor="middle">
+							{label}
+						</text>
+					</g>
+				);
+			})
+		}
+
+		{/* Cota: tramo en el que todavía se puede abandonar */}
+		<g class:list={['dg-fade', 'dg-d12']}>
+			<line class="dg-sep" x1={bracketL} y1={bracketY} x2={bracketR} y2={bracketY}></line>
+			<line class="dg-sep" x1={bracketL} y1={bracketY - 5} x2={bracketL} y2={bracketY + 5}></line>
+			<line class="dg-sep" x1={bracketR} y1={bracketY - 5} x2={bracketR} y2={bracketY + 5}></line>
+			<text class="dg-note" x={bracketMid} y={bracketY + 18} text-anchor="middle">
+				antes de empezar el trabajo
+			</text>
+		</g>
+
+		{
+			exits.map(({ role, label, from, to }) => {
+				const cxT = to;
+				const path = `M${from} ${bracketY + 26} V${busY} H${cxT} V${TERM_Y - 7}`;
+				const badgeX = (from + cxT) / 2;
+				return (
+					<g>
+						<g class:list={['dg-d16', 'dg-flow', flowClass(role), 'dg-fade']} data-role={role}>
+							<path class="dg-edge" d={path} />
+							<polygon class="dg-arrow" points={arrowHead(cxT, TERM_Y - 2, 'down')} />
+							<circle class="dg-badge" cx={badgeX} cy={busY} r="8" />
+							<text class="dg-badge-text" x={badgeX} y={busY + 3} text-anchor="middle">
+								{LETTER[role]}
+							</text>
+						</g>
+						<rect class="dg-node dg-node--ghost" x={cxT - W / 2} y={TERM_Y} width={W} height={H} />
+						<text
+							class="dg-label dg-label--muted"
+							x={cxT}
+							y={TERM_Y + H / 2 + 4}
+							text-anchor="middle"
+						>
+							{label}
+						</text>
+					</g>
+				);
+			})
+		}
+
+		{/* Fuente única de las transiciones */}
+		<g class:list={['dg-fade', 'dg-d18']}>
+			<rect class="dg-node" x={CODE_X} y={CODE_Y} width="336" height="114"></rect>
+			<text class="dg-code">
+				{
+					code.map((line, i) => (
+						<tspan x={CODE_X + 18 + line.indent * 20} y={CODE_Y + 26 + i * 16}>
+							{line.parts.map((p) => (
+								<tspan class={p.c}>{p.t}</tspan>
+							))}
+						</tspan>
+					))
+				}
+			</text>
+		</g>
+	</svg>
+
+	<Fragment slot="caption">
+		Cada paso tiene un dueño. Las transiciones viven en un solo objeto, <code>TRANSITIONS</code>, y
+		<code>canTransition(desde, hacia, rol)</code> las valida antes de tocar el store: las pantallas no
+		deciden qué se puede hacer. Para pasar a «en proceso», el profesional necesita el código que le da
+		el cliente.
+	</Fragment>
+	<Fragment slot="legend">
+		<span class="dg-key dg-key--strong" data-role="prof"
+			><span class="dg-swatch"></span>P · Profesional</span
+		>
+		<span class="dg-key dg-key--accent" data-role="cliente"
+			><span class="dg-swatch"></span>C · Cliente</span
+		>
+		<span class="dg-key"><span class="dg-swatch dg-swatch--double"></span>Estado final</span>
+		<span class="dg-key"
+			><span class="dg-swatch dg-swatch--box dg-swatch--dashed"></span>Final sin éxito</span
+		>
+	</Fragment>
+</Figure>

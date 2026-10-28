@@ -1,16 +1,20 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import ArrowIcon from './icons/ArrowIcon.astro';
+import { caseStudyDiagrams } from './diagrams';
+import TestsCota from './cota/TestsCota.astro';
+import Footer from './Footer.astro';
 
 type ProjectData = CollectionEntry<'projects'>['data'];
 type ArchLayer = ProjectData['caseStudy']['architecture']['layers'][number];
 
 interface Props {
 	project: ProjectData;
+	slug: string;
 }
 
-const { project } = Astro.props;
-const year = new Date().getFullYear();
+const { project, slug } = Astro.props;
+const Diagram = caseStudyDiagrams[slug];
 ---
 
 <!-- 01 — PROBLEMA -->
@@ -79,6 +83,7 @@ const year = new Date().getFullYear();
 				))
 			}
 		</div>
+		{Diagram && <Diagram />}
 	</div>
 </section>
 
@@ -114,6 +119,13 @@ const year = new Date().getFullYear();
 			<span class="sec-label">Resultados</span>
 			<span class="rule-flex"></span>
 		</div>
+		{
+			project.tests && (
+				<div class="cs-tests">
+					<TestsCota segments={project.tests} />
+				</div>
+			)
+		}
 		<div class="cs-results">
 			{
 				project.results.map((r: string, i: number) => (
@@ -145,14 +157,6 @@ const year = new Date().getFullYear();
 			>
 		</div>
 
-		<footer class="footer">
-			<p class="footer-copy">Diseñado y construido con criterio técnico por Iván Ortiz.</p>
-			<div class="footer-meta">
-				<a class="footer-top" href="#top"
-					>Volver arriba <span class="arrow"><ArrowIcon direction="up" /></span></a
-				>
-				<div class="footer-year">© {year} · Iván Ortiz</div>
-			</div>
-		</footer>
+		<Footer copy="Diseñado y construido con criterio técnico por Iván Ortiz." credit="Iván Ortiz" />
 	</div>
 </section>

@@ -281,3 +281,20 @@
 }
 
 /* Responsive: ver src/styles/editorial/responsive.css (punto de control único de breakpoints) */
+
+/* Distancia de entrada (reveal.css) */
+.cs-split.reveal {
+	--reveal-y: 24px;
+}
+.cs-arch-intro.reveal {
+	--reveal-y: 20px;
+}
+.cs-layer.reveal {
+	--reveal-y: 14px;
+}
+.cs-tech-grid.reveal {
+	--reveal-y: 20px;
+}
+.cs-result.reveal {
+	--reveal-y: 14px;
+}

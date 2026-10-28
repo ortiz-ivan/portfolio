@@ -1,0 +1,65 @@
+---
+// Antes y después sobre una misma escala: el largo de cada cota es
+// proporcional al valor, así la mejora se ve antes de leer el número.
+import type { ComparisonMetric } from '../../data/site';
+import { compareLengths, speedup } from '../../lib/cota';
+
+interface Props {
+	metric: ComparisonMetric;
+}
+
+const { metric } = Astro.props;
+const lengths = compareLengths(metric.before.value, metric.after.value);
+const gain = speedup(metric.before.value, metric.after.value);
+
+const rows = [
+	{ key: 'Antes', length: lengths.before, label: metric.before.label, accent: false },
+	{ key: 'Después', length: lengths.after, label: metric.after.label, accent: true }
+];
+const Y = 12;
+---
+
+<figure class="cota cota--compare reveal">
+	<figcaption class="cota-title">{metric.title}</figcaption>
+	<div
+		class="cota-rows"
+		role="img"
+		aria-label={`${metric.title}: de ${metric.before.label} a ${metric.after.label}, ${gain}.`}
+	>
+		{
+			rows.map((row) => (
+				<>
+					<span class="cota-k" aria-hidden="true">
+						{row.key}
+					</span>
+					<svg class="cota-svg" width="100%" height="24" aria-hidden="true">
+						<line
+							class:list={['cota-line', 'cota-draw', { 'cota-line--accent': row.accent }]}
+							x1="0%"
+							y1={Y}
+							x2={`${row.length}%`}
+							y2={Y}
+							pathLength="1"
+						/>
+						<g class:list={['cota-fade', { 'cota-accent': row.accent }]}>
+							<line class="cota-ext" x1="0%" y1={Y - 7} x2="0%" y2={Y + 7} />
+							<line
+								class="cota-ext"
+								x1={`${row.length}%`}
+								y1={Y - 7}
+								x2={`${row.length}%`}
+								y2={Y + 7}
+							/>
+							<svg x={`${row.length}%`} y={Y} overflow="visible">
+								<text class="cota-value cota-value--inline" x="12" y="5">
+									{row.label}
+									{row.accent && <tspan class="cota-gain"> · {gain}</tspan>}
+								</text>
+							</svg>
+						</g>
+					</svg>
+				</>
+			))
+		}
+	</div>
+</figure>

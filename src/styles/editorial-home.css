@@ -5,6 +5,9 @@
    ============================================================ */
 
 @import './editorial/tokens.css';
+@import './editorial/base.css';
+@import './editorial/primitives.css';
+@import './editorial/reveal.css';
 @import './editorial/nav.css';
 @import './editorial/hero.css';
 @import './editorial/projects.css';
@@ -12,4 +15,6 @@
 @import './editorial/experience.css';
 @import './editorial/contact.css';
 @import './editorial-project.css';
+@import './editorial/diagrams.css';
+@import './editorial/cota.css';
 @import './editorial/responsive.css';

@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../styles/fonts.css';
 import { ClientRouter } from 'astro:transitions';
+import ConstructionMode from '../components/ConstructionMode.astro';
 
 interface Props {
 	title?: string;
@@ -94,7 +95,11 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 						name: 'Iván Ortiz',
 						jobTitle: 'Fullstack Developer',
 						url: Astro.site,
-						sameAs: ['https://www.linkedin.com/in/ortiz-ivan08/', 'https://github.com/ortiz-ivan', 'https://www.instagram.com/ivan_ortiz.dev/'],
+						sameAs: [
+							'https://www.linkedin.com/in/ortiz-ivan08/',
+							'https://github.com/ortiz-ivan',
+							'https://www.instagram.com/ivan_ortiz.dev/'
+						],
 						description:
 							'Desarrollador fullstack enfocado en sistemas de gestión, automatización e integraciones para operaciones reales.'
 					},
@@ -115,6 +120,7 @@ const ogImageURL = new URL(ogImage, Astro.site).href;
 	<body>
 		<a class="skip-nav" href="#top">Saltar al contenido</a>
 		<slot />
+		<ConstructionMode />
 		<script>
 			let revealObserver: IntersectionObserver | null = null;
 

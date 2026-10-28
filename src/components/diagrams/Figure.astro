@@ -1,0 +1,44 @@
+---
+// Marco común de los diagramas: numeración de figura, lienzo con marcas de
+// registro (como la Fig. 01 del inicio) y pie con texto y leyenda opcional.
+// En pantallas angostas el lienzo se desplaza en horizontal en vez de encoger
+// el dibujo hasta volverlo ilegible.
+
+interface Props {
+	num: string;
+	title: string;
+}
+
+const { num, title } = Astro.props;
+const hasLegend = Astro.slots.has('legend');
+---
+
+<figure class="dg reveal">
+	<div class="dg-head">
+		<span class="dg-num">Fig. {num}</span>
+		<span class="dg-title">{title}</span>
+		<span class="dg-rule" aria-hidden="true"></span>
+	</div>
+
+	<div class="dg-frame">
+		<span class="reg reg-tl" aria-hidden="true"></span>
+		<span class="reg reg-tr" aria-hidden="true"></span>
+		<span class="reg reg-bl" aria-hidden="true"></span>
+		<span class="reg reg-br" aria-hidden="true"></span>
+		<div class="dg-canvas" tabindex="0" role="region" aria-label={`Fig. ${num}: ${title}`}>
+			<slot />
+		</div>
+	</div>
+	<p class="dg-hint" aria-hidden="true">Deslizar para ver completo →</p>
+
+	<figcaption class="dg-caption">
+		<p class="dg-caption-text"><slot name="caption" /></p>
+		{
+			hasLegend && (
+				<div class="dg-legend">
+					<slot name="legend" />
+				</div>
+			)
+		}
+	</figcaption>
+</figure>

@@ -32,6 +32,11 @@ const projects = defineCollection({
 		tech: z.array(z.string()),
 		technicalDecisions: z.array(z.string()),
 		results: z.array(z.string()),
+		// Partes de la suite de tests, dibujadas como cota en Resultados
+		tests: z
+			.array(z.object({ label: z.string(), count: z.number().int().positive() }))
+			.min(1)
+			.optional(),
 		caseStudy: z.object({
 			problem: z.object({
 				title: z.string(),

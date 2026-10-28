@@ -1,0 +1,198 @@
+---
+// Defensa en profundidad en MatLog: cada capa que atraviesa una petición y
+// la respuesta con la que la frena. Fuentes: matlog/vite.config.ts y
+// public/_headers (frontend); app/middleware.py, limites.py, deps.py,
+// schemas.py, models.py y auditoria.py (API).
+import Figure from './Figure.astro';
+import { arrowHead, layoutChips, d } from './geometry';
+
+const BAND_X = 30;
+const BAND_W = 600;
+const BAND_H = 46;
+const GAP = 14;
+const TOP = 30;
+const SPINE_X = 670;
+const CHIP_X = 734;
+const CHIP_H = 20;
+
+const bands = [
+	{
+		name: 'Navegador · Cloudflare Workers',
+		detail: 'CSP estricta generada en el build y cabeceras de seguridad propias del sitio estático',
+		codes: ['CSP'],
+		reject: 'script inyectado bloqueado'
+	},
+	{
+		name: 'Borde de la API',
+		detail: "Cuerpo de hasta 64 KB · nosniff, frame DENY, no-store y CSP 'none' en cada respuesta",
+		codes: ['413'],
+		reject: 'petición demasiado grande'
+	},
+	{
+		name: 'Autenticación',
+		detail:
+			'5 fallos por usuario y 20 por IP cada 15 min · JWT con versión: subirla cierra toda sesión',
+		codes: ['429', '401'],
+		reject: 'fuerza bruta o token viejo'
+	},
+	{
+		name: 'Autorización',
+		detail: 'Permisos usuario / admin · cinturón, grado y medallas solo los confirma un admin',
+		codes: ['403'],
+		reject: 'no le corresponde'
+	},
+	{
+		name: 'Validación',
+		detail: 'Esquemas de Pydantic: tipos, formatos y rangos antes de llegar a la lógica',
+		codes: ['422'],
+		reject: 'datos fuera del esquema'
+	},
+	{
+		name: 'Esquema · PostgreSQL',
+		detail: 'CHECK de grado válido, UNIQUE por participación y claves foráneas',
+		codes: ['CHECK'],
+		reject: 'viola una restricción'
+	},
+	{
+		name: 'Rastro',
+		detail:
+			'Altas, cambios y borrados auditados con valor anterior y nuevo · eventos de seguridad sin secretos',
+		codes: ['200'],
+		reject: 'y el cambio queda auditado',
+		accent: true
+	}
+].map((band, i) => {
+	const y = TOP + i * (BAND_H + GAP);
+	return { ...band, y, cy: y + BAND_H / 2, chips: layoutChips(band.codes, CHIP_X, 6, 10) };
+});
+
+const last = bands[bands.length - 1];
+const gates = bands.slice(0, -1);
+
+// Diamante de control sobre la columna de la petición
+const diamond = (cy: number, r = 5) =>
+	`${SPINE_X},${cy - r} ${SPINE_X + r},${cy} ${SPINE_X},${cy + r} ${SPINE_X - r},${cy}`;
+---
+
+<Figure num="01" title="Defensa en profundidad">
+	<svg
+		class="dg-svg"
+		viewBox="0 0 1000 450"
+		role="img"
+		aria-labelledby="dg-matlog-title dg-matlog-desc"
+	>
+		<title id="dg-matlog-title">Capas que atraviesa una petición en MatLog</title>
+		<desc id="dg-matlog-desc">
+			Una petición atraviesa siete capas: la política de seguridad de contenido del navegador, el
+			borde de la API con límite de tamaño y cabeceras, la autenticación con límite de intentos y
+			tokens versionados, la autorización por rol, la validación con Pydantic y las restricciones de
+			PostgreSQL. Cada una la puede rechazar con su propio código. Si pasa todas, el cambio queda
+			auditado.
+		</desc>
+
+		<text class="dg-meta" x={SPINE_X - 10} y="12" text-anchor="end">Petición</text>
+
+		{/* Columna de la petición */}
+		<g class="dg-flow dg-flow--strong">
+			{
+				bands.map((band, i) => {
+					const from = i === 0 ? 4 : bands[i - 1].cy + 6;
+					const isLast = i === bands.length - 1;
+					const path = isLast
+						? `M${SPINE_X} ${from} V${band.cy} H${BAND_X + BAND_W + 7}`
+						: `M${SPINE_X} ${from} V${band.cy - 6}`;
+					return <path class:list={['dg-edge dg-draw', d(i * 0.8)]} d={path} pathLength="1" />;
+				})
+			}
+			<polygon
+				class:list={['dg-arrow dg-fade', d((bands.length - 1) * 0.8)]}
+				points={arrowHead(BAND_X + BAND_W + 2, last.cy, 'left')}></polygon>
+		</g>
+
+		{
+			bands.map((band, i) => (
+				<g>
+					<text class="dg-meta" x="0" y={band.cy + 4}>
+						{String(i + 1).padStart(2, '0')}
+					</text>
+					<rect
+						class:list={['dg-band', { 'dg-band--accent': band.accent }]}
+						x={BAND_X}
+						y={band.y}
+						width={BAND_W}
+						height={BAND_H}
+					/>
+					<text class="dg-label" x={BAND_X + 18} y={band.y + 19}>
+						{band.name}
+					</text>
+					<text class="dg-text" x={BAND_X + 18} y={band.y + 35}>
+						{band.detail}
+					</text>
+				</g>
+			))
+		}
+
+		{/* Controles y rechazos */}
+		{
+			gates.map((band, i) => (
+				<g class:list={['dg-fade', d(i * 0.8 + 0.4)]}>
+					<line class="dg-sep" x1={BAND_X + BAND_W} y1={band.cy} x2={SPINE_X - 6} y2={band.cy} />
+					<polygon class="dg-node" points={diamond(band.cy)} />
+					<g class="dg-flow">
+						<path class="dg-edge dg-edge--dashed" d={`M${SPINE_X + 6} ${band.cy} H${CHIP_X - 9}`} />
+						<polygon class="dg-arrow" points={arrowHead(CHIP_X - 4, band.cy, 'right')} />
+					</g>
+				</g>
+			))
+		}
+
+		{
+			bands.map((band, i) => {
+				const end = band.chips[band.chips.length - 1];
+				return (
+					<g class:list={['dg-fade', d(i * 0.8 + 0.5)]}>
+						{band.chips.map((chip) => (
+							<g>
+								<rect
+									class:list={['dg-chip', { 'dg-chip--accent': band.accent }]}
+									x={chip.x}
+									y={band.cy - CHIP_H / 2}
+									width={chip.width}
+									height={CHIP_H}
+									rx="10"
+								/>
+								<text
+									class:list={['dg-chip-text', { 'dg-chip-text--accent': band.accent }]}
+									x={chip.x + chip.width / 2}
+									y={band.cy + 3.5}
+									text-anchor="middle"
+								>
+									{chip.text}
+								</text>
+							</g>
+						))}
+						<text class="dg-note" x={end.x + end.width + 10} y={band.cy + 4}>
+							{band.reject}
+						</text>
+					</g>
+				);
+			})
+		}
+	</svg>
+
+	<Fragment slot="caption">
+		Cada capa asume que la anterior puede fallar. Para escribir algo, una petición tiene que
+		atravesarlas todas, y cualquiera la puede frenar con su propio código de error. Lo que llega al
+		final queda registrado. Es un proyecto chico, pero guarda datos personales: la seguridad no se
+		dejó para después.
+	</Fragment>
+	<Fragment slot="legend">
+		<span class="dg-key dg-key--strong"
+			><span class="dg-swatch"></span>Recorrido de la petición</span
+		>
+		<span class="dg-key"><span class="dg-swatch dg-swatch--dashed"></span>Rechazo</span>
+		<span class="dg-key dg-key--accent"
+			><span class="dg-swatch dg-swatch--box"></span>Llega y se registra</span
+		>
+	</Fragment>
+</Figure>

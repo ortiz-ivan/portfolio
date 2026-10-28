@@ -17,8 +17,14 @@
 	],
 	"results": [
 		"Unifica en un solo sistema ventas, inventario, arqueo de caja, cuentas por cobrar y reportes, que antes vivían en procesos separados.",
-		"Casi 200 tests automatizados con pytest que cubren flujos completos (ventas, créditos, arqueo, kardex, migraciones), ejecutados en CI con GitHub Actions sobre Python 3.9, 3.10 y 3.11.",
+		"277 tests automatizados con pytest que cubren flujos completos (ventas, créditos, arqueo, kardex, migraciones), ejecutados en CI con GitHub Actions sobre Python 3.9, 3.10 y 3.11.",
 		"Distribución lista para el usuario final: un instalador NSIS con versionado, backups automáticos al iniciar y actualización sin tocar los datos."
+	],
+	"tests": [
+		{
+			"label": "pytest",
+			"count": 277
+		}
 	],
 	"caseStudy": {
 		"problem": {

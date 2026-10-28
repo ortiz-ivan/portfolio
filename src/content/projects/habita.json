@@ -14,9 +14,19 @@
 		"El estado de mora se recalcula con un management command (`marcar_morosos`, con soporte `--dry-run`) que revisa contratos activos con pagos vencidos, pensado para ejecutarse manualmente o vía scheduler externo."
 	],
 	"results": [
-		"83 tests de backend + 102 de frontend corriendo en CI, con cobertura mínima del 60%.",
-		"Invalidación de caché consciente del dominio en React Query: pagar una cuota también invalida el contrato asociado (por el recálculo de garantía) y actualiza la disponibilidad de la habitación en el dashboard.",
+		"126 tests de backend + 82 de frontend corriendo en CI, con cobertura mínima del 60%.",
+		"Invalidación de caché consciente del dominio en React Query: pagar una cuota también invalida los contratos (por el recálculo de garantía), y guardar un contrato invalida las habitaciones, cuya ocupación recalcula el backend.",
 		"Modelo de dominio con 7 entidades relacionadas —incluida una tabla de auditoría (AuditLog)— para trazabilidad completa del ciclo habitación → contrato → pago."
+	],
+	"tests": [
+		{
+			"label": "Backend · Django",
+			"count": 126
+		},
+		{
+			"label": "Frontend · Vitest",
+			"count": 82
+		}
 	],
 	"caseStudy": {
 		"problem": {

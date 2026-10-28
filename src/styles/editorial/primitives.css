@@ -1,0 +1,240 @@
+/* ============================================================
+   primitives.css — piezas reutilizables entre secciones: encabezado
+   de sección, eyebrow, tipografía display, tags, botones y links
+   ============================================================
+
+/* ---------- Section header ---------- */
+.sec-head {
+	display: flex;
+	align-items: baseline;
+	gap: 1rem;
+	margin-bottom: clamp(2.5rem, 5vw, 4rem);
+	flex-wrap: wrap;
+}
+.sec-num {
+	font-family: var(--font-mono);
+	font-size: 0.78rem;
+	letter-spacing: 0.1em;
+	color: var(--accent);
+}
+.sec-label {
+	margin: 0;
+	font-family: var(--font-mono);
+	font-size: 0.78rem;
+	font-weight: 400;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--text-2);
+}
+/* Línea de cota: trazo con marcas en ambos extremos, como en un plano */
+.sec-head .rule-flex {
+	flex: 1;
+	height: 1px;
+	background: var(--line);
+	min-width: 40px;
+	position: relative;
+}
+.sec-head .rule-flex::before,
+.sec-head .rule-flex::after {
+	content: '';
+	position: absolute;
+	top: -4px;
+	width: 1px;
+	height: 9px;
+	background: var(--reg-mark);
+}
+.sec-head .rule-flex::before {
+	left: 0;
+}
+.sec-head .rule-flex::after {
+	right: 0;
+}
+
+/* ---------- Eyebrow chip ---------- */
+.ed-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.6rem;
+	font-family: var(--font-mono);
+	font-size: 0.74rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+.ed-eyebrow .dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: #7fd6a0;
+	box-shadow: 0 0 0 3px rgba(127, 214, 160, 0.12);
+}
+
+/* ---------- Display typography ---------- */
+.display {
+	font-family: var(--font-display);
+	font-weight: 400;
+	line-height: 0.98;
+	letter-spacing: -0.02em;
+	margin: 0;
+	text-wrap: balance;
+}
+.display em {
+	font-style: italic;
+	color: var(--text-2);
+}
+
+/* ---------- Tags ---------- */
+.tag-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-top: 0.2rem;
+}
+.tag {
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.02em;
+	color: var(--text-2);
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	padding: 0.32rem 0.7rem;
+}
+
+/* ---------- Arrow icons ---------- */
+.arrow-icon {
+	width: 0.9em;
+	height: 0.9em;
+	vertical-align: -0.1em;
+	display: inline-block;
+}
+
+/* ---------- CTA row ---------- */
+.cta-row {
+	display: flex;
+	gap: 1.5rem;
+	flex-wrap: wrap;
+	align-items: center;
+	margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.6rem;
+	font-family: var(--font-mono);
+	font-size: 0.8rem;
+	letter-spacing: 0.04em;
+	padding: 0.9rem 1.4rem;
+	border-radius: 999px;
+	border: 1px solid var(--text);
+	background: var(--accent-bg);
+	color: var(--accent-fg);
+	transition:
+		transform 0.3s var(--ease),
+		background 0.3s var(--ease),
+		color 0.3s var(--ease);
+}
+.btn .arrow {
+	transition: transform 0.35s var(--ease);
+}
+.btn:hover {
+	will-change: transform;
+	transform: translateY(-2px);
+}
+.btn:hover .arrow {
+	transform: translate(3px, -3px);
+}
+
+.btn.is-loading {
+	position: relative;
+	overflow: hidden;
+	cursor: default;
+	transform: none;
+}
+.btn.is-loading .arrow {
+	opacity: 0;
+}
+.btn.is-loading::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		100deg,
+		transparent 30%,
+		rgba(var(--bg-rgb), 0.16) 50%,
+		transparent 70%
+	);
+	background-size: 200% 100%;
+	animation: btn-shimmer 1.3s ease-in-out infinite;
+}
+
+@keyframes btn-shimmer {
+	0% {
+		background-position: 150% 0;
+	}
+	100% {
+		background-position: -50% 0;
+	}
+}
+
+.btn-ghost {
+	background: transparent;
+	color: var(--text);
+	border-color: var(--line-strong);
+}
+.btn-ghost:hover {
+	background: rgba(244, 242, 238, 0.05);
+	border-color: var(--text);
+}
+
+.btn--unavailable {
+	opacity: 0.4;
+	cursor: default;
+}
+
+/* ---------- Text link with arrow ---------- */
+.tlink {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	font-family: var(--font-mono);
+	font-size: 0.78rem;
+	letter-spacing: 0.03em;
+	color: var(--text-2);
+	position: relative;
+	padding-bottom: 2px;
+	transition: color 0.3s var(--ease);
+}
+.tlink::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 1px;
+	background: currentColor;
+	transform: scaleX(0);
+	transform-origin: right;
+	transition: transform 0.4s var(--ease);
+}
+.tlink:hover {
+	color: var(--accent);
+}
+.tlink:hover::after {
+	transform: scaleX(1);
+	transform-origin: left;
+}
+.tlink .arrow {
+	transition: transform 0.35s var(--ease);
+}
+.tlink:hover .arrow {
+	transform: translate(2px, -2px);
+}
+.tlink.disabled {
+	color: var(--faint);
+	pointer-events: none;
+}
+.sec-head.reveal {
+	--reveal-y: 10px;
+}

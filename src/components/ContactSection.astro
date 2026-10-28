@@ -2,6 +2,7 @@
 import type { ContactSection, FooterContent } from '../data/site';
 import ArrowIcon from './icons/ArrowIcon.astro';
 import BrandIcon from './icons/BrandIcon.astro';
+import Footer from './Footer.astro';
 
 interface Props {
 	data: ContactSection;
@@ -10,7 +11,6 @@ interface Props {
 }
 
 const { data, footer, authorName } = Astro.props;
-const year = new Date().getFullYear();
 const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 ---
 
@@ -97,7 +97,8 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 					<div>
 						<p class="form-success-title">Mensaje enviado.</p>
 						<p class="form-success-desc">
-							Te respondo a la brevedad. Mientras tanto, también me encontrás en LinkedIn, GitHub o Instagram.
+							Te respondo a la brevedad. Mientras tanto, también me encontrás en LinkedIn, GitHub o
+							Instagram.
 						</p>
 					</div>
 				</div>
@@ -128,15 +129,7 @@ const w3fKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 			</aside>
 		</div>
 
-		<footer class="footer">
-			<p class="footer-copy">{footer.copy}</p>
-			<div class="footer-meta">
-				<a class="footer-top" href="#top"
-					>Volver arriba <span class="arrow"><ArrowIcon direction="up" /></span></a
-				>
-				<div class="footer-year">© {year} · Diseñado y construido por {authorName}</div>
-			</div>
-		</footer>
+		<Footer copy={footer.copy} credit={`Diseñado y construido por ${authorName}`} />
 	</div>
 </section>
 

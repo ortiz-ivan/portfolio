@@ -32,6 +32,13 @@ export interface SkillsSection {
 	items: SkillCategory[];
 }
 
+/** Métrica de antes y después, dibujada como cota (CompareCota) */
+export interface ComparisonMetric {
+	title: string;
+	before: { value: number; label: string };
+	after: { value: number; label: string };
+}
+
 export interface ExperienceItem {
 	company: string;
 	role: string;
@@ -39,6 +46,7 @@ export interface ExperienceItem {
 	description: string;
 	responsibilities: string[];
 	tech: string[];
+	metric?: ComparisonMetric;
 }
 
 export interface ExperienceSection {
@@ -61,7 +69,7 @@ export const heroContent: HeroContent = {
 	narrative:
 		'Hoy desarrollo sistemas empresariales en Airam con Java, Spring y PostgreSQL: APIs, integraciones como SIFEN, optimización de consultas y despliegues con GitLab CI y Docker.',
 	panelSummary:
-		'Por fuera del trabajo llevé a producción un POS offline que un comercio usa a diario, con instalador, backups automáticos y casi 200 tests.',
+		'Por fuera del trabajo llevé a producción un POS offline que un comercio usa a diario, con instalador, backups automáticos y más de 270 tests.',
 	primaryCta: {
 		label: 'Ver proyectos',
 		href: '#projects'
@@ -127,7 +135,12 @@ export const experienceSection: ExperienceSection = {
 				'Despliegues a test y producción con pipelines de GitLab CI.',
 				'Servicios con Docker Compose en servidores Linux, administrados por SSH.'
 			],
-			tech: ['Java', 'Spring', 'PostgreSQL', 'Docker', 'GitLab CI', 'Linux', 'React', 'Angular']
+			tech: ['Java', 'Spring', 'PostgreSQL', 'Docker', 'GitLab CI', 'Linux', 'React', 'Angular'],
+			metric: {
+				title: 'Tiempo de respuesta · vistas críticas',
+				before: { value: 3, label: '~3 s' },
+				after: { value: 1, label: '~1 s' }
+			}
 		}
 	]
 };

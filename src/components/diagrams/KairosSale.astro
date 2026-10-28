@@ -1,0 +1,184 @@
+---
+// Recorrido de una venta en Kairos: ventas_routes.agregar_venta_view →
+// ventas_service.validar_formulario_venta → repositories/venta.registrar_venta.
+import Figure from './Figure.astro';
+import { arrowHead, d } from './geometry';
+
+const W = 108;
+const H = 44;
+const s = (i: number) => 150 + i * 122; // borde izquierdo de cada columna
+const c = (i: number) => s(i) + W / 2;
+
+const lanes = [
+	{ name: 'Ruta', sub: 'ventas_routes.py', top: 16, bottom: 96 },
+	{ name: 'Servicio', sub: 'ventas_service.py', top: 96, bottom: 176 },
+	{ name: 'Repositorio', sub: 'repositories/venta.py', top: 176, bottom: 326 },
+	{ name: 'SQLite', sub: 'SQLAlchemy · Alembic', top: 326, bottom: 406 }
+];
+
+// Borde superior de los nodos de cada carril
+const Y = { ruta: 34, servicio: 114, repo: 196, repo2: 264, base: 344 };
+const mid = (y: number) => y + H / 2;
+
+type Kind = 'solid' | 'ghost' | 'accent';
+const nodes: { col: number; y: number; label: string; sub: string; kind?: Kind }[] = [
+	{ col: 0, y: Y.ruta, label: 'Sesión + CSRF', sub: 'login_required' },
+	{ col: 1, y: Y.ruta, label: '¿Caja abierta?', sub: 'si no, no vende' },
+	{ col: 2, y: Y.servicio, label: 'Validar datos', sub: 'pago y cantidad' },
+	{ col: 3, y: Y.repo, label: 'Bloquear filas', sub: 'en orden por id' },
+	{ col: 4, y: Y.repo, label: 'Venta y líneas', sub: 'con descuentos' },
+	{ col: 5, y: Y.repo, label: 'Kardex', sub: 'salida por línea' },
+	{ col: 5, y: Y.repo2, label: 'Deuda cliente', sub: 'solo a crédito', kind: 'ghost' },
+	{ col: 4, y: Y.base, label: 'Rollback', sub: 'no queda nada', kind: 'ghost' },
+	{ col: 6, y: Y.base, label: 'Commit', sub: 'todo o nada', kind: 'accent' },
+	{ col: 6, y: Y.ruta, label: 'Caja', sub: 'según el pago' }
+];
+
+// Camino principal, en orden de dibujo
+const UP_X = s(6) + W - 24; // subida del commit a la caja
+const edges = [
+	{ d: `M${s(0) + W + 1} ${mid(Y.ruta)} H${s(1) - 7}`, tip: [s(1) - 2, mid(Y.ruta), 'right'] },
+	{
+		d: `M${s(1) + W} ${mid(Y.ruta)} H${c(2)} V${Y.servicio - 7}`,
+		tip: [c(2), Y.servicio - 2, 'down']
+	},
+	{ d: `M${s(2) + W} ${mid(Y.servicio)} H${c(3)} V${Y.repo - 7}`, tip: [c(3), Y.repo - 2, 'down'] },
+	{ d: `M${s(3) + W + 1} ${mid(Y.repo)} H${s(4) - 7}`, tip: [s(4) - 2, mid(Y.repo), 'right'] },
+	{ d: `M${s(4) + W + 1} ${mid(Y.repo)} H${s(5) - 7}`, tip: [s(5) - 2, mid(Y.repo), 'right'] },
+	{ d: `M${s(5) + W} ${mid(Y.repo)} H${c(6)} V${Y.base - 7}`, tip: [c(6), Y.base - 2, 'down'] }
+] as const;
+
+const ZONE = { x: s(3) - 12, y: 186, w: s(5) + W + 12 - (s(3) - 12), h: 132 };
+---
+
+<Figure num="01" title="Una venta, de la ruta a la base">
+	<svg
+		class="dg-svg"
+		viewBox="0 0 1000 410"
+		role="img"
+		aria-labelledby="dg-kairos-title dg-kairos-desc"
+	>
+		<title id="dg-kairos-title">Recorrido de una venta por las capas de Kairos</title>
+		<desc id="dg-kairos-desc">
+			La ruta exige sesión, token CSRF y una caja abierta; el servicio valida el formulario; el
+			repositorio, dentro de una transacción, bloquea los productos, guarda la venta con sus líneas,
+			descuenta el stock a través del kardex y, si es a crédito, crea la deuda del cliente. Si algo
+			falla se hace rollback; si no, commit, y recién después se registra el movimiento de caja.
+		</desc>
+
+		{
+			lanes.map((lane, i) => (
+				<g>
+					{i > 0 && <line class="dg-sep" x1="0" y1={lane.top} x2="1000" y2={lane.top} />}
+					<text class="dg-label dg-label--muted" x="0" y={(lane.top + lane.bottom) / 2 - 3}>
+						{lane.name}
+					</text>
+					<text class="dg-sub" x="0" y={(lane.top + lane.bottom) / 2 + 12}>
+						{lane.sub}
+					</text>
+				</g>
+			))
+		}
+
+		<rect
+			class:list={['dg-zone dg-fade', 'dg-d4']}
+			x={ZONE.x}
+			y={ZONE.y}
+			width={ZONE.w}
+			height={ZONE.h}></rect>
+		<text
+			class:list={['dg-meta dg-meta--accent dg-fade', 'dg-d4']}
+			x={ZONE.x + 10}
+			y={ZONE.y + ZONE.h - 10}
+		>
+			Transacción
+		</text>
+
+		{
+			edges.map((e, i) => (
+				<g class="dg-flow dg-flow--strong">
+					<path class:list={['dg-edge dg-draw', d(i)]} d={e.d} pathLength="1" />
+					<polygon
+						class:list={['dg-arrow dg-fade', d(i)]}
+						points={arrowHead(e.tip[0], e.tip[1], e.tip[2])}
+					/>
+				</g>
+			))
+		}
+
+		{/* Ramas condicionales */}
+		<g class:list={['dg-flow dg-fade', 'dg-d12']}>
+			<path class="dg-edge dg-edge--dashed" d={`M${c(5)} ${Y.repo + H} V${Y.repo2 - 7}`}></path>
+			<polygon class="dg-arrow" points={arrowHead(c(5), Y.repo2 - 2, 'down')}></polygon>
+			<path class="dg-edge dg-edge--dashed" d={`M${s(5) + W} ${mid(Y.repo2)} H${c(6) - 4}`}></path>
+			<circle class="dg-dot" cx={c(6)} cy={mid(Y.repo2)} r="3"></circle>
+
+			<path class="dg-edge dg-edge--dashed" d={`M${c(4)} ${ZONE.y + ZONE.h} V${Y.base - 7}`}></path>
+			<polygon class="dg-arrow" points={arrowHead(c(4), Y.base - 2, 'down')}></polygon>
+		</g>
+		<text class:list={['dg-note dg-fade', 'dg-d12']} x={c(4) + 10} y={Y.base - 10}
+			>si algo falla</text
+		>
+
+		{/* Después del commit, fuera de la transacción */}
+		<g class="dg-flow dg-flow--accent">
+			<path
+				class:list={['dg-edge dg-draw', 'dg-d14']}
+				d={`M${UP_X} ${Y.base} V${Y.ruta + H + 7}`}
+				pathLength="1"></path>
+			<polygon
+				class:list={['dg-arrow dg-fade', 'dg-d14']}
+				points={arrowHead(UP_X, Y.ruta + H + 2, 'up')}></polygon>
+		</g>
+		<text
+			class:list={['dg-note dg-fade', 'dg-d14']}
+			x={UP_X - 10}
+			y={mid(Y.servicio) + 4}
+			text-anchor="end"
+		>
+			después del commit
+		</text>
+
+		{
+			nodes.map((n) => (
+				<g>
+					<rect
+						class:list={[
+							'dg-node',
+							{ 'dg-node--ghost': n.kind === 'ghost', 'dg-node--accent': n.kind === 'accent' }
+						]}
+						x={s(n.col)}
+						y={n.y}
+						width={W}
+						height={H}
+					/>
+					<text
+						class:list={['dg-label', { 'dg-label--muted': n.kind === 'ghost' }]}
+						x={c(n.col)}
+						y={n.y + 19}
+						text-anchor="middle"
+					>
+						{n.label}
+					</text>
+					<text class="dg-sub" x={c(n.col)} y={n.y + 33} text-anchor="middle">
+						{n.sub}
+					</text>
+				</g>
+			))
+		}
+	</svg>
+
+	<Fragment slot="caption">
+		Antes de tocar datos, la venta pasa dos controles: sesión con CSRF y una caja abierta. Después,
+		todo ocurre en una sola transacción: los productos se bloquean en orden de id (así dos cajas no
+		se esperan entre sí), el stock solo se mueve con un asiento de kardex y, si cualquier paso
+		falla, no queda nada a medias.
+	</Fragment>
+	<Fragment slot="legend">
+		<span class="dg-key dg-key--strong"><span class="dg-swatch"></span>Camino de la venta</span>
+		<span class="dg-key"><span class="dg-swatch dg-swatch--dashed"></span>Condicional</span>
+		<span class="dg-key dg-key--accent"
+			><span class="dg-swatch dg-swatch--box dg-swatch--dashed"></span>Transacción</span
+		>
+	</Fragment>
+</Figure>

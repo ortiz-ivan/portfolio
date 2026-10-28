@@ -321,3 +321,14 @@ button.contact-v:hover {
 }
 
 /* Responsive: ver src/styles/editorial/responsive.css (punto de control único de breakpoints) */
+
+/* Distancia de entrada (reveal.css) */
+.contact-intro.reveal {
+	--reveal-y: 16px;
+}
+.contact-form.reveal {
+	--reveal-y: 24px;
+}
+.contact-links.reveal {
+	--reveal-y: 14px;
+}

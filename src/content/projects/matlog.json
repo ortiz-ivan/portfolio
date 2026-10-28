@@ -6,7 +6,7 @@
 	"tagline": "Historial de clases y técnicas de una academia de BJJ, gestionado por los propios alumnos.",
 	"summary": "En la academia de Brazilian Jiu-Jitsu lo que se enseñaba en cada clase se perdía al terminar el entrenamiento: nadie sabía qué técnicas se vieron, en qué turno ni cuándo. Construí una plataforma que gestionan los propios alumnos para registrar clases y técnicas, consultarlas después y llevar los torneos y medallas de cada compañero.",
 	"longDescription": "Plataforma web mobile-first que funciona como historial técnico de las clases de una academia de BJJ: biblioteca de técnicas reutilizables, registro de clases por turno y modalidad, filtros combinables, calendario, perfiles de compañeros con cinturón y grado, y participaciones en torneos con un flujo de aprobación por administradores.",
-	"highlight": "Caso para mostrar un producto pequeño y de uso real llevado a producción con criterio de seguridad: permisos mínimos en la base de datos, auditoría de solo inserción y endurecimiento del frontend y la API.",
+	"highlight": "Caso para mostrar un producto pequeño y de uso real llevado a producción con criterio de seguridad: restricciones en el propio esquema, auditoría de cada cambio y endurecimiento del frontend y la API.",
 	"tech": [
 		"Python 3.12",
 		"FastAPI",
@@ -26,8 +26,8 @@
 		"Cloudflare Workers"
 	],
 	"technicalDecisions": [
-		"La API se conecta a PostgreSQL con un rol de permisos mínimos: puede leer y escribir filas, pero no alterar el esquema ni modificar o borrar la tabla de auditoría. Solo las migraciones usan el rol propietario.",
-		"Cada alta, cambio o borrado queda en una auditoría de solo inserción con quién, cuándo y el valor anterior y nuevo, junto a un log de eventos de seguridad (logins fallidos, bloqueos, accesos denegados) que nunca incluye contraseñas ni tokens.",
+		"Las reglas que no pueden romperse viven en el propio esquema de PostgreSQL y no solo en la API: CHECK de grados válidos, unicidad de las participaciones en torneos y claves foráneas, para que un error en el código no deje datos inconsistentes.",
+		"Cada alta, cambio o borrado queda auditado con quién, cuándo y el valor anterior y nuevo (la API solo agrega registros y los muestra en modo lectura a los admins), junto a un log de eventos de seguridad (logins fallidos, bloqueos, accesos denegados) que nunca incluye contraseñas ni tokens.",
 		"Los datos que otros ven (cinturón, grado y medallas) no los edita el propio alumno: el cinturón lo asigna un admin y las participaciones en torneos quedan pendientes hasta que un admin las aprueba o rechaza con un motivo.",
 		"El MVP se acotó a propósito a una sola pregunta, «¿qué vimos en las clases y en qué turno?», y se dejaron fuera asistencia, estadísticas y multi-academia hasta comprobar que se usaba de verdad.",
 		"Sesión con JWT de corta duración, renovación mientras se usa y versión de token por usuario para invalidar todas sus sesiones; límite de intentos contra fuerza bruta, límite de tamaño de las peticiones y una CSP estricta generada en el build."
@@ -35,7 +35,13 @@
 	"results": [
 		"Expone capacidad para llevar un producto de punta a punta: modelado, API, frontend, migraciones, despliegue continuo y documentación funcional.",
 		"Muestra criterio de seguridad aplicado a un proyecto pequeño, con defensa en profundidad desde la base de datos hasta las cabeceras del navegador.",
-		"Refuerza la disciplina de alcance: un MVP que responde una pregunta concreta y crece según el uso real, respaldado por 98 tests de la API."
+		"Refuerza la disciplina de alcance: un MVP que responde una pregunta concreta y crece según el uso real, respaldado por 128 tests de la API."
+	],
+	"tests": [
+		{
+			"label": "API · pytest",
+			"count": 128
+		}
 	],
 	"caseStudy": {
 		"problem": {

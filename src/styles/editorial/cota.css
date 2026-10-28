@@ -1,0 +1,132 @@
+/* ============================================================
+   cota.css — métricas dibujadas como cotas de plano
+   Trazo fino con marcas oblicuas (convención de arquitectura) y
+   el cobre reservado para el resultado.
+   ============================================================ */
+
+.cota {
+	margin: 0;
+	display: grid;
+	gap: 0.9rem;
+}
+.cota.reveal {
+	--reveal-y: 14px;
+}
+
+.cota-title {
+	font-family: var(--font-mono);
+	font-size: 0.7rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+
+.cota-svg {
+	display: block;
+	overflow: visible;
+}
+
+.cota-line {
+	stroke: var(--text-2);
+	stroke-width: 1;
+}
+.cota-line--muted {
+	stroke: var(--line-strong);
+}
+.cota-line--accent {
+	stroke: var(--accent);
+	stroke-width: 1.5;
+}
+.cota-ext {
+	stroke: var(--reg-mark);
+	stroke-width: 1;
+}
+.cota-tick {
+	stroke: var(--text);
+	stroke-width: 1.25;
+}
+.cota-accent .cota-ext {
+	stroke: rgba(var(--accent-rgb), 0.6);
+}
+.cota-mask {
+	fill: var(--bg);
+}
+
+.cota-value,
+.cota-label {
+	font-family: var(--font-mono);
+}
+.cota-value {
+	font-size: 15px;
+	letter-spacing: 0.02em;
+	fill: var(--text);
+}
+.cota-value--inline {
+	font-size: 13px;
+	fill: var(--text-2);
+}
+.cota-accent .cota-value--inline {
+	fill: var(--text);
+}
+.cota-gain {
+	fill: var(--accent);
+}
+.cota-label {
+	font-size: 10px;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	fill: var(--muted);
+}
+.cota-label--total {
+	font-size: 10.5px;
+	fill: var(--text-2);
+}
+
+/* Comparación: rótulo a la izquierda, cota a la derecha */
+.cota-rows {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	align-items: center;
+	gap: 0.55rem 1.1rem;
+}
+.cota-k {
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--faint);
+}
+
+/* Entrada: la cota se traza y después aparecen marcas y valores */
+.cota-draw {
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+	transition: stroke-dashoffset 0.9s var(--ease) 0.2s;
+}
+.cota-fade {
+	opacity: 0;
+	transition: opacity 0.5s ease 0.75s;
+}
+.cota.in .cota-draw {
+	stroke-dashoffset: 0;
+}
+.cota.in .cota-fade {
+	opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cota-draw {
+		stroke-dashoffset: 0;
+		transition: none;
+	}
+	.cota-fade {
+		opacity: 1;
+		transition: none;
+	}
+}
+
+/* En el caso de estudio la cota encabeza la lista de resultados */
+.cs-tests {
+	padding-block: clamp(1.4rem, 2.5vw, 2rem) clamp(1.8rem, 3vw, 2.5rem);
+	border-top: 1px solid var(--line);
+}

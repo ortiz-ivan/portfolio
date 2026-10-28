@@ -141,3 +141,8 @@
 		display: block;
 	}
 }
+
+/* Distancia de entrada (reveal.css) */
+.proj-row.reveal {
+	--reveal-y: 14px;
+}

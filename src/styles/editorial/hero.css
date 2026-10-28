@@ -367,3 +367,17 @@
 	text-transform: uppercase;
 	color: var(--muted);
 }
+
+/* Distancia de entrada (reveal.css) */
+.hero-top.reveal {
+	--reveal-y: 12px;
+}
+.hero-title.reveal {
+	--reveal-y: 40px;
+}
+.ed-hero-copy.reveal {
+	--reveal-y: 22px;
+}
+.hero-meta.reveal {
+	--reveal-y: 16px;
+}

@@ -1,0 +1,259 @@
+---
+// Propagación de un cambio en Habita: qué hace el backend (Django) y qué
+// claves de React Query invalida el frontend (hooks/queries/usePagos.ts y
+// useContratos.ts) para que ninguna vista quede con datos viejos.
+import Figure from './Figure.astro';
+import { arrowHead, layoutChips, d } from './geometry';
+
+const COL = { action: 0, server: 240, cache: 600 };
+const ACTION_W = 180;
+const SERVER_W = 280;
+const H = 44;
+const CHIP_H = 20;
+const BRACKET_X = 586;
+
+const rowA = {
+	action: { y: 104, label: 'Cobrar cuota', sub: 'useCobrarPagos' },
+	server: [
+		{ y: 60, label: 'Guarda el pago', sub: 'post_save / post_delete en Pago' },
+		{ y: 140, label: 'Resumen en Redis', sub: 'versión +1: la caché vieja se descarta' }
+	],
+	chips: [
+		{ top: 52, keys: ['pagos.all', 'pagos.pendientes', 'pagos.porVencer'] },
+		{ top: 80, keys: ['pagos.vencidos', 'pagos.vencidosCount'] },
+		{ top: 108, keys: ['pagos-dashboard', 'pagos-resumen'] },
+		{ top: 150, keys: ['contratos.all', 'contratos.activos', 'contratos.select'], accent: true }
+	]
+};
+
+const rowB = {
+	action: { y: 258, label: 'Guardar contrato', sub: 'useContratos' },
+	server: {
+		y: 258,
+		label: 'Sincroniza habitación',
+		sub: 'ocupada si hay contrato activo o moroso'
+	},
+	chipsTop: 270
+};
+
+// Contratos y habitaciones en una sola fila; habitaciones es el dato derivado
+const rowBLine = layoutChips(
+	['contratos.all', 'contratos.select', 'habitaciones.all'],
+	COL.cache
+).map((chip) => ({ ...chip, accent: chip.text.startsWith('habitaciones') }));
+
+const rowALines = rowA.chips.map((line) => ({
+	...line,
+	chips: layoutChips(line.keys, COL.cache)
+}));
+
+const mid = (y: number) => y + H / 2;
+const aMid = mid(rowA.action.y);
+const s1Mid = mid(rowA.server[0].y);
+const bMid = mid(rowB.action.y);
+---
+
+<Figure num="01" title="Qué se actualiza cuando cambia algo">
+	<svg
+		class="dg-svg"
+		viewBox="0 0 1000 340"
+		role="img"
+		aria-labelledby="dg-habita-title dg-habita-desc"
+	>
+		<title id="dg-habita-title">Propagación de cambios en Habita</title>
+		<desc id="dg-habita-desc">
+			Al cobrar una cuota, el backend guarda el pago y una señal sube la versión del resumen
+			cacheado en Redis; el frontend invalida las consultas de pagos, del dashboard y de contratos,
+			porque la garantía se calcula en el serializer del contrato. Al guardar un contrato, el
+			backend recalcula si la habitación está ocupada y el frontend invalida contratos y
+			habitaciones.
+		</desc>
+
+		{/* Columnas */}
+		<text class="dg-meta" x={COL.action} y="14">Acción</text>
+		<text class="dg-meta" x={COL.server} y="14">Servidor · Django</text>
+		<text class="dg-meta" x={COL.cache} y="14">Caché del cliente · React Query</text>
+		<line class="dg-sep dg-sep--dashed" x1="220" y1="30" x2="220" y2="340"></line>
+		<line class="dg-sep dg-sep--dashed" x1="556" y1="30" x2="556" y2="340"></line>
+		<line class="dg-sep" x1="0" y1="226" x2="1000" y2="226"></line>
+
+		{/* Flechas */}
+		<g class="dg-flow dg-flow--strong">
+			<path
+				class:list={['dg-edge dg-draw', 'dg-d0']}
+				d={`M${ACTION_W} ${aMid} H210 V${s1Mid} H${COL.server - 7}`}
+				pathLength="1"></path>
+			<polygon
+				class:list={['dg-arrow dg-fade', 'dg-d0']}
+				points={arrowHead(COL.server - 2, s1Mid, 'right')}></polygon>
+
+			<path
+				class:list={['dg-edge dg-draw', 'dg-d2']}
+				d={`M${COL.server + SERVER_W / 2} ${rowA.server[0].y + H} V${rowA.server[1].y - 7}`}
+				pathLength="1"></path>
+			<polygon
+				class:list={['dg-arrow dg-fade', 'dg-d2']}
+				points={arrowHead(COL.server + SERVER_W / 2, rowA.server[1].y - 2, 'down')}></polygon>
+
+			<path
+				class:list={['dg-edge dg-draw', 'dg-d4']}
+				d={`M${COL.server + SERVER_W} ${s1Mid} H${BRACKET_X - 9}`}
+				pathLength="1"></path>
+			<polygon
+				class:list={['dg-arrow dg-fade', 'dg-d4']}
+				points={arrowHead(BRACKET_X - 4, s1Mid, 'right')}></polygon>
+
+			<path
+				class:list={['dg-edge dg-draw', 'dg-d6']}
+				d={`M${ACTION_W} ${bMid} H${COL.server - 7}`}
+				pathLength="1"></path>
+			<polygon
+				class:list={['dg-arrow dg-fade', 'dg-d6']}
+				points={arrowHead(COL.server - 2, bMid, 'right')}></polygon>
+
+			<path
+				class:list={['dg-edge dg-draw', 'dg-d8']}
+				d={`M${COL.server + SERVER_W} ${bMid} H${BRACKET_X - 9}`}
+				pathLength="1"></path>
+			<polygon
+				class:list={['dg-arrow dg-fade', 'dg-d8']}
+				points={arrowHead(BRACKET_X - 4, bMid, 'right')}></polygon>
+		</g>
+		<text
+			class:list={['dg-meta dg-fade', 'dg-d2']}
+			x={COL.server + SERVER_W / 2 + 10}
+			y={rowA.server[0].y + H + 22}>signal</text
+		>
+		<text class:list={['dg-meta dg-fade', 'dg-d4']} x={COL.server + SERVER_W + 8} y={s1Mid - 8}
+			>invalida</text
+		>
+		<text class:list={['dg-meta dg-fade', 'dg-d8']} x={COL.server + SERVER_W + 8} y={bMid - 8}
+			>invalida</text
+		>
+
+		{/* Cotas que agrupan las claves invalidadas */}
+		{
+			[
+				[rowA.chips[0].top - 2, rowA.chips[3].top + CHIP_H + 2],
+				[rowB.chipsTop - 2, rowB.chipsTop + CHIP_H + 2]
+			].map(([y1, y2], i) => (
+				<g class:list={['dg-fade', d(i === 0 ? 2 : 4)]}>
+					<line class="dg-sep" x1={BRACKET_X} y1={y1} x2={BRACKET_X} y2={y2} />
+					<line class="dg-sep" x1={BRACKET_X} y1={y1} x2={BRACKET_X + 6} y2={y1} />
+					<line class="dg-sep" x1={BRACKET_X} y1={y2} x2={BRACKET_X + 6} y2={y2} />
+				</g>
+			))
+		}
+
+		{/* Nodos: acciones y servidor */}
+		{
+			[rowA.action, rowB.action].map((n, i) => (
+				<g>
+					<text class="dg-meta" x={COL.action} y={n.y - 10}>
+						{String(i + 1).padStart(2, '0')}
+					</text>
+					<rect class="dg-node" x={COL.action} y={n.y} width={ACTION_W} height={H} />
+					<text class="dg-label" x={COL.action + 14} y={n.y + 19}>
+						{n.label}
+					</text>
+					<text class="dg-sub" x={COL.action + 14} y={n.y + 33}>
+						{n.sub}
+					</text>
+				</g>
+			))
+		}
+		{
+			[...rowA.server, rowB.server].map((n) => (
+				<g>
+					<rect class="dg-node" x={COL.server} y={n.y} width={SERVER_W} height={H} />
+					<text class="dg-label" x={COL.server + 14} y={n.y + 19}>
+						{n.label}
+					</text>
+					<text class="dg-sub" x={COL.server + 14} y={n.y + 33}>
+						{n.sub}
+					</text>
+				</g>
+			))
+		}
+		<text class="dg-note" x={COL.server} y={rowB.server.y + H + 22}>
+			y libera la anterior si cambió de habitación
+		</text>
+
+		{/* Claves de React Query */}
+		{
+			rowALines.map((line, li) => (
+				<g class:list={['dg-fade', d(2 + li * 0.5)]}>
+					{line.chips.map((chip) => (
+						<g>
+							<rect
+								class:list={['dg-chip', { 'dg-chip--accent': line.accent }]}
+								x={chip.x}
+								y={line.top}
+								width={chip.width}
+								height={CHIP_H}
+								rx="10"
+							/>
+							<text
+								class:list={['dg-chip-text', { 'dg-chip-text--accent': line.accent }]}
+								x={chip.x + chip.width / 2}
+								y={line.top + 13.5}
+								text-anchor="middle"
+							>
+								{chip.text}
+							</text>
+						</g>
+					))}
+				</g>
+			))
+		}
+		<text
+			class:list={['dg-note dg-fade', 'dg-d8']}
+			x={COL.cache}
+			y={rowA.chips[3].top + CHIP_H + 22}
+		>
+			la garantía se calcula en el serializer del contrato
+		</text>
+
+		<g class:list={['dg-fade', 'dg-d9']}>
+			{
+				rowBLine.map((chip) => (
+					<g>
+						<rect
+							class:list={['dg-chip', { 'dg-chip--accent': chip.accent }]}
+							x={chip.x}
+							y={rowB.chipsTop}
+							width={chip.width}
+							height={CHIP_H}
+							rx="10"
+						/>
+						<text
+							class:list={['dg-chip-text', { 'dg-chip-text--accent': chip.accent }]}
+							x={chip.x + chip.width / 2}
+							y={rowB.chipsTop + 13.5}
+							text-anchor="middle"
+						>
+							{chip.text}
+						</text>
+					</g>
+				))
+			}
+		</g>
+		<text class:list={['dg-note dg-fade', 'dg-d10']} x={COL.cache} y={rowB.chipsTop + CHIP_H + 22}>
+			la ocupación la recalcula el backend
+		</text>
+	</svg>
+
+	<Fragment slot="caption">
+		Una mutación no termina cuando el servidor responde: hay que saber qué otras pantallas quedaron
+		desactualizadas. Cobrar una cuota también invalida los contratos, porque la garantía se calcula
+		a partir de los pagos, y guardar un contrato invalida las habitaciones, porque el backend
+		recalcula su ocupación. En el servidor, el resumen cacheado en Redis no se borra clave por
+		clave: se sube su versión.
+	</Fragment>
+	<Fragment slot="legend">
+		<span class="dg-key"><span class="dg-swatch dg-swatch--box"></span>Clave de React Query</span>
+		<span class="dg-key dg-key--accent"
+			><span class="dg-swatch dg-swatch--box"></span>Dato que depende de otro dominio</span
+		>
+	</Fragment>
+</Figure>
