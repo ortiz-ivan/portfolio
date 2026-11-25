@@ -155,6 +155,10 @@
 			li + li {
 				margin-top: 1.2pt;
 			}
+			li b {
+				font-weight: 600;
+				color: var(--ink);
+			}
 			li::before {
 				content: '';
 				position: absolute;
@@ -216,10 +220,11 @@
 			<h2>Perfil</h2>
 			<p>
 				Desarrollador Backend/Fullstack con experiencia profesional en Java, Spring Boot y
-				PostgreSQL sobre un sistema en producción. Trabajo el ciclo completo: desarrollo de APIs,
-				optimización de consultas, integración con SIFEN y despliegue a test y producción con Docker
-				Compose y GitLab CI en servidores Linux. Complemento este perfil con proyectos propios en
-				uso real, con testing automatizado y arquitectura en capas como estándar de trabajo.
+				PostgreSQL sobre un sistema en producción. Trabajo el ciclo completo: relevamiento con
+				clientes, desarrollo de APIs, optimización de consultas, integración con SIFEN, despliegue
+				con Docker Compose y GitLab CI en servidores Linux y capacitación de usuarios. En paralelo desarrollo software a medida como
+				freelance, con un sistema de punto de venta en producción para un comercio, y con testing
+				automatizado y arquitectura en capas como estándar de trabajo.
 			</p>
 		</section>
 
@@ -233,17 +238,24 @@
 				<p class="position">Desarrollador Fullstack</p>
 				<ul>
 					<li>
-						APIs REST en Java/Spring Boot, separadas por capas (controller / service / repository) y
-						DTOs.
+						Migración de una aplicación web a app móvil con Capacitor, con notificaciones push, y
+						publicación en Google Play y App Store, hoy con usuarios activos.
 					</li>
+					<li>
+						Relevamiento de requerimientos en visitas a clientes y capacitación de usuarios en los
+						módulos nuevos que implementé.
+					</li>
+					<li>Integración y mantenimiento de endpoints SIFEN para facturación electrónica.</li>
 					<li>
 						Optimización de consultas SQL en vistas críticas: reduje los tiempos de respuesta un
 						~66% (~3s → ~1s).
 					</li>
-					<li>Integración y mantenimiento de endpoints SIFEN para facturación electrónica.</li>
-					<li>Despliegues a entornos de test y producción mediante pipelines de GitLab CI.</li>
 					<li>
-						Servicios contenerizados con Docker Compose en servidores Linux, administrados por SSH.
+						APIs REST en Java/Spring Boot, separadas por capas (controller / service / repository) y
+						DTOs.
+					</li>
+					<li>
+						Despliegues a test y producción con GitLab CI y Docker Compose en servidores Linux (SSH).
 					</li>
 					<li>
 						Evolución de modelos en PostgreSQL en producción y soporte en frontend (React, Angular).
@@ -251,43 +263,37 @@
 				</ul>
 				<p class="meta">
 					<b>Stack:</b> Java, Spring Boot, PostgreSQL, Docker Compose, GitLab CI, Linux, React,
-					Angular
+					Angular, Capacitor
+				</p>
+			</div>
+			<div class="entry">
+				<div class="entry-head">
+					<h3>Freelance</h3>
+					<span class="when">Nov 2025 – Actualidad</span>
+				</div>
+				<p class="position">Desarrollador Fullstack · Software a medida</p>
+				<ul>
+					<li>
+						<b>Kairos</b> (Python, Flask, PostgreSQL): punto de venta en producción para un comercio,
+						con ventas, inventario con kardex, caja, créditos y reportes. Lo migré por fases de app
+						de escritorio (SQLite) a web PWA en Railway, importando los datos existentes; más de 400
+						tests con pytest en CI.
+					</li>
+					<li>
+						<b>Domus</b> (React, TypeScript, Zustand): demo de un marketplace de servicios con apps de
+						cliente, profesional y administrador para la presentación de un equipo universitario.
+						Máquina de estados por rol; 88 tests unitarios y 12 E2E como condición de deploy.
+					</li>
+				</ul>
+				<p class="meta">
+					<a href="https://github.com/ortiz-ivan/kairos">github.com/ortiz-ivan/kairos</a> ·
+					<a href="https://domus.ivanortiz.dev">domus.ivanortiz.dev</a>
 				</p>
 			</div>
 		</section>
 
 		<section>
-			<h2>Proyectos</h2>
-			<div class="entry">
-				<h3>Kairos <span class="sub">— Punto de venta e inventario de escritorio</span></h3>
-				<p class="desc">
-					Sistema POS en producción para un comercio real: ventas, inventario con kardex, arqueo de
-					caja, créditos a clientes y reportes, funcionando sin internet. Arquitectura en capas
-					(routes / services / repositories), migraciones versionadas con Alembic, instalador para
-					Windows y casi 200 tests con pytest en CI.
-				</p>
-				<p class="meta">
-					<b>Stack:</b> Python, Flask, SQLAlchemy, Alembic, SQLite, PyInstaller, pytest ·
-					<b>Repo:</b>
-					<a href="https://github.com/ortiz-ivan/kairos">github.com/ortiz-ivan/kairos</a>
-				</p>
-			</div>
-			<div class="entry">
-				<h3>Habita <span class="sub">— Gestión de alquileres</span></h3>
-				<p class="desc">
-					Aplicación fullstack para administrar alquileres (habitaciones, inquilinos, contratos y
-					pagos con estados de mora), con 7 modelos relacionados y auditoría. Autenticación JWT con
-					rotación de refresh tokens en cookie httpOnly y 185 tests automatizados entre backend y
-					frontend.
-				</p>
-				<p class="meta">
-					<b>Stack:</b> Django 5, PostgreSQL, React 19, React Query, Tailwind CSS, JWT, Docker
-					Compose ·
-					<b>Repos:</b>
-					<a href="https://github.com/ortiz-ivan/Habita">backend</a>,
-					<a href="https://github.com/ortiz-ivan/Habita-frontend">frontend</a>
-				</p>
-			</div>
+			<h2>Proyecto personal</h2>
 			<div class="entry">
 				<h3>MatLog <span class="sub">— Historial técnico para una academia de BJJ</span></h3>
 				<p class="desc">
@@ -307,14 +313,12 @@
 			<h2>Habilidades técnicas</h2>
 			<div class="skills">
 				<p>
-					<b>Backend</b>Java · Spring Boot · REST APIs · Python · Django / DRF · FastAPI · Flask ·
-					Node.js · Express.js
+					<b>Backend</b>Java · Spring Boot · REST APIs · Python · FastAPI · Flask · Django / DRF
 				</p>
 				<p><b>Bases de datos</b>PostgreSQL · SQLite · SQLAlchemy · Alembic</p>
-				<p><b>Frontend</b>React · Angular · TypeScript · TanStack Query · Tailwind CSS</p>
+				<p><b>Frontend</b>React · Angular · TypeScript · TanStack Query · Zustand · Tailwind CSS · Capacitor</p>
 				<p><b>DevOps</b>Docker · Docker Compose · GitLab CI · GitHub Actions · Linux · SSH · Git</p>
-				<p><b>Testing y seguridad</b>pytest · Vitest · JWT · bcrypt · OWASP</p>
-				<p><b>Arquitectura</b>Arquitectura en capas · Clean Architecture · SOLID</p>
+				<p><b>Testing y seguridad</b>pytest · Vitest · Playwright · JWT · bcrypt</p>
 			</div>
 		</section>
 

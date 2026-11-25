@@ -1,80 +1,92 @@
 {
 	"name": "Kairos",
 	"priority": 1,
-	"eyebrow": "Punto de venta e inventario de escritorio",
+	"eyebrow": "Punto de venta e inventario · Freelance",
 	"isFeatured": true,
-	"tagline": "Sistema POS de escritorio que unifica ventas, stock, caja y fiado de un comercio real, sin depender de internet.",
-	"summary": "Un comercio llevaba ventas, stock, caja y fiado en procesos manuales y planillas sueltas, sin control por rol ni trazabilidad. Construí un sistema POS que corre en la PC del local, sin depender de internet, y reúne ventas, inventario con kardex, arqueo de caja, créditos a clientes y reportes en una sola herramienta que se instala como app de Windows.",
-	"longDescription": "Sistema de punto de venta e inventario para un local físico. Funciona en local y sin conexión, con backend Flask organizado en capas (routes, services, repositories), base SQLite con migraciones versionadas y distribución como ejecutable de escritorio con instalador, backups automáticos y clave de seguridad propia en cada instalación.",
-	"highlight": "Proyecto estrella: software en producción para un negocio real, desde el modelado del dominio hasta el instalador.",
-	"tech": ["Python", "Flask", "SQLAlchemy", "Alembic", "SQLite", "Chart.js", "PyInstaller", "pytest"],
+	"tagline": "Sistema POS en producción para un comercio real: ventas, stock, caja y fiado, migrado de escritorio a web.",
+	"summary": "Un comercio llevaba ventas, stock, caja y fiado en procesos manuales y planillas sueltas, sin control por rol ni trazabilidad. Construí un sistema POS que reúne ventas, inventario con kardex, arqueo de caja, créditos a clientes y reportes en una sola herramienta. Nació como app de escritorio para Windows y después lo migré por fases a una aplicación web instalable como PWA, sin perder los datos que ya tenía.",
+	"longDescription": "Sistema de punto de venta e inventario para un local físico, hecho por encargo y en uso diario. La versión 2 es una aplicación web en Flask y PostgreSQL, organizada en capas (routes, services, repositories), servida con Gunicorn en Railway, con backups cifrados y endurecida para estar expuesta a internet. La versión 1, un ejecutable de Windows con SQLite, sigue disponible en su propia rama.",
+	"highlight": "Proyecto estrella: software pagado y en producción, desde el modelado del dominio hasta la migración de escritorio a web con los datos reales del negocio.",
+	"tech": [
+		"Python",
+		"Flask",
+		"SQLAlchemy",
+		"Alembic",
+		"PostgreSQL",
+		"Gunicorn",
+		"Redis",
+		"Docker",
+		"Railway",
+		"Chart.js",
+		"pytest"
+	],
 	"technicalDecisions": [
-		"Arquitectura en capas (routes → services → repositories) para que las reglas de negocio no dependan de las vistas y puedan testearse aisladas.",
-		"Enfoque local y sin conexión: Flask + SQLite empaquetados con PyInstaller, con icono en la bandeja del sistema, una sola instancia por PC y datos persistentes en %APPDATA% entre actualizaciones.",
-		"Frontend sin framework ni build step: módulos JS desacoplados que se comunican por eventos (búsqueda → tabla → resumen) para mantener ágil el flujo de venta con lector de código de barras.",
-		"Integridad de datos con kardex de movimientos por producto y migraciones Alembic versionadas para cambiar el esquema sin perder datos.",
-		"Seguridad adaptada a la app local: roles y autenticación, protección CSRF, rate limiting en el login y una SECRET_KEY única que se genera en cada instalación."
+		"Arquitectura en capas (routes → services → repositories) para que las reglas de negocio no dependan de las vistas y puedan testearse aisladas; gracias a eso la migración a web cambió la infraestructura sin reescribir el dominio.",
+		"Migración de escritorio a web en cinco fases, cada una desplegable: PostgreSQL y Alembic desde cero, la app como servicio con Gunicorn, seguridad para internet y, al final, concurrencia y zona horaria. Un comando importa la base SQLite del .exe conservando los IDs y valida conteos y sumas de control.",
+		"Concurrencia resuelta en la base: los productos se bloquean con SELECT … FOR UPDATE en orden de ID antes de validar stock, y un índice único parcial impide dos cajas abiertas por usuario. Dos ventas del último ítem ya no pueden dejar stock negativo.",
+		"Seguridad para exponerla a internet: CSP con nonce y cabeceras de seguridad, sesiones revocables, rate limiting compartido por Redis, login que no delata qué usuarios existen, auditoría de acciones y el costo de compra oculto a los cajeros desde el servidor.",
+		"Operación sin sobresaltos: infraestructura de Railway como código, logs en JSON, monitoreo con Sentry y backups de la base cifrados con AES-256 antes de subirlos a un bucket."
 	],
 	"results": [
-		"Unifica en un solo sistema ventas, inventario, arqueo de caja, cuentas por cobrar y reportes, que antes vivían en procesos separados.",
-		"277 tests automatizados con pytest que cubren flujos completos (ventas, créditos, arqueo, kardex, migraciones), ejecutados en CI con GitHub Actions sobre Python 3.9, 3.10 y 3.11.",
-		"Distribución lista para el usuario final: un instalador NSIS con versionado, backups automáticos al iniciar y actualización sin tocar los datos."
+		"Unifica en un solo sistema ventas (con pagos mixtos y anulaciones), inventario, arqueo de caja, cuentas por cobrar y reportes, que antes vivían en procesos separados.",
+		"Migración a web sin perder historial: los datos de la versión de escritorio se importaron a PostgreSQL con validación de conteos y sumas, y la app se puede instalar como PWA.",
+		"412 tests automatizados con pytest que corren en CI con GitHub Actions contra PostgreSQL 16 en Python 3.11 y 3.12, más una prueba de humo que levanta Gunicorn en modo producción."
 	],
 	"tests": [
 		{
 			"label": "pytest",
-			"count": 277
+			"count": 412
 		}
 	],
 	"caseStudy": {
 		"problem": {
-			"title": "Llevar la operación diaria a un sistema confiable que funcione sin internet.",
-			"description": "El negocio necesitaba registrar ventas rápido, controlar stock y caja, y dar seguimiento al fiado de clientes, todo en una PC común del mostrador y sin servidores externos.",
+			"title": "Llevar la operación diaria a un sistema confiable, y después sacarlo de una sola PC.",
+			"description": "El negocio necesitaba registrar ventas rápido, controlar stock y caja, y dar seguimiento al fiado de clientes. La primera versión corría en la PC del mostrador; la segunda tenía que llevar todo eso a la web sin perder lo ya cargado.",
 			"points": [
 				"Ventas, stock y caja se llevaban por separado, sin una fuente única de verdad ni historial de movimientos.",
 				"El cierre de caja por turno era manual y propenso a errores (efectivo, transferencias por banco, diferencias).",
 				"Las ventas a crédito y los pagos parciales de clientes no tenían seguimiento formal.",
-				"Hacía falta restringir acciones sensibles por rol sin frenar la operación en el mostrador."
+				"Pasar a web implicaba varios usuarios a la vez, exposición a internet y migrar meses de datos reales del .exe."
 			]
 		},
 		"solution": {
-			"title": "Un POS modular, instalable y pensado para el uso real del mostrador.",
-			"description": "Una aplicación Flask que corre en local y se abre en el navegador, con módulos independientes para cada área del negocio y un empaquetado que la hace instalable y actualizable como cualquier programa de Windows.",
+			"title": "Un POS modular que pasó de app de escritorio a aplicación web instalable.",
+			"description": "Una aplicación Flask con módulos independientes para cada área del negocio. Se migró por fases a un servicio web en Railway, con PostgreSQL y una PWA instalable desde el navegador.",
 			"points": [
-				"Ventas por código de barras o búsqueda, pago en efectivo o transferencia por banco, descuentos por ítem y total en letras (guaraníes).",
+				"Ventas por código de barras o búsqueda, pago en efectivo, transferencia por banco o mixto, cálculo de vuelto, descuentos con tope por rol y total en letras (guaraníes).",
+				"Anulación de ventas por el admin que devuelve el stock por kardex y revierte caja, transferencias y deudas.",
 				"Inventario con niveles de stock, kardex por producto y carga masiva de stock.",
 				"Arqueo de caja con apertura y cierre por turno, movimientos de entrada y salida, conteo por denominación, cálculo automático de diferencias y reporte PDF.",
-				"Créditos a clientes con cuentas por cobrar y registro de pagos parciales.",
-				"Dashboard con estadísticas diarias y generales, comparación con el período anterior, gráficos de tendencia, productos más vendidos y exportación a CSV y Excel."
+				"Créditos a clientes con cuentas por cobrar y pagos parciales, y estadísticas por período con comparación, productos que más aportan y exportación a CSV y Excel."
 			]
 		},
 		"architecture": {
-			"title": "Capas bien separadas dentro de un monolito liviano y portable.",
-			"description": "La lógica sensible del negocio está aislada de las vistas y del acceso a datos, así el sistema crece por módulos y se testea sin levantar la interfaz.",
+			"title": "Capas bien separadas dentro de un monolito liviano, ahora como servicio web.",
+			"description": "La lógica del negocio está aislada de las vistas y del acceso a datos: por eso el sistema pudo cambiar de SQLite a PostgreSQL y de escritorio a web sin reescribir las reglas de venta, caja y crédito.",
 			"layers": [
 				{
 					"name": "Presentación",
-					"description": "Plantillas Jinja2 con macros reutilizables, Bootstrap 5, un design system propio en CSS y módulos JS vanilla por pantalla (tablas paginadas por AJAX, gráficos con Chart.js)."
+					"description": "Plantillas Jinja2 con macros reutilizables, Bootstrap 5, un design system propio en CSS, módulos JS vanilla por pantalla y PWA con manifest y service worker."
 				},
 				{
 					"name": "Rutas y seguridad",
-					"description": "Blueprints por área (ventas, productos, inventario, arqueo, créditos, registros y admin), con autorización por rol, CSRF y rate limiting."
+					"description": "Blueprints por área (ventas, productos, inventario, arqueo, créditos, registros y admin), con autorización por rol, CSRF, CSP con nonce, sesiones revocables y rate limiting en Redis."
 				},
 				{
 					"name": "Servicios",
-					"description": "Reglas de negocio y validaciones: cálculo de ventas y descuentos, cierre de caja, pagos de crédito, reportes y generación de PDF."
+					"description": "Reglas de negocio y validaciones: cálculo de ventas, pagos mixtos y descuentos, anulaciones, cierre de caja, pagos de crédito, reportes y generación de PDF."
 				},
 				{
 					"name": "Repositorios y persistencia",
-					"description": "Acceso a datos con SQLAlchemy sobre SQLite, índices de rendimiento, migraciones Alembic y backups automáticos de la base."
+					"description": "SQLAlchemy sobre PostgreSQL con bloqueo de filas, índices de rendimiento, migraciones Alembic y un importador de la base SQLite de la versión de escritorio."
 				},
 				{
-					"name": "Distribución",
-					"description": "Ejecutable PyInstaller con icono en la bandeja del sistema, instancia única, puerto libre automático e instalador NSIS versionado."
+					"name": "Infraestructura",
+					"description": "Docker y Gunicorn en Railway, configurado como código, con logs en JSON, Sentry y un servicio de backups cifrados."
 				}
 			]
 		},
-		"technologiesNote": "Elegí el stack para una operación local y offline: Flask y SQLite no necesitan infraestructura, se empaquetan en un solo ejecutable y permiten avanzar rápido sobre el dominio. La suite de tests y la CI mantienen el sistema estable mientras se agregan módulos."
+		"technologiesNote": "La v1 usó Flask y SQLite para operar en local sin infraestructura. Para la v2 se mantuvo Flask, porque el dominio ya estaba probado, y se pasó a PostgreSQL por la concurrencia entre usuarios. Railway da un despliegue simple sin administrar servidores. La suite de tests fue la red de seguridad durante toda la migración."
 	},
 	"links": [
 		{
