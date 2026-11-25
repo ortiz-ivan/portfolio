@@ -1,7 +1,7 @@
 {
 	"name": "Domus",
 	"priority": 4,
-	"eyebrow": "Demo de producto para una presentación universitaria",
+	"eyebrow": "Demo de producto · Freelance",
 	"isFeatured": false,
 	"tagline": "Demo interactiva de un marketplace de servicios para el hogar, con apps de cliente, profesional y administrador.",
 	"summary": "Un equipo universitario tenía la idea de Domus, una plataforma que conecta a personas con profesionales del hogar, y necesitaba mostrarla funcionando en su presentación. Construí una demo 100% frontend que recorre el flujo completo de contratación entre los tres roles, con datos simulados y una vista para proyectar en TV.",

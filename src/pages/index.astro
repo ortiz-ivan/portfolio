@@ -21,12 +21,18 @@ const sorted = [...allProjects].sort((a, b) => a.data.priority - b.data.priority
 const featured = sorted.find((p) => p.data.isFeatured) ?? sorted[0];
 const rest = sorted.filter((p) => p !== featured);
 
-const heroStack = experienceSection.items[0]?.tech ??['Java', 'Spring', 'PostgreSQL', 'Angular', 'React'];
+const heroStack = experienceSection.items[0]?.tech ?? [
+	'Java',
+	'Spring',
+	'PostgreSQL',
+	'Angular',
+	'React'
+];
 
 const navItems = [
 	{ href: '#sobre-mi', label: 'Sobre mí', index: '01' },
-	{ href: '#projects', label: 'Proyectos', index: '02' },
-	{ href: '#experience', label: 'Experiencia', index: '03' },
+	{ href: '#experience', label: 'Experiencia', index: '02' },
+	{ href: '#projects', label: 'Proyectos', index: '03' },
 	{ href: '#skills', label: 'Skills', index: '04' },
 	{ href: '#contact', label: 'Contacto', index: '05' }
 ];
@@ -39,8 +45,8 @@ const navItems = [
 	<main class="ed-home" id="top">
 		<NavBar name={heroContent.name} items={navItems} />
 		<HeroSection hero={heroContent} heroStack={heroStack} socials={contactSection.items} />
-		<ProjectsSection featured={featured} rest={rest} />
 		<ExperienceSection data={experienceSection} />
+		<ProjectsSection featured={featured} rest={rest} />
 		<SkillsSection data={skillsSection} />
 		<ContactSection data={contactSection} footer={footerContent} authorName={heroContent.name} />
 	</main>
@@ -50,7 +56,7 @@ const navItems = [
 	let spyObserver: IntersectionObserver | null = null;
 
 	function initScrollspy() {
-		const ids = ['sobre-mi', 'projects', 'experience', 'skills', 'contact'];
+		const ids = ['sobre-mi', 'experience', 'projects', 'skills', 'contact'];
 		const sections = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
 		if (sections.length === 0) return;
 

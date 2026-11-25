@@ -65,11 +65,11 @@ export const heroContent: HeroContent = {
 	name: 'Iván Ortiz',
 	role: 'Fullstack Developer',
 	subtitle:
-		'Construyo sistemas de gestión que usan negocios reales: punto de venta, inventario, alquileres y facturación electrónica.',
+		'Construyo sistemas de gestión que usan negocios reales: punto de venta, inventario, caja y facturación electrónica.',
 	narrative:
-		'Hoy desarrollo sistemas empresariales en Airam con Java, Spring y PostgreSQL: APIs, integraciones como SIFEN, optimización de consultas y despliegues con GitLab CI y Docker.',
+		'Hoy desarrollo sistemas empresariales en Airam con Java, Spring y PostgreSQL: APIs, integraciones como SIFEN, una app móvil publicada en Google Play y App Store, y trato directo con clientes.',
 	panelSummary:
-		'Por fuera del trabajo llevé a producción un POS offline que un comercio usa a diario, con instalador, backups automáticos y más de 270 tests.',
+		'Como freelance llevé a producción un POS que un comercio usa a diario y lo migré de escritorio a web, con más de 400 tests.',
 	primaryCta: {
 		label: 'Ver proyectos',
 		href: '#projects'
@@ -89,23 +89,23 @@ export const skillsSection: SkillsSection = {
 		},
 		{
 			title: 'Backend',
-			items: ['Node.js', 'Spring (Boot)', 'Django', 'Django REST Framework']
+			items: ['Spring Boot', 'FastAPI', 'Flask', 'Django / DRF', 'REST APIs']
 		},
 		{
-			title: 'Frontend',
-			items: ['React', 'Angular', 'React Query / TanStack Query', 'Tailwind CSS', 'Zustand']
+			title: 'Frontend y móvil',
+			items: ['React', 'Angular', 'TanStack Query', 'Zustand', 'Tailwind CSS', 'Capacitor']
 		},
 		{
 			title: 'Bases de datos',
-			items: ['PostgreSQL', 'MongoDB']
+			items: ['PostgreSQL', 'SQLite', 'Redis']
 		},
 		{
-			title: 'ORM / Data',
-			items: ['Prisma', 'SQLAlchemy']
+			title: 'ORM / Migraciones',
+			items: ['SQLAlchemy', 'Alembic']
 		},
 		{
 			title: 'Testing',
-			items: ['Vitest', 'pytest']
+			items: ['pytest', 'Vitest', 'Playwright']
 		},
 		{
 			title: 'DevOps & Herramientas',
@@ -115,6 +115,7 @@ export const skillsSection: SkillsSection = {
 				'Git',
 				'GitLab CI',
 				'GitHub Actions (CI)',
+				'Railway',
 				'Netlify'
 			]
 		}
@@ -128,19 +129,54 @@ export const experienceSection: ExperienceSection = {
 			role: 'Desarrollador Fullstack',
 			period: 'Febrero 2026 – Actualidad',
 			description:
-				'Desarrollo y mantengo sistemas empresariales de punta a punta: backend, integraciones, frontend y despliegue.',
+				'Desarrollo y mantengo sistemas empresariales de punta a punta: desde el relevamiento con clientes hasta el despliegue y la capacitación de usuarios.',
 			responsibilities: [
-				'APIs REST con Java y Spring e integraciones clave, como SIFEN para facturación electrónica.',
+				'Migración de una aplicación web a app móvil con Capacitor, con notificaciones push, publicada en Google Play y App Store y con usuarios activos.',
+				'Relevamiento de requerimientos en visitas a clientes y capacitación de usuarios en los módulos nuevos que implementé.',
+				'Integración y mantenimiento de endpoints SIFEN para facturación electrónica.',
 				'Optimización de consultas SQL en vistas críticas, bajando respuestas de ~3s a ~1s.',
-				'Despliegues a test y producción con pipelines de GitLab CI.',
-				'Servicios con Docker Compose en servidores Linux, administrados por SSH.'
+				'APIs REST con Java y Spring Boot, separadas por capas y con DTOs.',
+				'Despliegues a test y producción con GitLab CI y Docker Compose en servidores Linux (SSH).'
 			],
-			tech: ['Java', 'Spring', 'PostgreSQL', 'Docker', 'GitLab CI', 'Linux', 'React', 'Angular'],
+			tech: [
+				'Java',
+				'Spring',
+				'PostgreSQL',
+				'Docker',
+				'GitLab CI',
+				'Linux',
+				'React',
+				'Angular',
+				'Capacitor'
+			],
 			metric: {
 				title: 'Tiempo de respuesta · vistas críticas',
 				before: { value: 3, label: '~3 s' },
 				after: { value: 1, label: '~1 s' }
 			}
+		},
+		{
+			company: 'Freelance',
+			role: 'Desarrollador Fullstack · Software a medida',
+			period: 'Noviembre 2025 – Actualidad',
+			description:
+				'Desarrollo software por encargo para clientes, con alcance acordado, entrega en producción y mantenimiento.',
+			responsibilities: [
+				'Kairos: punto de venta en producción para un comercio, con ventas, inventario con kardex, caja, créditos y reportes.',
+				'Migré Kairos por fases de app de escritorio (SQLite) a web PWA en Railway, importando los datos existentes; más de 400 tests con pytest en CI.',
+				'Domus: demo de un marketplace de servicios con apps de cliente, profesional y administrador para la presentación de un equipo universitario.',
+				'Flujo de Domus modelado como máquina de estados por rol, con tests unitarios y E2E como condición de deploy.'
+			],
+			tech: [
+				'Python',
+				'Flask',
+				'PostgreSQL',
+				'Railway',
+				'React',
+				'TypeScript',
+				'Zustand',
+				'Playwright'
+			]
 		}
 	]
 };
